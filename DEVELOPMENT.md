@@ -4,8 +4,8 @@ This document contains development-specific information for the React Design Sys
 
 ## Requirements
 
-- **Node.js**: 24.0.1 or higher
-- **npm**: 10.x or higher (comes with Node.js 24.0.1)
+- **Node.js**: 22.x or higher
+ - **pnpm**: 9.x or higher
 
 ## Project Structure
 
@@ -53,20 +53,20 @@ git clone https://github.com/agentience/react-design-systems-mcp.git
 cd react-design-systems-mcp
 
 # Install dependencies
-npm install
+pnpm install
 ```
 
 ### Setup Steps
 
-1. Ensure you have Node.js 24.0.1 or higher installed:
+1. Ensure you have Node.js 22.x or higher installed:
 ```bash
 node --version
-# Should output v24.0.1 or higher
+# Should output v22.x or higher
 ```
 
 2. Build the TypeScript code:
 ```bash
-npm run build
+pnpm run build
 ```
 
 ## Usage (Development Environment)
@@ -76,57 +76,57 @@ npm run build
 #### Standard Mode (stdio)
 
 ```bash
-npm start
+pnpm start
 ```
 
 or
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 #### SSE Mode (for Web Applications)
 
 ```bash
-npm run dev:sse
+pnpm run dev:sse
 ```
 
 #### Advanced Development Usage
 
 Start the server:
 ```bash
-npm start
+pnpm start
 
 # With custom port
-npm start -- --port 8080
+pnpm start -- --port 8080
 # or
-PORT=8080 npm start
+PORT=8080 pnpm start
 
 # With custom bind address
-npm start -- --bind 127.0.0.1
+pnpm start -- --bind 127.0.0.1
 # or
-BIND=127.0.0.1 npm start
+BIND=127.0.0.1 pnpm start
 ```
 
 For development with automatic reloading:
 ```bash
-npm run dev
+pnpm run dev
 
 # With custom port
-npm run dev -- --port 8080
+pnpm run dev -- --port 8080
 # or
-PORT=8080 npm run dev
+PORT=8080 pnpm run dev
 
 # With custom bind address
-npm run dev -- --bind 127.0.0.1
+pnpm run dev -- --bind 127.0.0.1
 # or
-BIND=127.0.0.1 npm run dev
+BIND=127.0.0.1 pnpm run dev
 ```
 
 ### Testing
 
 ```bash
-npm test
+pnpm test
 ```
 
 ### Building
@@ -135,16 +135,16 @@ The build process includes automatic processing of usage.md files to convert int
 
 ```bash
 # Full build with link processing
-npm run build
+pnpm run build
 
 # Individual build steps
-npm run prepare      # Compile TypeScript
-npm run update-links # Process markdown links
-npm run postbuild    # Copy data files
+pnpm run prepare      # Compile TypeScript
+pnpm run update-links # Process markdown links
+pnpm run postbuild    # Copy data files
 
 # Link processing utilities
-npm run update-links:dry-run    # Preview changes without modifying files
-npm run update-links:verbose    # Show detailed processing information
+pnpm run update-links:dry-run    # Preview changes without modifying files
+pnpm run update-links:verbose    # Show detailed processing information
 ```
 
 The build automatically converts internal markdown links in usage.md files from regular format to the `get_link_resource` tool call format, enabling the MCP server to resolve component, pattern, and foundation references.
@@ -248,29 +248,24 @@ The FastMCP server supports two transport types:
 #### Running with stdio Transport
 
 ```bash
-npm start
+pnpm start
 # or
-npm run dev
+pnpm run dev
 ```
 
 #### Running with SSE Transport
 
 ```bash
-npm run dev:sse
+pnpm run dev:sse
 ```
 
 ### Implementation Details
 
 For detailed technical information about the FastMCP implementation, including tool and resource registration patterns, see [FastMCP Implementation Guide](docs/fastmcp-implementation.md).
 
-## Node.js 24.x Compatibility
+## Node.js 22.x Notes
 
-This project requires Node.js 24.0.1 or higher. If you encounter any issues related to the Node.js version, please refer to the [Node.js 24 Upgrade Guide](docs/nodejs-24-upgrade-guide.md) for detailed information about compatibility considerations and potential issues.
-
-Key considerations:
-- TypeScript 5.4+ is recommended for better Node.js 24 support
-- Some users have reported issues with ts-node on Node.js 24
-- HTTP parser changes may affect behavior in some cases
+This project targets Node.js 22.x or higher. If you encounter any issues related to the Node.js version, ensure your local runtime matches 22.x and reinstall dependencies.
 
 ## Publishing
 
@@ -279,12 +274,12 @@ To publish a new version of the package:
 1. Update the version in `package.json`
 2. Build the package:
 ```bash
-npm run build
+pnpm run build
 ```
 
 3. Publish to npm:
 ```bash
-npm publish
+pnpm publish
 ```
 
 ## Contributing

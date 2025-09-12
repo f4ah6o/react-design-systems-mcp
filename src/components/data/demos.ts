@@ -28,7 +28,7 @@ export interface Demo {
   type: string; // e.g., 'basic', 'interactive', 'form', 'data-display'
   variations: DemoVariation[];
   tags: string[];
-  code: string;
+  code?: string;
   metadata: DemoMetadata;
 }
 

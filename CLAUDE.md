@@ -11,41 +11,44 @@ React Design Systems is a Model Context Protocol (MCP) server that provides comp
 ### Building and Running
 ```bash
 # Install dependencies
-npm install
+pnpm install
 
 # Build TypeScript to JavaScript
-npm run build
+pnpm run build
 
 # Run in development mode with auto-reload
-npm run dev
+pnpm run dev
 
 # Run in development mode with SSE transport
-npm run dev:sse
+pnpm run dev:sse
 
 # Run production server
-npm start
+pnpm start
 ```
 
 ### Testing
 ```bash
 # Run all tests
-npm test
+pnpm test
 
 # Run specific test suites
-npm run test:unit      # Unit tests only
-npm run test:e2e       # End-to-end tests only
-npm run test:tools     # Tools tests
-npm run test:resources # Resources tests
-npm run test:roo      # Roo integration tests
+pnpm run test:unit      # Unit tests only
+pnpm run test:e2e       # End-to-end tests only
+pnpm run test:tools     # Tools tests
+pnpm run test:resources # Resources tests
+pnpm run test:roo      # Roo integration tests
 
 # Run tests in CI mode (skip long-running tests)
-npm run test:ci
+pnpm run test:ci
 ```
 
 ### Linting and Type Checking
 ```bash
-# Run ESLint
-npm run lint
+# Run Biome (lint)
+pnpm run lint
+
+# Run Biome (format fix)
+pnpm run format
 ```
 
 ## Architecture Overview
@@ -123,7 +126,7 @@ npm run lint
 ## Development Guidelines
 
 1. **TypeScript**: Use strict TypeScript settings as configured in tsconfig.json
-2. **Node.js Version**: Requires Node.js 24.0.1 or higher
+2. **Node.js Version**: Requires Node.js 22.x or higher
 3. **Testing**: Write tests for new functionality in the appropriate test directory
 4. **Component Data**: When adding new components, update the data files in src/components/data/
 5. **FastMCP**: When adding new tools, follow the FastMCP pattern using Zod schemas for parameters
@@ -156,7 +159,7 @@ npm run lint
 4. Add corresponding tests
 
 ### Debugging
-- Use `npm run dev` for development with auto-reload
+- Use `pnpm run dev` for development with auto-reload
 - Check logs for FastMCP server output
 - Use the test files to verify functionality
 - Test demo functionality using `DemoProvider` methods
@@ -166,24 +169,24 @@ npm run lint
 ### Testing New Demo and Pattern Features
 ```bash
 # Test demo functionality
-npm run test:unit -- --testNamePattern="DemoProvider"
+pnpm run test:unit -- --testNamePattern="DemoProvider"
 
 # Test pattern functionality  
-npm run test:unit -- --testNamePattern="PatternProvider"
+pnpm run test:unit -- --testNamePattern="PatternProvider"
 
 # Test data validation
-npm run test:unit -- --testNamePattern="validation"
+pnpm run test:unit -- --testNamePattern="validation"
 
 # Test contract compliance
-npm run test -- tests/contract/
+pnpm run test -- tests/contract/
 
 # Test integration
-npm run test -- tests/integration/
+pnpm run test -- tests/integration/
 ```
 
 ## Publishing
 The package is published to npm as `@agentience/react-design-systems-mcp`. Before publishing:
 1. Update version in package.json
-2. Run `npm run build`
-3. Run `npm run test:ci`
-4. Use `npm publish` to publish
+2. Run `pnpm run build`
+3. Run `pnpm run test:ci`
+4. Use `pnpm publish` to publish

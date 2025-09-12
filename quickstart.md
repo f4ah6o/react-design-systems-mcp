@@ -7,9 +7,9 @@ This guide provides quick commands and examples to test the new demo and pattern
 Ensure you have the server built and running:
 
 ```bash
-npm install
-npm run build
-npm run dev
+pnpm install
+pnpm run build
+pnpm run dev
 ```
 
 ## Testing New MCP Tools
@@ -91,11 +91,11 @@ echo '{"tool": "get_pattern_categories", "arguments": {"includePatternList": fal
 
 ## Testing with curl (if running SSE mode)
 
-If running with `npm run dev:sse`, you can test with HTTP requests:
+If running with `pnpm run dev:sse`, you can test with HTTP requests:
 
 ```bash
 # Start SSE mode
-npm run dev:sse
+pnpm run dev:sse
 
 # Test get_component_demos
 curl -X POST http://localhost:3000/mcp/tools/get_component_demos \
@@ -136,22 +136,22 @@ Run specific test suites for the new functionality:
 
 ```bash
 # Test DemoProvider functionality
-npm run test:unit -- --testNamePattern="DemoProvider"
+pnpm run test:unit -- --testNamePattern="DemoProvider"
 
 # Test PatternProvider functionality
-npm run test:unit -- --testNamePattern="PatternProvider"
+pnpm run test:unit -- --testNamePattern="PatternProvider"
 
 # Test demo data validation
-npm run test:unit -- --testNamePattern="demo.*validation"
+pnpm run test:unit -- --testNamePattern="demo.*validation"
 
 # Test pattern data validation
-npm run test:unit -- --testNamePattern="pattern.*validation"
+pnpm run test:unit -- --testNamePattern="pattern.*validation"
 
 # Test all new contract tests
-npm test tests/contract/
+pnpm test tests/contract/
 
 # Test all new integration tests
-npm test tests/integration/
+pnpm test tests/integration/
 ```
 
 ## Integration Tests
@@ -160,13 +160,13 @@ Test the complete integration between components, demos, and patterns:
 
 ```bash
 # Test demo-component relationships
-npm test tests/integration/test_demo_integration.ts
+pnpm test tests/integration/test_demo_integration.ts
 
 # Test pattern search functionality
-npm test tests/integration/test_pattern_search.ts
+pnpm test tests/integration/test_pattern_search.ts
 
 # Test error handling across the system
-npm test tests/integration/test_error_handling.ts
+pnpm test tests/integration/test_error_handling.ts
 ```
 
 ## Common Test Scenarios
@@ -250,9 +250,9 @@ echo '{"tool": "get_pattern_categories", "arguments": {"includePatternCount": tr
 
 ### Common Issues
 
-1. **Server not running**: Make sure `npm run dev` is running
-2. **TypeScript errors**: Run `npm run build` to compile TypeScript
-3. **Test failures**: Ensure all dependencies are installed with `npm install`
+1. **Server not running**: Make sure `pnpm run dev` is running
+2. **TypeScript errors**: Run `pnpm run build` to compile TypeScript
+3. **Test failures**: Ensure all dependencies are installed with `pnpm install`
 4. **Tool not found**: Verify tool name spelling and server is properly started
 
 ### Debug Commands
@@ -262,7 +262,7 @@ echo '{"tool": "get_pattern_categories", "arguments": {"includePatternCount": tr
 curl -X GET http://localhost:3000/health
 
 # View server logs
-npm run dev 2>&1 | tee server.log
+pnpm run dev 2>&1 | tee server.log
 
 # Test basic MCP functionality
 echo '{"tool": "search_components", "arguments": {"query": "button"}}' | node dist/mcp/server.js
@@ -274,10 +274,10 @@ After testing, verify data integrity:
 
 ```bash
 # Run all validation tests
-npm run test:unit -- --testNamePattern="validation"
+pnpm run test:unit -- --testNamePattern="validation"
 
 # Check demo-component mapping consistency
-npm run test:unit -- --testNamePattern="component.*demo.*map"
+pnpm run test:unit -- --testNamePattern="component.*demo.*map"
 ```
 
 ## Next Steps

@@ -2184,10 +2184,10 @@ function registerResources(server: FastMCP) {
 
 ## Installation
 
-Install the Cloudscape Design System packages:
+Install the Cloudscape Design System packages (pnpm shown):
 
 \`\`\`bash
-npm install @cloudscape-design/components @cloudscape-design/global-styles
+pnpm add @cloudscape-design/components @cloudscape-design/global-styles
 \`\`\`
 
 ## Basic Setup

@@ -37,23 +37,23 @@ See [CHANGELOG.md](CHANGELOG.md)
 
 ## Requirements
 
-- **Node.js**: 24.0.1 or higher
-- **npm**: 10.x or higher (comes with Node.js 24.0.1)
+- **Node.js**: 22.x or higher
+- **pnpm**: 9.x or higher
 
 ## Installation
 
 ### For Usage as a Dependency
 
 ```bash
-# Install from npm
-npm install @agentience/react-design-systems-mcp
+# Install from npm registry (using pnpm)
+pnpm add @agentience/react-design-systems-mcp
 ```
 
 ### Global Installation
 
 ```bash
 # Install globally to use as a CLI tool
-npm install -g @agentience/react-design-systems-mcp
+pnpm add -g @agentience/react-design-systems-mcp
 
 # Then you can run it directly
 react-design-systems-mcp
@@ -61,7 +61,7 @@ react-design-systems-mcp
 
 ## Claude Desktop Configuration
 
-To use React Design Systems with Claude Desktop, you can configure it as an MCP server using the npm package. This allows Claude Desktop to automatically launch the server when needed.
+To use React Design Systems with Claude Desktop, you can configure it as an MCP server using the published package. This allows Claude Desktop to automatically launch the server when needed.
 
 ### Configuration File
 
@@ -76,8 +76,9 @@ Add the following configuration to your Claude Desktop MCP settings file:
 {
   "mcpServers": {
     "react-design-systems": {
-      "command": "npx",
+      "command": "pnpm",
       "args": [
+        "dlx",
         "@agentience/react-design-systems-mcp"
       ]
     }
