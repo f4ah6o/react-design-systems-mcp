@@ -11,6 +11,12 @@
 
 import fs from 'fs';
 import path from 'path';
+import demoProvider, { DemoSearchOptions, DemoSearchResult } from '../demo-provider';
+import { Demo } from './data/demos';
+import patternProvider, { PatternSearchOptions, PatternSearchResult, PatternDetailsOptions } from '../pattern-provider';
+import { Pattern } from './data/patterns';
+import { PatternCategory } from './data/pattern-categories';
+import componentDemoMap, { getDemosForComponent, getPrimaryDemoForComponent, componentHasDemos } from './data/component-demo-map';
 
 // Define types for component metadata
 export interface PropertyMetadata {
@@ -45,6 +51,10 @@ export interface ComponentMetadata {
   }>;
   examples: string[];
   usageGuidelines?: string;
+  // Demo-related properties
+  demoIds?: string[];
+  primaryDemo?: string;
+  hasDemos?: boolean;
 }
 
 export interface CategoryMetadata {
@@ -441,15 +451,58 @@ export function getAllComponents(): Record<string, ComponentMetadata> {
 }
 
 /**
- * Get a component by ID
+ * Get a component by ID with demo information enriched
  * @param componentId - Component ID
- * @returns Component metadata
+ * @returns Component metadata with demo references
  */
 export function getComponent(componentId: string): ComponentMetadata | undefined {
   if (Object.keys(componentCache).length === 0) {
     initialize();
   }
-  return componentCache[componentId];
+  
+  const component = componentCache[componentId];
+  if (!component) {
+    return undefined;
+  }
+  
+  // Enrich with demo information
+  return enrichComponentWithDemoInfo(component);
+}
+
+/**
+ * Get all components with demo information enriched
+ * @returns All components with demo references
+ */
+export function getAllComponentsWithDemos(): Record<string, ComponentMetadata> {
+  if (Object.keys(componentCache).length === 0) {
+    initialize();
+  }
+  
+  // Enrich all components with demo information
+  const enrichedComponents: Record<string, ComponentMetadata> = {};
+  Object.entries(componentCache).forEach(([id, component]) => {
+    enrichedComponents[id] = enrichComponentWithDemoInfo(component);
+  });
+  
+  return enrichedComponents;
+}
+
+/**
+ * Enrich component metadata with demo information
+ * @param component - Base component metadata
+ * @returns Component metadata with demo info
+ */
+function enrichComponentWithDemoInfo(component: ComponentMetadata): ComponentMetadata {
+  const demoIds = getDemosForComponent(component.id);
+  const primaryDemo = getPrimaryDemoForComponent(component.id);
+  const hasDemos = componentHasDemos(component.id);
+  
+  return {
+    ...component,
+    demoIds,
+    primaryDemo,
+    hasDemos
+  };
 }
 
 /**
@@ -845,6 +898,167 @@ export function searchUsageGuidelines(options: {
   return results;
 }
 
+/**
+ * Get demos for a specific component
+ * @param componentId - Component ID
+ * @param options - Demo search options
+ * @returns Demo search result
+ */
+export function getComponentDemos(componentId: string, options: Omit<DemoSearchOptions, 'componentId'> = {}): DemoSearchResult {
+  return demoProvider.getComponentDemos({
+    componentId,
+    ...options
+  });
+}
+
+/**
+ * Search demos across all components
+ * @param options - Demo search options
+ * @returns Array of demos
+ */
+export function searchDemos(options: DemoSearchOptions = {}): Demo[] {
+  return demoProvider.getAllDemos(options);
+}
+
+/**
+ * Get demo by ID
+ * @param demoId - Demo ID
+ * @returns Demo or undefined
+ */
+export function getDemoById(demoId: string): Demo | undefined {
+  return demoProvider.getDemo(demoId);
+}
+
+/**
+ * Get demo statistics
+ * @returns Demo statistics
+ */
+export function getDemoStats() {
+  return demoProvider.getDemoStats();
+}
+
+/**
+ * Get available demo types
+ * @returns Array of demo type strings
+ */
+export function getDemoTypes(): string[] {
+  return demoProvider.getDemoTypes();
+}
+
+/**
+ * Get components that have demos available
+ * @returns Array of component IDs with demos
+ */
+export function getComponentsWithDemos(): string[] {
+  return demoProvider.getComponentsWithDemos();
+}
+
+/**
+ * Validate demo data integrity
+ * @returns Validation result with errors if any
+ */
+export function validateDemoData(): { valid: boolean; errors: string[] } {
+  return demoProvider.validateDemos();
+}
+
+/**
+ * Search patterns with various filters
+ * @param options - Pattern search options
+ * @returns Pattern search result
+ */
+export function searchPatternsByProvider(options: PatternSearchOptions = {}): PatternSearchResult {
+  return patternProvider.searchPatterns(options);
+}
+
+/**
+ * Get detailed information about a specific pattern
+ * @param options - Pattern details options
+ * @returns Pattern with requested details
+ */
+export function getPatternDetails(options: PatternDetailsOptions): Pattern {
+  return patternProvider.getPatternDetails(options);
+}
+
+/**
+ * Get all pattern categories with optional details
+ * @param options - Category options
+ * @returns Pattern categories
+ */
+export function getPatternCategories(options: {
+  includePatternCount?: boolean;
+  includePatternList?: boolean;
+} = {}): { categories: PatternCategory[] } {
+  return patternProvider.getPatternCategories(options);
+}
+
+/**
+ * Get patterns by category
+ * @param categoryId - Category ID
+ * @returns Array of patterns in the category
+ */
+export function getPatternsByCategory(categoryId: string): Pattern[] {
+  return patternProvider.getPatternsByCategory(categoryId);
+}
+
+/**
+ * Get patterns that use a specific component
+ * @param componentId - Component ID
+ * @returns Array of patterns using the component
+ */
+export function getPatternsByComponent(componentId: string): Pattern[] {
+  return patternProvider.getPatternsByComponent(componentId);
+}
+
+/**
+ * Get pattern statistics
+ * @returns Pattern statistics
+ */
+export function getPatternStats() {
+  return patternProvider.getPatternStats();
+}
+
+/**
+ * Get available pattern categories
+ * @returns Array of category IDs
+ */
+export function getAvailablePatternCategories(): string[] {
+  return patternProvider.getAvailableCategories();
+}
+
+/**
+ * Get all tags used across patterns
+ * @returns Array of pattern tags
+ */
+export function getAllPatternTags(): string[] {
+  return patternProvider.getAllTags();
+}
+
+/**
+ * Get components used across all patterns
+ * @returns Array of component IDs used in patterns
+ */
+export function getAllPatternComponents(): string[] {
+  return patternProvider.getAllComponents();
+}
+
+/**
+ * Find patterns similar to a given pattern
+ * @param patternId - Pattern ID to find similar patterns for
+ * @param limit - Maximum number of similar patterns to return
+ * @returns Array of similar patterns
+ */
+export function findSimilarPatterns(patternId: string, limit: number = 5): Pattern[] {
+  return patternProvider.findSimilarPatterns(patternId, limit);
+}
+
+/**
+ * Validate pattern data integrity
+ * @returns Validation result with errors if any
+ */
+export function validatePatternData(): { valid: boolean; errors: string[] } {
+  return patternProvider.validatePatterns();
+}
+
 // Export the module
 export default {
   getAllComponents,
@@ -860,5 +1074,25 @@ export default {
   getExampleById,
   searchPatterns,
   getComponentUsage,
-  searchUsageGuidelines
+  searchUsageGuidelines,
+  // Demo methods
+  getComponentDemos,
+  searchDemos,
+  getDemoById,
+  getDemoStats,
+  getDemoTypes,
+  getComponentsWithDemos,
+  validateDemoData,
+  // Pattern methods
+  searchPatternsByProvider,
+  getPatternDetails,
+  getPatternCategories,
+  getPatternsByCategory,
+  getPatternsByComponent,
+  getPatternStats,
+  getAvailablePatternCategories,
+  getAllPatternTags,
+  getAllPatternComponents,
+  findSimilarPatterns,
+  validatePatternData
 };

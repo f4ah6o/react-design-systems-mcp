@@ -1103,6 +1103,216 @@ function registerTools(server: FastMCP) {
     },
   });
 
+  // Tool: get_component_demos
+  server.addTool({
+    name: 'get_component_demos',
+    description: 'Get demos for a specific component with filtering options',
+    parameters: z.object({
+      componentId: z.string().describe('Component ID to get demos for'),
+      demoType: z.string().optional().describe('Filter by demo type (basic, interactive, form, data-display, etc.)'),
+      includeCode: z.boolean().optional().describe('Whether to include demo code in response'),
+      includeVariations: z.boolean().optional().describe('Whether to include demo variations'),
+      tags: z.array(z.string()).optional().describe('Filter by tags'),
+      complexity: z.enum(['basic', 'intermediate', 'advanced']).optional().describe('Filter by complexity level'),
+      limit: z.number().optional().describe('Maximum number of demos to return'),
+      offset: z.number().optional().describe('Offset for pagination')
+    }),
+    execute: async (args) => {
+      // Validate required parameters
+      if (typeof args.componentId !== 'string') {
+        throw new Error('componentId is required and must be a string');
+      }
+
+      // Validate optional boolean parameters
+      if (args.includeCode !== undefined && typeof args.includeCode !== 'boolean') {
+        throw new Error('includeCode must be a boolean value');
+      }
+      
+      if (args.includeVariations !== undefined && typeof args.includeVariations !== 'boolean') {
+        throw new Error('includeVariations must be a boolean value');
+      }
+
+      // Validate demoType if provided
+      if (args.demoType !== undefined && typeof args.demoType !== 'string') {
+        throw new Error('demoType must be a string');
+      }
+
+      // Validate limit and offset
+      if (args.limit !== undefined && (typeof args.limit !== 'number' || args.limit < 0)) {
+        throw new Error('limit must be a non-negative number');
+      }
+      
+      if (args.offset !== undefined && (typeof args.offset !== 'number' || args.offset < 0)) {
+        throw new Error('offset must be a non-negative number');
+      }
+
+      const result = componentRegistry.getComponentDemos(args.componentId, {
+        demoType: args.demoType,
+        includeCode: args.includeCode ?? true,
+        includeVariations: args.includeVariations ?? true,
+        tags: args.tags,
+        complexity: args.complexity,
+        limit: args.limit,
+        offset: args.offset
+      });
+
+      return {
+        type: 'text',
+        text: JSON.stringify(result, null, 2)
+      };
+    }
+  });
+
+  // Tool: search_patterns
+  server.addTool({
+    name: 'search_patterns',
+    description: 'Search for design patterns with various filters and options',
+    parameters: z.object({
+      query: z.string().optional().describe('Search query for pattern name, description, or tags'),
+      category: z.string().optional().describe('Filter by pattern category (general, generative-ai, resource-management, layout)'),
+      component: z.string().optional().describe('Filter by patterns that use a specific component'),
+      tags: z.array(z.string()).optional().describe('Filter by tags'),
+      limit: z.number().optional().describe('Maximum number of patterns to return (max 100, default 20)'),
+      offset: z.number().optional().describe('Offset for pagination')
+    }),
+    execute: async (args) => {
+      // Validate query parameter
+      if (args.query !== undefined && typeof args.query !== 'string') {
+        throw new Error('query must be a string');
+      }
+
+      // Validate category parameter
+      if (args.category !== undefined && typeof args.category !== 'string') {
+        throw new Error('category must be a string');
+      }
+
+      // Validate component parameter  
+      if (args.component !== undefined && typeof args.component !== 'string') {
+        throw new Error('component must be a string');
+      }
+
+      // Validate limit and offset
+      if (args.limit !== undefined && (typeof args.limit !== 'number' || args.limit < 0)) {
+        throw new Error('limit must be a non-negative number');
+      }
+      
+      if (args.offset !== undefined && (typeof args.offset !== 'number' || args.offset < 0)) {
+        throw new Error('offset must be a non-negative number');
+      }
+
+      const result = componentRegistry.searchPatternsByProvider({
+        query: args.query,
+        category: args.category,
+        component: args.component,
+        tags: args.tags,
+        limit: args.limit,
+        offset: args.offset
+      });
+
+      return {
+        type: 'text',
+        text: JSON.stringify(result, null, 2)
+      };
+    }
+  });
+
+  // Tool: get_pattern_details
+  server.addTool({
+    name: 'get_pattern_details',
+    description: 'Get detailed information about a specific design pattern',
+    parameters: z.object({
+      patternId: z.string().describe('Pattern ID to get details for'),
+      includeExamples: z.boolean().optional().describe('Whether to include pattern examples'),
+      includeCode: z.boolean().optional().describe('Whether to include pattern code example'),
+      includeUsageGuidelines: z.boolean().optional().describe('Whether to include usage guidelines'),
+      includeRelatedPatterns: z.boolean().optional().describe('Whether to include related patterns')
+    }),
+    execute: async (args) => {
+      // Validate required parameters
+      if (!args.patternId || typeof args.patternId !== 'string') {
+        throw new Error('patternId is required and must be a string');
+      }
+
+      // Validate optional boolean parameters
+      if (args.includeExamples !== undefined && typeof args.includeExamples !== 'boolean') {
+        throw new Error('includeExamples must be a boolean value');
+      }
+      
+      if (args.includeCode !== undefined && typeof args.includeCode !== 'boolean') {
+        throw new Error('includeCode must be a boolean value');
+      }
+      
+      if (args.includeUsageGuidelines !== undefined && typeof args.includeUsageGuidelines !== 'boolean') {
+        throw new Error('includeUsageGuidelines must be a boolean value');
+      }
+      
+      if (args.includeRelatedPatterns !== undefined && typeof args.includeRelatedPatterns !== 'boolean') {
+        throw new Error('includeRelatedPatterns must be a boolean value');
+      }
+
+      try {
+        const result = componentRegistry.getPatternDetails({
+          patternId: args.patternId,
+          includeExamples: args.includeExamples ?? true,
+          includeCode: args.includeCode ?? true,
+          includeUsageGuidelines: args.includeUsageGuidelines ?? true,
+          includeRelatedPatterns: args.includeRelatedPatterns ?? true
+        });
+
+        return {
+          type: 'text',
+          text: JSON.stringify(result, null, 2)
+        };
+      } catch (error) {
+        if (error instanceof Error && error.message.includes('not found')) {
+          throw new Error(`Pattern with ID '${args.patternId}' not found`);
+        }
+        throw error;
+      }
+    }
+  });
+
+  // Tool: get_pattern_categories
+  server.addTool({
+    name: 'get_pattern_categories',
+    description: 'Get all pattern categories with optional details about patterns in each category',
+    parameters: z.object({
+      includePatternCount: z.boolean().optional().describe('Whether to include pattern count for each category'),
+      includePatternList: z.boolean().optional().describe('Whether to include list of patterns in each category')
+    }),
+    execute: async (args) => {
+      // Validate optional boolean parameters
+      if (args.includePatternCount !== undefined && typeof args.includePatternCount !== 'boolean') {
+        throw new Error('includePatternCount must be a boolean value');
+      }
+      
+      if (args.includePatternList !== undefined && typeof args.includePatternList !== 'boolean') {
+        throw new Error('includePatternList must be a boolean value');
+      }
+
+      try {
+        const result = componentRegistry.getPatternCategories({
+          includePatternCount: args.includePatternCount ?? true,
+          includePatternList: args.includePatternList ?? true
+        });
+
+        return {
+          type: 'text',
+          text: JSON.stringify(result, null, 2)
+        };
+      } catch (error) {
+        // Handle any system errors gracefully
+        return {
+          type: 'text',
+          text: JSON.stringify({
+            categories: [],
+            error: error instanceof Error ? error.message : 'Unknown error occurred'
+          }, null, 2)
+        };
+      }
+    }
+  });
+
   // Tool: get_link_resource
   server.addTool({
     name: 'get_link_resource',
@@ -1830,6 +2040,74 @@ function registerResources(server: FastMCP) {
         type: 'text',
         text: usageContent,
       };
+    },
+  });
+
+  // Register demos resource
+  (server.addResourceTemplate as any)({
+    uriTemplate: 'cloudscape://demos/{componentId}',
+    name: 'Component Demos',
+    parameters: [
+      {
+        name: 'componentId',
+        description: 'Component ID to get demos for',
+      }
+    ],
+    handler: async (params: { componentId: string }) => {
+      const { componentId } = params;
+      
+      try {
+        const demos = componentRegistry.getComponentDemos(componentId, {
+          includeCode: true,
+          includeVariations: true
+        });
+        
+        if (demos.demos.length === 0) {
+          throw new Error(`No demos found for component ${componentId}`);
+        }
+        
+        return {
+          type: 'text',
+          text: JSON.stringify(demos, null, 2),
+        };
+      } catch (error) {
+        throw new Error(`Demos for component ${componentId} not found: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      }
+    },
+  });
+
+  // Register pattern category resource
+  (server.addResourceTemplate as any)({
+    uriTemplate: 'cloudscape://pattern-categories/{categoryId}',
+    name: 'Pattern Category Details',
+    parameters: [
+      {
+        name: 'categoryId',
+        description: 'Pattern category ID (general, generative-ai, resource-management, layout)',
+      }
+    ],
+    handler: async (params: { categoryId: string }) => {
+      const { categoryId } = params;
+      
+      try {
+        const categories = componentRegistry.getPatternCategories({
+          includePatternCount: true,
+          includePatternList: true
+        });
+        
+        const category = categories.categories.find(cat => cat.id === categoryId);
+        
+        if (!category) {
+          throw new Error(`Pattern category ${categoryId} not found`);
+        }
+        
+        return {
+          type: 'text',
+          text: JSON.stringify(category, null, 2),
+        };
+      } catch (error) {
+        throw new Error(`Pattern category ${categoryId} not found: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      }
     },
   });
 
