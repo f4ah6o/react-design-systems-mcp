@@ -52,12 +52,21 @@ npm run lint
 
 ### Project Structure
 - **src/components/**: Component registry and data
-  - `registry.ts`: Main component registry implementation
-  - `data/`: Component metadata, categories, examples, and patterns
-  - `registry-new.ts`: New registry implementation (experimental)
+  - `registry.ts`: Main component registry implementation with demo and pattern integration
+  - `data/`: Component metadata, categories, examples, patterns, and demos
+    - `demos.ts`: Interactive demo data from Cloudscape demos repository
+    - `patterns.ts`: Design patterns from cloudscape.design/patterns
+    - `pattern-categories.ts`: Pattern category organization
+    - `component-demo-map.ts`: Component-demo relationship mappings
+
+- **src/demo-provider/**: Demo provider service
+  - `index.ts`: DemoProvider service for demo management and search
+
+- **src/pattern-provider/**: Pattern provider service
+  - `index.ts`: PatternProvider service for pattern search and details
 
 - **src/mcp/**: MCP server implementation
-  - `server.ts`: FastMCP server implementation
+  - `server.ts`: FastMCP server implementation with demo and pattern tools
   - `fastmcp-server.ts`: Re-exports server.ts for backward compatibility
 
 - **src/search/**: Search engine for components
@@ -87,13 +96,28 @@ npm run lint
    - importPath, version, isExperimental
    - properties (with type, description, required status)
    - relatedComponents, tags
+   - demoIds, primaryDemo, hasDemos (demo integration)
 
-4. **Tools Available**: The server provides various tools like:
+4. **Demo Data Structure**: Demos provide interactive examples with:
+   - id, name, description, componentId
+   - type, variations, tags, code
+   - metadata (complexity, lastUpdated, version)
+
+5. **Pattern Data Structure**: Patterns provide design guidance with:
+   - id, name, description, category
+   - components, usageGuidelines, examples
+   - codeExample, relatedPatterns, tags
+
+6. **Tools Available**: The server provides various tools like:
    - `search_components`: Search with advanced filtering
    - `get_component_details`: Get detailed component info
    - `generate_component_code`: Generate component code
    - `generate_pattern_code`: Generate pattern code
    - `validate_component_props`: Validate component props
+   - `get_component_demos`: Get interactive demos for components
+   - `search_patterns`: Search design patterns with filters
+   - `get_pattern_details`: Get detailed pattern information
+   - `get_pattern_categories`: Get pattern categories and organization
    - And many more...
 
 ## Development Guidelines
@@ -110,7 +134,20 @@ npm run lint
 1. Add component metadata to `src/components/data/components.ts`
 2. Add examples to `src/components/data/examples.ts`
 3. Update categories if needed in `src/components/data/categories.ts`
-4. Run tests to ensure everything works
+4. If adding demos, update `src/components/data/demos.ts` and `src/components/data/component-demo-map.ts`
+5. Run tests to ensure everything works
+
+### Adding a New Demo
+1. Add demo data to `src/components/data/demos.ts`
+2. Update component-demo mappings in `src/components/data/component-demo-map.ts`
+3. Test with `DemoProvider` service methods
+4. Validate demo structure using validation tests
+
+### Adding a New Pattern
+1. Add pattern data to `src/components/data/patterns.ts`
+2. Update pattern categories in `src/components/data/pattern-categories.ts`
+3. Test with `PatternProvider` service methods
+4. Validate pattern structure using validation tests
 
 ### Adding a New Tool
 1. Add the tool in `src/mcp/server.ts` using the FastMCP pattern
@@ -122,6 +159,27 @@ npm run lint
 - Use `npm run dev` for development with auto-reload
 - Check logs for FastMCP server output
 - Use the test files to verify functionality
+- Test demo functionality using `DemoProvider` methods
+- Test pattern functionality using `PatternProvider` methods
+- Validate data integrity using the validation test suites
+
+### Testing New Demo and Pattern Features
+```bash
+# Test demo functionality
+npm run test:unit -- --testNamePattern="DemoProvider"
+
+# Test pattern functionality  
+npm run test:unit -- --testNamePattern="PatternProvider"
+
+# Test data validation
+npm run test:unit -- --testNamePattern="validation"
+
+# Test contract compliance
+npm run test -- tests/contract/
+
+# Test integration
+npm run test -- tests/integration/
+```
 
 ## Publishing
 The package is published to npm as `@agentience/react-design-systems-mcp`. Before publishing:
