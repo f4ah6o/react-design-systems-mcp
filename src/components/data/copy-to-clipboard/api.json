@@ -68,11 +68,7 @@
       "inlineType": {
         "name": "CopyToClipboardProps.Variant",
         "type": "union",
-        "values": [
-          "inline",
-          "button",
-          "icon"
-        ]
+        "values": ["inline", "button", "icon"]
       },
       "optional": true,
       "description": "Determines the general styling of the copy button as follows:\n\n* `button` to display a standalone secondary button with an icon, and `copyButtonText` as text.\n* `icon` to display a standalone icon-only (no text) button.\n* `inline` to display an icon-only (no text) button within a text context.\n\nDefaults to `button`.",

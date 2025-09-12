@@ -86,11 +86,7 @@
       "inlineType": {
         "name": "\"small\" | \"medium\" | \"large\"",
         "type": "union",
-        "values": [
-          "small",
-          "medium",
-          "large"
-        ]
+        "values": ["small", "medium", "large"]
       },
       "optional": true,
       "description": "Determines the maximum width the detail popover will be limited to.",
@@ -141,10 +137,7 @@
       "inlineType": {
         "name": "NonNullable<Series>",
         "type": "union",
-        "values": [
-          "Series",
-          "{}"
-        ]
+        "values": ["Series", "{}"]
       },
       "optional": true,
       "description": "The currently highlighted data series, usually through hovering over a series or the legend.\nA value of `null` means no series is highlighted.\n\n- If you do not set this property, series are highlighted automatically when hovering over one of the triggers (uncontrolled behavior).\n- If you explicitly set this property, you must set an `onHighlightChange` listener to update this property when a series should be highlighted (controlled behavior)."
@@ -266,11 +259,7 @@
       "inlineType": {
         "name": "\"error\" | \"finished\" | \"loading\"",
         "type": "union",
-        "values": [
-          "error",
-          "finished",
-          "loading"
-        ]
+        "values": ["error", "finished", "loading"]
       },
       "optional": true,
       "description": "Specifies the current status of loading data.\n* `loading`: data fetching is in progress.\n* `finished`: data has loaded successfully.\n* `error`: an error occurred during fetch. You should provide user an option to recover.",
@@ -294,12 +283,7 @@
       "inlineType": {
         "name": "ScaleType",
         "type": "union",
-        "values": [
-          "linear",
-          "time",
-          "log",
-          "categorical"
-        ]
+        "values": ["linear", "time", "log", "categorical"]
       },
       "optional": true,
       "description": "Determines the type of scale for values on the x axis.\nUse `categorical` for bar charts.",
@@ -340,10 +324,7 @@
       "inlineType": {
         "name": "\"linear\" | \"log\"",
         "type": "union",
-        "values": [
-          "linear",
-          "log"
-        ]
+        "values": ["linear", "log"]
       },
       "optional": true,
       "description": "Determines the type of scale for values on the y axis.",

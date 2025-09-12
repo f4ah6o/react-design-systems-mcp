@@ -4,57 +4,57 @@
  * This module provides documentation for Cloudscape components.
  */
 
-import componentRegistry from '../components/registry';
+import componentRegistry from '../components/registry'
 
 // Define types
 interface GetComponentDocumentationOptions {
-  componentId: string;
-  section?: string;
-  format?: 'markdown' | 'html' | 'plain';
+  componentId: string
+  section?: string
+  format?: 'markdown' | 'html' | 'plain'
 }
 
 interface GetCategoryDocumentationOptions {
-  categoryId: string;
-  format?: 'markdown' | 'html' | 'plain';
+  categoryId: string
+  format?: 'markdown' | 'html' | 'plain'
 }
 
 interface GetPatternDocumentationOptions {
-  patternId: string;
-  section?: string;
-  format?: 'markdown' | 'html' | 'plain';
+  patternId: string
+  section?: string
+  format?: 'markdown' | 'html' | 'plain'
 }
 
 interface SearchDocumentationOptions {
-  query: string;
-  scope?: 'components' | 'categories' | 'patterns' | 'all';
-  limit?: number;
+  query: string
+  scope?: 'components' | 'categories' | 'patterns' | 'all'
+  limit?: number
 }
 
 interface DocumentationSection {
-  overview: string;
-  props: string;
-  usage: string;
-  accessibility: string;
-  design: string;
-  bestPractices: string;
-  commonPitfalls: string;
-  migrationGuides: string;
-  examples: string;
+  overview: string
+  props: string
+  usage: string
+  accessibility: string
+  design: string
+  bestPractices: string
+  commonPitfalls: string
+  migrationGuides: string
+  examples: string
 }
 
 interface SearchResult {
-  type: 'component' | 'category' | 'pattern';
-  id: string;
-  name: string;
-  description: string;
-  relevance: number;
+  type: 'component' | 'category' | 'pattern'
+  id: string
+  name: string
+  description: string
+  relevance: number
 }
 
 interface SearchResponse {
-  results: SearchResult[];
-  totalResults: number;
-  query: string;
-  scope: string;
+  results: SearchResult[]
+  totalResults: number
+  query: string
+  scope: string
 }
 
 /**
@@ -62,13 +62,17 @@ interface SearchResponse {
  * @param options - Documentation options
  * @returns Component documentation
  */
-function getComponentDocumentation({ componentId, section, format = 'markdown' }: GetComponentDocumentationOptions): DocumentationSection | string {
-  const component = componentRegistry.getComponent(componentId);
-  
+function getComponentDocumentation({
+  componentId,
+  section,
+  format = 'markdown',
+}: GetComponentDocumentationOptions): DocumentationSection | string {
+  const component = componentRegistry.getComponent(componentId)
+
   if (!component) {
-    throw new Error(`Component ${componentId} not found`);
+    throw new Error(`Component ${componentId} not found`)
   }
-  
+
   // Generate overview documentation
   const overview = `
 # ${component.name}
@@ -86,32 +90,34 @@ import ${component.name} from "${component.importPath}";
 \`\`\`jsx
 <${component.name} />
 \`\`\`
-`;
-  
+`
+
   // Generate props documentation
-  const propsDoc = Object.values(component.properties).map(prop => {
-    const required = prop.required ? 'Required' : 'Optional';
-    const defaultValue = prop.defaultValue !== null && prop.defaultValue !== undefined
-      ? `Default: \`${JSON.stringify(prop.defaultValue)}\``
-      : 'No default value';
-    
-    const acceptedValues = prop.acceptedValues && prop.acceptedValues.length > 0
-      ? `\nAccepted values: ${prop.acceptedValues.map(v => `\`${v}\``).join(', ')}`
-      : '';
-    
-    const deprecated = prop.isDeprecated
-      ? '\n**Deprecated**'
-      : '';
-    
-    return `### ${prop.name}
+  const propsDoc = Object.values(component.properties)
+    .map((prop) => {
+      const required = prop.required ? 'Required' : 'Optional'
+      const defaultValue =
+        prop.defaultValue !== null && prop.defaultValue !== undefined
+          ? `Default: \`${JSON.stringify(prop.defaultValue)}\``
+          : 'No default value'
+
+      const acceptedValues =
+        prop.acceptedValues && prop.acceptedValues.length > 0
+          ? `\nAccepted values: ${prop.acceptedValues.map((v) => `\`${v}\``).join(', ')}`
+          : ''
+
+      const deprecated = prop.isDeprecated ? '\n**Deprecated**' : ''
+
+      return `### ${prop.name}
 
 Type: \`${prop.type}\`
 ${required} - ${defaultValue}${acceptedValues}${deprecated}
 
 ${prop.description}
-`;
-  }).join('\n');
-  
+`
+    })
+    .join('\n')
+
   // Generate usage documentation
   const usage = `
 ## Usage Guidelines
@@ -120,8 +126,8 @@ ${prop.description}
 - Follow accessibility best practices
 - Ensure proper keyboard navigation
 ${generateComponentSpecificUsageGuidelines(component)}
-`;
-  
+`
+
   // Generate accessibility documentation
   const accessibility = `
 ## Accessibility
@@ -132,8 +138,8 @@ ${component.name} follows WAI-ARIA guidelines for accessibility:
 - Keyboard navigation support
 - Screen reader compatibility
 ${generateComponentSpecificAccessibilityGuidelines(component)}
-`;
-  
+`
+
   // Generate design documentation
   const design = `
 ## Design Guidelines
@@ -142,8 +148,8 @@ ${generateComponentSpecificAccessibilityGuidelines(component)}
 - Follow Cloudscape Design System typography guidelines
 - Maintain visual hierarchy
 ${generateComponentSpecificDesignGuidelines(component)}
-`;
-  
+`
+
   // Generate best practices documentation
   const bestPractices = `
 ## Best Practices
@@ -153,8 +159,8 @@ ${generateComponentSpecificDesignGuidelines(component)}
 - Provide feedback for user interactions
 - Test with different screen sizes
 ${generateComponentSpecificBestPractices(component)}
-`;
-  
+`
+
   // Generate common pitfalls documentation
   const commonPitfalls = `
 ## Common Pitfalls
@@ -164,8 +170,8 @@ ${generateComponentSpecificBestPractices(component)}
 - Not handling error states properly
 - Ignoring responsive design considerations
 ${generateComponentSpecificCommonPitfalls(component)}
-`;
-  
+`
+
   // Generate migration guides documentation
   const migrationGuides = component.isExperimental
     ? `
@@ -178,15 +184,15 @@ This component is experimental and may change in future versions. Be prepared to
 
 When upgrading Cloudscape versions, check the changelog for any breaking changes to this component.
 ${generateComponentSpecificMigrationGuides(component)}
-`;
+`
 
   // Generate examples documentation
   const examples = `
 ## Examples
 
 ${generateComponentExamplesDocumentation(component)}
-`;
-  
+`
+
   // Create documentation object
   const documentation: DocumentationSection = {
     overview,
@@ -197,18 +203,18 @@ ${generateComponentExamplesDocumentation(component)}
     bestPractices,
     commonPitfalls,
     migrationGuides,
-    examples
-  };
-  
+    examples,
+  }
+
   // Return specific section if requested
   if (section && section in documentation) {
-    return formatDocumentation(documentation[section as keyof DocumentationSection], format);
+    return formatDocumentation(documentation[section as keyof DocumentationSection], format)
   }
-  
+
   // Return full documentation
   return format === 'markdown'
     ? documentation
-    : formatDocumentation(Object.values(documentation).join('\n\n'), format);
+    : formatDocumentation(Object.values(documentation).join('\n\n'), format)
 }
 
 /**
@@ -216,23 +222,30 @@ ${generateComponentExamplesDocumentation(component)}
  * @param options - Documentation options
  * @returns Category documentation
  */
-function getCategoryDocumentation({ categoryId, format = 'markdown' }: GetCategoryDocumentationOptions): any {
-  const category = componentRegistry.getCategory(categoryId);
-  
+function getCategoryDocumentation({
+  categoryId,
+  format = 'markdown',
+}: GetCategoryDocumentationOptions): any {
+  const category = componentRegistry.getCategory(categoryId)
+
   if (!category) {
-    throw new Error(`Category ${categoryId} not found`);
+    throw new Error(`Category ${categoryId} not found`)
   }
-  
+
   // Get components in the category
-  const components = category.components.map(componentId => {
-    const component = componentRegistry.getComponent(componentId);
-    return component ? {
-      id: component.id,
-      name: component.name,
-      description: component.description
-    } : null;
-  }).filter(Boolean);
-  
+  const components = category.components
+    .map((componentId) => {
+      const component = componentRegistry.getComponent(componentId)
+      return component
+        ? {
+            id: component.id,
+            name: component.name,
+            description: component.description,
+          }
+        : null
+    })
+    .filter(Boolean)
+
   // Generate category documentation
   const overview = `
 # ${category.name} Components
@@ -241,27 +254,27 @@ ${category.description}
 
 ## Components in this Category
 
-${components.map(component => `- **${component!.name}**: ${component!.description}`).join('\n')}
-`;
+${components.map((component) => `- **${component?.name}**: ${component?.description}`).join('\n')}
+`
 
   // Generate usage guidelines
   const usage = `
 ## Usage Guidelines
 
 ${generateCategorySpecificUsageGuidelines(category)}
-`;
-  
+`
+
   // Create documentation object
   const documentation = {
     overview,
     components,
-    usage
-  };
-  
+    usage,
+  }
+
   // Return formatted documentation
   return format === 'markdown'
     ? documentation
-    : formatDocumentation(Object.values(documentation).join('\n\n'), format);
+    : formatDocumentation(Object.values(documentation).join('\n\n'), format)
 }
 
 /**
@@ -269,23 +282,31 @@ ${generateCategorySpecificUsageGuidelines(category)}
  * @param options - Documentation options
  * @returns Pattern documentation
  */
-function getPatternDocumentation({ patternId, section, format = 'markdown' }: GetPatternDocumentationOptions): any {
-  const pattern = componentRegistry.getPattern(patternId);
-  
+function getPatternDocumentation({
+  patternId,
+  section,
+  format = 'markdown',
+}: GetPatternDocumentationOptions): any {
+  const pattern = componentRegistry.getPattern(patternId)
+
   if (!pattern) {
-    throw new Error(`Pattern ${patternId} not found`);
+    throw new Error(`Pattern ${patternId} not found`)
   }
-  
+
   // Get components used in the pattern
-  const components = pattern.components.map(componentId => {
-    const component = componentRegistry.getComponent(componentId);
-    return component ? {
-      id: component.id,
-      name: component.name,
-      description: component.description
-    } : null;
-  }).filter(Boolean);
-  
+  const components = pattern.components
+    .map((componentId) => {
+      const component = componentRegistry.getComponent(componentId)
+      return component
+        ? {
+            id: component.id,
+            name: component.name,
+            description: component.description,
+          }
+        : null
+    })
+    .filter(Boolean)
+
   // Generate pattern documentation
   const overview = `
 # ${pattern.name}
@@ -294,63 +315,69 @@ ${pattern.description}
 
 ## Components Used
 
-${components.map(component => `- **${component!.name}**: ${component!.description}`).join('\n')}
+${components.map((component) => `- **${component?.name}**: ${component?.description}`).join('\n')}
 
 ## Code Example
 
 \`\`\`jsx
 ${pattern.code}
 \`\`\`
-`;
-  
+`
+
   // Generate customization options documentation
-  const customizationOptions = Object.entries(pattern.customizationOptions).map(([key, option]) => {
-    const defaultValue = option.defaultValue !== null && option.defaultValue !== undefined
-      ? `Default: \`${JSON.stringify(option.defaultValue)}\``
-      : 'No default value';
-    
-    return `### ${option.name}
+  const customizationOptions = Object.entries(pattern.customizationOptions)
+    .map(([_key, option]) => {
+      const defaultValue =
+        option.defaultValue !== null && option.defaultValue !== undefined
+          ? `Default: \`${JSON.stringify(option.defaultValue)}\``
+          : 'No default value'
+
+      return `### ${option.name}
 
 Type: \`${option.type}\`
 ${defaultValue}
 
 ${option.description}
-`;
-  }).join('\n');
+`
+    })
+    .join('\n')
 
   // Generate usage guidelines
   const usage = `
 ## Usage Guidelines
 
 ${generatePatternSpecificUsageGuidelines(pattern)}
-`;
+`
 
   // Generate best practices
   const bestPractices = `
 ## Best Practices
 
 ${generatePatternSpecificBestPractices(pattern)}
-`;
-  
+`
+
   // Create documentation object
   const documentation = {
     overview,
     components,
     customizationOptions,
     usage,
-    bestPractices
-  };
-  
+    bestPractices,
+  }
+
   // Return specific section if requested
   if (section && section in documentation) {
-    const sectionContent = documentation[section as keyof typeof documentation];
-    return formatDocumentation(typeof sectionContent === 'string' ? sectionContent : JSON.stringify(sectionContent), format);
+    const sectionContent = documentation[section as keyof typeof documentation]
+    return formatDocumentation(
+      typeof sectionContent === 'string' ? sectionContent : JSON.stringify(sectionContent),
+      format,
+    )
   }
-  
+
   // Return formatted documentation
   return format === 'markdown'
     ? documentation
-    : formatDocumentation(Object.values(documentation).join('\n\n'), format);
+    : formatDocumentation(Object.values(documentation).join('\n\n'), format)
 }
 
 /**
@@ -358,89 +385,90 @@ ${generatePatternSpecificBestPractices(pattern)}
  * @param options - Search options
  * @returns Search results
  */
-function searchDocumentation({ query, scope = 'all', limit = 10 }: SearchDocumentationOptions): SearchResponse {
+function searchDocumentation({
+  query,
+  scope = 'all',
+  limit = 10,
+}: SearchDocumentationOptions): SearchResponse {
   if (!query) {
-    throw new Error('Search query is required');
+    throw new Error('Search query is required')
   }
-  
-  const results: SearchResult[] = [];
-  
+
+  const results: SearchResult[] = []
+
   // Search in components
   if (scope === 'all' || scope === 'components') {
-    const components = componentRegistry.getAllComponents();
-    
-    Object.values(components).forEach(component => {
-      const documentation = getComponentDocumentation({ componentId: component.id });
-      const documentationText = typeof documentation === 'string' 
-        ? documentation 
-        : Object.values(documentation).join(' ');
-      
+    const components = componentRegistry.getAllComponents()
+
+    Object.values(components).forEach((component) => {
+      const documentation = getComponentDocumentation({ componentId: component.id })
+      const documentationText =
+        typeof documentation === 'string' ? documentation : Object.values(documentation).join(' ')
+
       if (documentationText.toLowerCase().includes(query.toLowerCase())) {
         results.push({
           type: 'component',
           id: component.id,
           name: component.name,
           description: component.description || `${component.name} component`,
-          relevance: calculateRelevance(documentationText.toLowerCase(), query)
-        });
+          relevance: calculateRelevance(documentationText.toLowerCase(), query),
+        })
       }
-    });
+    })
   }
-  
+
   // Search in categories
   if (scope === 'all' || scope === 'categories') {
-    const categories = componentRegistry.getAllCategories();
-    
-    Object.values(categories).forEach(category => {
-      const documentation = getCategoryDocumentation({ categoryId: category.id });
-      const documentationText = typeof documentation === 'string'
-        ? documentation
-        : Object.values(documentation).join(' ');
-      
+    const categories = componentRegistry.getAllCategories()
+
+    Object.values(categories).forEach((category) => {
+      const documentation = getCategoryDocumentation({ categoryId: category.id })
+      const documentationText =
+        typeof documentation === 'string' ? documentation : Object.values(documentation).join(' ')
+
       if (documentationText.toLowerCase().includes(query.toLowerCase())) {
         results.push({
           type: 'category',
           id: category.id,
           name: category.name,
           description: category.description,
-          relevance: calculateRelevance(documentationText.toLowerCase(), query)
-        });
+          relevance: calculateRelevance(documentationText.toLowerCase(), query),
+        })
       }
-    });
+    })
   }
-  
+
   // Search in patterns
   if (scope === 'all' || scope === 'patterns') {
-    const patterns = componentRegistry.getAllPatterns();
-    
-    Object.values(patterns).forEach(pattern => {
-      const documentation = getPatternDocumentation({ patternId: pattern.id });
-      const documentationText = typeof documentation === 'string'
-        ? documentation
-        : Object.values(documentation).join(' ');
-      
+    const patterns = componentRegistry.getAllPatterns()
+
+    Object.values(patterns).forEach((pattern) => {
+      const documentation = getPatternDocumentation({ patternId: pattern.id })
+      const documentationText =
+        typeof documentation === 'string' ? documentation : Object.values(documentation).join(' ')
+
       if (documentationText.toLowerCase().includes(query.toLowerCase())) {
         results.push({
           type: 'pattern',
           id: pattern.id,
           name: pattern.name,
           description: pattern.description,
-          relevance: calculateRelevance(documentationText.toLowerCase(), query)
-        });
+          relevance: calculateRelevance(documentationText.toLowerCase(), query),
+        })
       }
-    });
+    })
   }
-  
+
   // Sort results by relevance
-  results.sort((a, b) => b.relevance - a.relevance);
-  
+  results.sort((a, b) => b.relevance - a.relevance)
+
   // Apply limit
   return {
     results: results.slice(0, limit),
     totalResults: results.length,
     query,
-    scope
-  };
+    scope,
+  }
 }
 
 /**
@@ -450,16 +478,16 @@ function searchDocumentation({ query, scope = 'all', limit = 10 }: SearchDocumen
  * @returns Relevance score
  */
 function calculateRelevance(text: string, query: string): number {
-  const queryLower = query.toLowerCase();
-  const textLower = text.toLowerCase();
-  
+  const queryLower = query.toLowerCase()
+  const textLower = text.toLowerCase()
+
   // Count occurrences
-  const occurrences = (textLower.match(new RegExp(queryLower, 'g')) || []).length;
-  
+  const occurrences = (textLower.match(new RegExp(queryLower, 'g')) || []).length
+
   // Check if query appears in title or description
-  const titleOrDescriptionBoost = textLower.startsWith(queryLower) ? 5 : 0;
-  
-  return occurrences + titleOrDescriptionBoost;
+  const titleOrDescriptionBoost = textLower.startsWith(queryLower) ? 5 : 0
+
+  return occurrences + titleOrDescriptionBoost
 }
 
 /**
@@ -471,12 +499,11 @@ function calculateRelevance(text: string, query: string): number {
 function formatDocumentation(documentation: string, format: string): string {
   switch (format) {
     case 'html':
-      return markdownToHtml(documentation);
+      return markdownToHtml(documentation)
     case 'plain':
-      return markdownToPlain(documentation);
-    case 'markdown':
+      return markdownToPlain(documentation)
     default:
-      return documentation;
+      return documentation
   }
 }
 
@@ -487,38 +514,38 @@ function formatDocumentation(documentation: string, format: string): string {
  */
 function markdownToHtml(markdown: string): string {
   // Simple markdown to HTML conversion
-  let html = markdown;
-  
+  let html = markdown
+
   // Headers
-  html = html.replace(/^# (.*$)/gm, '<h1>$1</h1>');
-  html = html.replace(/^## (.*$)/gm, '<h2>$1</h2>');
-  html = html.replace(/^### (.*$)/gm, '<h3>$1</h3>');
-  
+  html = html.replace(/^# (.*$)/gm, '<h1>$1</h1>')
+  html = html.replace(/^## (.*$)/gm, '<h2>$1</h2>')
+  html = html.replace(/^### (.*$)/gm, '<h3>$1</h3>')
+
   // Bold
-  html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-  
+  html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+
   // Italic
-  html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
-  
+  html = html.replace(/\*(.*?)\*/g, '<em>$1</em>')
+
   // Code blocks
-  html = html.replace(/```([^`]+)```/g, '<pre><code>$1</code></pre>');
-  
+  html = html.replace(/```([^`]+)```/g, '<pre><code>$1</code></pre>')
+
   // Inline code
-  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
-  
+  html = html.replace(/`([^`]+)`/g, '<code>$1</code>')
+
   // Lists
-  html = html.replace(/^- (.*$)/gm, '<li>$1</li>');
-  html = html.replace(/(<li>.*<\/li>)/gm, '<ul>$1</ul>');
-  
+  html = html.replace(/^- (.*$)/gm, '<li>$1</li>')
+  html = html.replace(/(<li>.*<\/li>)/gm, '<ul>$1</ul>')
+
   // Paragraphs
-  html = html.replace(/^\s*(\n)?(.+)/gm, function(m) {
-    return /\<(\/)?(h\d|ul|li|pre|code)/.test(m) ? m : '<p>' + m + '</p>';
-  });
-  
+  html = html.replace(/^\s*(\n)?(.+)/gm, (m) =>
+    /<(\/)?(h\d|ul|li|pre|code)/.test(m) ? m : `<p>${m}</p>`,
+  )
+
   // Line breaks
-  html = html.replace(/\n/g, '<br>');
-  
-  return html;
+  html = html.replace(/\n/g, '<br>')
+
+  return html
 }
 
 /**
@@ -528,24 +555,24 @@ function markdownToHtml(markdown: string): string {
  */
 function markdownToPlain(markdown: string): string {
   // Simple markdown to plain text conversion
-  let plain = markdown;
-  
+  let plain = markdown
+
   // Remove headers
-  plain = plain.replace(/^# (.*$)/gm, '$1\n');
-  plain = plain.replace(/^## (.*$)/gm, '$1\n');
-  plain = plain.replace(/^### (.*$)/gm, '$1\n');
-  
+  plain = plain.replace(/^# (.*$)/gm, '$1\n')
+  plain = plain.replace(/^## (.*$)/gm, '$1\n')
+  plain = plain.replace(/^### (.*$)/gm, '$1\n')
+
   // Remove bold and italic
-  plain = plain.replace(/\*\*(.*?)\*\*/g, '$1');
-  plain = plain.replace(/\*(.*?)\*/g, '$1');
-  
+  plain = plain.replace(/\*\*(.*?)\*\*/g, '$1')
+  plain = plain.replace(/\*(.*?)\*/g, '$1')
+
   // Remove code blocks
-  plain = plain.replace(/```([^`]+)```/g, '$1');
-  
+  plain = plain.replace(/```([^`]+)```/g, '$1')
+
   // Remove inline code
-  plain = plain.replace(/`([^`]+)`/g, '$1');
-  
-  return plain;
+  plain = plain.replace(/`([^`]+)`/g, '$1')
+
+  return plain
 }
 
 /**
@@ -561,21 +588,21 @@ function generateComponentSpecificUsageGuidelines(component: any): string {
 - Use primary buttons for the main action
 - Use normal buttons for secondary actions
 - Use link buttons for tertiary actions
-- Use icon buttons for compact UI elements`;
+- Use icon buttons for compact UI elements`
     case 'table':
       return `
 - Use tables to display structured data
 - Include sorting and filtering for large datasets
 - Use pagination for tables with many rows
-- Provide clear column headers`;
+- Provide clear column headers`
     case 'form':
       return `
 - Group related form fields together
 - Provide clear labels for all form fields
 - Indicate required fields
-- Display validation errors inline`;
+- Display validation errors inline`
     default:
-      return '';
+      return ''
   }
 }
 
@@ -591,19 +618,19 @@ function generateComponentSpecificAccessibilityGuidelines(component: any): strin
       return `
 - Ensure buttons have descriptive labels
 - Use aria-label for icon-only buttons
-- Maintain focus states for keyboard navigation`;
+- Maintain focus states for keyboard navigation`
     case 'table':
       return `
 - Use proper table markup with headers
 - Ensure keyboard navigation works for all table interactions
-- Provide text alternatives for any visual indicators`;
+- Provide text alternatives for any visual indicators`
     case 'form':
       return `
 - Associate labels with form controls
 - Provide error messages that are announced by screen readers
-- Ensure form can be completed using keyboard only`;
+- Ensure form can be completed using keyboard only`
     default:
-      return '';
+      return ''
   }
 }
 
@@ -619,19 +646,19 @@ function generateComponentSpecificDesignGuidelines(component: any): string {
       return `
 - Use appropriate button variants based on importance
 - Maintain consistent button sizing
-- Use icons sparingly and with clear meaning`;
+- Use icons sparingly and with clear meaning`
     case 'table':
       return `
 - Align text appropriately (left for text, right for numbers)
 - Use zebra striping for better readability
-- Highlight selected rows clearly`;
+- Highlight selected rows clearly`
     case 'form':
       return `
 - Maintain consistent spacing between form elements
 - Align form fields and labels consistently
-- Use appropriate field widths based on expected input`;
+- Use appropriate field widths based on expected input`
     default:
-      return '';
+      return ''
   }
 }
 
@@ -647,19 +674,19 @@ function generateComponentSpecificBestPractices(component: any): string {
       return `
 - Use verb-noun format for button labels (e.g., "Save changes")
 - Disable buttons when actions are not available
-- Provide loading states for asynchronous actions`;
+- Provide loading states for asynchronous actions`
     case 'table':
       return `
 - Implement efficient data loading for large datasets
 - Provide empty state messaging when no data is available
-- Allow users to customize their table view`;
+- Allow users to customize their table view`
     case 'form':
       return `
 - Validate input as users type
 - Preserve user input when validation fails
-- Provide clear success confirmation`;
+- Provide clear success confirmation`
     default:
-      return '';
+      return ''
   }
 }
 
@@ -675,19 +702,19 @@ function generateComponentSpecificCommonPitfalls(component: any): string {
       return `
 - Using too many primary buttons on a single page
 - Not providing enough visual distinction between button types
-- Using buttons when links would be more appropriate`;
+- Using buttons when links would be more appropriate`
     case 'table':
       return `
 - Loading too much data at once, causing performance issues
 - Not handling empty or error states
-- Making tables too wide for mobile screens`;
+- Making tables too wide for mobile screens`
     case 'form':
       return `
 - Creating forms that are too long without breaking into steps
 - Not providing clear validation messages
-- Not preserving user input when errors occur`;
+- Not preserving user input when errors occur`
     default:
-      return '';
+      return ''
   }
 }
 
@@ -703,19 +730,19 @@ function generateComponentSpecificMigrationGuides(component: any): string {
       return `
 ### Migrating from v1 to v2
 - The \`size\` prop has been renamed to \`variant\`
-- The \`primary\` prop has been removed in favor of \`variant="primary"\``;
+- The \`primary\` prop has been removed in favor of \`variant="primary"\``
     case 'table':
       return `
 ### Migrating from v1 to v2
 - The \`items\` prop now requires a unique \`id\` for each item
-- The \`onSort\` prop has been replaced with \`onSortingChange\``;
+- The \`onSort\` prop has been replaced with \`onSortingChange\``
     case 'form':
       return `
 ### Migrating from v1 to v2
 - Form fields now require explicit \`id\` props
-- The \`error\` prop has been renamed to \`errorText\``;
+- The \`error\` prop has been renamed to \`errorText\``
     default:
-      return '';
+      return ''
   }
 }
 
@@ -726,13 +753,15 @@ function generateComponentSpecificMigrationGuides(component: any): string {
  */
 function generateComponentExamplesDocumentation(component: any): string {
   // Get examples for the component
-  const examples = componentRegistry.getComponentExamples({ componentId: component.id });
-  
+  const examples = componentRegistry.getComponentExamples({ componentId: component.id })
+
   if (examples.length === 0) {
-    return 'No examples available for this component.';
+    return 'No examples available for this component.'
   }
-  
-  return examples.map(example => `
+
+  return examples
+    .map(
+      (example) => `
 ### ${example.name}
 
 ${example.description}
@@ -740,7 +769,9 @@ ${example.description}
 \`\`\`jsx
 ${example.code}
 \`\`\`
-`).join('\n');
+`,
+    )
+    .join('\n')
 }
 
 /**
@@ -755,19 +786,19 @@ function generateCategorySpecificUsageGuidelines(category: any): string {
       return `
 - Use consistent navigation patterns throughout your application
 - Provide clear visual indicators for the current location
-- Ensure navigation is accessible via keyboard`;
+- Ensure navigation is accessible via keyboard`
     case 'containers':
       return `
 - Use containers to group related content
 - Maintain consistent spacing between containers
-- Use appropriate container variants based on content importance`;
+- Use appropriate container variants based on content importance`
     case 'forms':
       return `
 - Group related form fields together
 - Provide clear validation feedback
-- Use appropriate input types for different data`;
+- Use appropriate input types for different data`
     default:
-      return 'Follow Cloudscape Design System guidelines for consistent user experience.';
+      return 'Follow Cloudscape Design System guidelines for consistent user experience.'
   }
 }
 
@@ -783,15 +814,15 @@ function generatePatternSpecificUsageGuidelines(pattern: any): string {
       return `
 - Use for displaying structured data that needs sorting and filtering
 - Implement pagination for large datasets
-- Provide clear column headers and sorting indicators`;
+- Provide clear column headers and sorting indicators`
     case 'form-layout':
       return `
 - Use for collecting user input in a structured way
 - Group related fields together
 - Provide clear validation feedback
-- Include appropriate actions (submit, cancel)`;
+- Include appropriate actions (submit, cancel)`
     default:
-      return 'Follow Cloudscape Design System guidelines for consistent user experience.';
+      return 'Follow Cloudscape Design System guidelines for consistent user experience.'
   }
 }
 
@@ -808,15 +839,15 @@ function generatePatternSpecificBestPractices(pattern: any): string {
 - Implement efficient data loading for large datasets
 - Preserve user's sorting and filtering preferences
 - Provide empty and loading states
-- Allow users to customize their view`;
+- Allow users to customize their view`
     case 'form-layout':
       return `
 - Validate input as users type
 - Preserve user input when validation fails
 - Provide clear success confirmation
-- Use appropriate field types for different data`;
+- Use appropriate field types for different data`
     default:
-      return 'Follow Cloudscape Design System best practices for optimal user experience.';
+      return 'Follow Cloudscape Design System best practices for optimal user experience.'
   }
 }
 
@@ -825,5 +856,5 @@ export default {
   getCategoryDocumentation,
   getPatternDocumentation,
   searchDocumentation,
-  formatDocumentation
-};
+  formatDocumentation,
+}

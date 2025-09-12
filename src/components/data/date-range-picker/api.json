@@ -18,10 +18,7 @@
       "inlineType": {
         "name": "DateRangePickerProps.AbsoluteFormat",
         "type": "union",
-        "values": [
-          "iso",
-          "long-localized"
-        ]
+        "values": ["iso", "long-localized"]
       },
       "optional": true,
       "description": "Specifies the time format to use for displaying the absolute time range.\n\nIt can take the following values:\n* `iso`: ISO 8601 format, e.g.: 2024-01-30T13:32:32+01:00 (or 2024-01-30 when `dateOnly` is true)\n* `long-localized`: a more human-readable, localized format, e.g.: January 30, 2024, 13:32:32 (UTC+1) (or January 30, 2024 when `dateOnly` is true)\n\nDefaults to `iso`.",
@@ -140,10 +137,7 @@
       "inlineType": {
         "name": "CalendarProps.Granularity",
         "type": "union",
-        "values": [
-          "day",
-          "month"
-        ]
+        "values": ["day", "month"]
       },
       "optional": true,
       "description": "Specifies the granularity at which users will be able to select a date.\nDefaults to `day`.",
@@ -411,11 +405,7 @@
       "inlineType": {
         "name": "DateRangePickerProps.RangeSelectorMode",
         "type": "union",
-        "values": [
-          "default",
-          "absolute-only",
-          "relative-only"
-        ]
+        "values": ["default", "absolute-only", "relative-only"]
       },
       "optional": true,
       "description": "Determines the range selector mode as follows:\n\n* `default` for combined absolute/relative range selector.\n* `absolute-only` for absolute-only range selector.\n* `relative-only` for relative-only range selector.\n\nBy default, the range selector mode is `default`.",
@@ -454,11 +444,7 @@
       "inlineType": {
         "name": "TimeInputProps.Format",
         "type": "union",
-        "values": [
-          "hh",
-          "hh:mm",
-          "hh:mm:ss"
-        ]
+        "values": ["hh", "hh:mm", "hh:mm:ss"]
       },
       "optional": true,
       "description": "Specifies the format of the time input for absolute ranges.\n\nUse to restrict the granularity of time that the user can enter.\n\nHas no effect when `dateOnly` is true or `granularity` is set to 'month'.",
@@ -477,10 +463,7 @@
       "inlineType": {
         "name": "DateRangePickerProps.Value",
         "type": "union",
-        "values": [
-          "DateRangePickerProps.AbsoluteValue",
-          "DateRangePickerProps.RelativeValue"
-        ]
+        "values": ["DateRangePickerProps.AbsoluteValue", "DateRangePickerProps.RelativeValue"]
       },
       "optional": false,
       "description": "The current date range value. Can be either an absolute time range\nor a relative time range."

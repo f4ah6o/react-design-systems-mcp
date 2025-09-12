@@ -1,32 +1,30 @@
 /**
  * Performance Optimization Module
- * 
+ *
  * This module provides performance optimizations for the Cloudscape MCP Server.
  * It includes caching, memoization, and other performance enhancements.
  */
 
-import { ComponentMetadata, CategoryMetadata, PatternMetadata, ExampleMetadata } from '../components/registry';
-
 // Define types for cache entries
 interface CacheEntry<T> {
-  value: T;
-  timestamp: number;
+  value: T
+  timestamp: number
 }
 
 // Cache for storing results of expensive operations
 interface Cache {
-  componentSearch: Map<string, CacheEntry<any>>;
-  componentDetails: Map<string, CacheEntry<any>>;
-  componentCode: Map<string, CacheEntry<any>>;
-  patternCode: Map<string, CacheEntry<any>>;
-  documentation: Map<string, CacheEntry<any>>;
-  examples: Map<string, CacheEntry<any>>;
+  componentSearch: Map<string, CacheEntry<any>>
+  componentDetails: Map<string, CacheEntry<any>>
+  componentCode: Map<string, CacheEntry<any>>
+  patternCode: Map<string, CacheEntry<any>>
+  documentation: Map<string, CacheEntry<any>>
+  examples: Map<string, CacheEntry<any>>
 }
 
 // Cache configuration
 interface CacheConfig {
-  maxSize: number;
-  ttl: number;
+  maxSize: number
+  ttl: number
 }
 
 // Cache for storing results of expensive operations
@@ -37,13 +35,13 @@ const cache: Cache = {
   patternCode: new Map(),
   documentation: new Map(),
   examples: new Map(),
-};
+}
 
 // Cache configuration
 const cacheConfig: CacheConfig = {
   maxSize: 1000, // Maximum number of entries in each cache
   ttl: 3600000, // Time to live in milliseconds (1 hour)
-};
+}
 
 /**
  * Generate a cache key from input parameters
@@ -52,7 +50,7 @@ const cacheConfig: CacheConfig = {
  * @returns Cache key
  */
 export function generateCacheKey(cacheType: string, params: any): string {
-  return `${cacheType}:${JSON.stringify(params)}`;
+  return `${cacheType}:${JSON.stringify(params)}`
 }
 
 /**
@@ -61,8 +59,8 @@ export function generateCacheKey(cacheType: string, params: any): string {
  * @returns Whether the entry is valid
  */
 export function isCacheEntryValid<T>(entry: CacheEntry<T> | undefined): boolean {
-  if (!entry) return false;
-  return Date.now() - entry.timestamp < cacheConfig.ttl;
+  if (!entry) return false
+  return Date.now() - entry.timestamp < cacheConfig.ttl
 }
 
 /**
@@ -72,21 +70,21 @@ export function isCacheEntryValid<T>(entry: CacheEntry<T> | undefined): boolean 
  * @param value - Value to cache
  */
 export function addToCache<T>(cacheType: keyof Cache, key: string, value: T): void {
-  const cacheMap = cache[cacheType];
-  
+  const cacheMap = cache[cacheType]
+
   // If cache is full, remove oldest entry
   if (cacheMap.size >= cacheConfig.maxSize) {
-    const oldestKey = cacheMap.keys().next().value;
+    const oldestKey = cacheMap.keys().next().value
     if (oldestKey) {
-      cacheMap.delete(oldestKey);
+      cacheMap.delete(oldestKey)
     }
   }
-  
+
   // Add new entry
   cacheMap.set(key, {
     value,
     timestamp: Date.now(),
-  });
+  })
 }
 
 /**
@@ -96,19 +94,19 @@ export function addToCache<T>(cacheType: keyof Cache, key: string, value: T): vo
  * @returns Cached value or undefined
  */
 export function getFromCache<T>(cacheType: keyof Cache, key: string): T | undefined {
-  const cacheMap = cache[cacheType];
-  const entry = cacheMap.get(key);
-  
+  const cacheMap = cache[cacheType]
+  const entry = cacheMap.get(key)
+
   if (entry && isCacheEntryValid(entry)) {
-    return entry.value as T;
+    return entry.value as T
   }
-  
+
   // Remove invalid entry
   if (entry) {
-    cacheMap.delete(key);
+    cacheMap.delete(key)
   }
-  
-  return undefined;
+
+  return undefined
 }
 
 /**
@@ -117,9 +115,9 @@ export function getFromCache<T>(cacheType: keyof Cache, key: string): T | undefi
  */
 export function clearCache(cacheType?: keyof Cache): void {
   if (cacheType) {
-    cache[cacheType].clear();
+    cache[cacheType].clear()
   } else {
-    Object.values(cache).forEach(cacheMap => cacheMap.clear());
+    Object.values(cache).forEach((cacheMap) => cacheMap.clear())
   }
 }
 
@@ -131,22 +129,22 @@ export function clearCache(cacheType?: keyof Cache): void {
  */
 export function memoize<T, A extends any[]>(
   fn: (...args: A) => T,
-  cacheType: keyof Cache
+  cacheType: keyof Cache,
 ): (...args: A) => T {
-  return function(...args: A): T {
-    const key = generateCacheKey(cacheType, args);
-    const cachedResult = getFromCache<T>(cacheType, key);
-    
+  return (...args: A): T => {
+    const key = generateCacheKey(cacheType, args)
+    const cachedResult = getFromCache<T>(cacheType, key)
+
     if (cachedResult !== undefined) {
-      return cachedResult;
+      return cachedResult
     }
-    
+
     // Use call instead of apply to avoid 'this' context issues
-    const result = fn.call(null, ...args);
-    addToCache(cacheType, key, result);
-    
-    return result;
-  };
+    const result = fn.call(null, ...args)
+    addToCache(cacheType, key, result)
+
+    return result
+  }
 }
 
 /**
@@ -159,10 +157,13 @@ export function optimizeSearch(searchEngine: any): any {
   const optimizedSearchEngine = {
     ...searchEngine,
     searchComponents: memoize(searchEngine.searchComponents, 'componentSearch'),
-    searchComponentsByFunctionality: memoize(searchEngine.searchComponentsByFunctionality, 'componentSearch'),
-  };
-  
-  return optimizedSearchEngine;
+    searchComponentsByFunctionality: memoize(
+      searchEngine.searchComponentsByFunctionality,
+      'componentSearch',
+    ),
+  }
+
+  return optimizedSearchEngine
 }
 
 /**
@@ -178,9 +179,9 @@ export function optimizeComponentRegistry(componentRegistry: any): any {
     getCategory: memoize(componentRegistry.getCategory, 'componentDetails'),
     getPattern: memoize(componentRegistry.getPattern, 'componentDetails'),
     getComponentExamples: memoize(componentRegistry.getComponentExamples, 'examples'),
-  };
-  
-  return optimizedComponentRegistry;
+  }
+
+  return optimizedComponentRegistry
 }
 
 /**
@@ -195,9 +196,9 @@ export function optimizeCodeGenerator(codeGenerator: any): any {
     generateComponentCode: memoize(codeGenerator.generateComponentCode, 'componentCode'),
     generatePatternCode: memoize(codeGenerator.generatePatternCode, 'patternCode'),
     generateComponentInterface: memoize(codeGenerator.generateComponentInterface, 'componentCode'),
-  };
-  
-  return optimizedCodeGenerator;
+  }
+
+  return optimizedCodeGenerator
 }
 
 /**
@@ -209,11 +210,14 @@ export function optimizeDocumentationProvider(documentationProvider: any): any {
   // Memoize documentation provider functions
   const optimizedDocumentationProvider = {
     ...documentationProvider,
-    getComponentDocumentation: memoize(documentationProvider.getComponentDocumentation, 'documentation'),
+    getComponentDocumentation: memoize(
+      documentationProvider.getComponentDocumentation,
+      'documentation',
+    ),
     searchDocumentation: memoize(documentationProvider.searchDocumentation, 'documentation'),
-  };
-  
-  return optimizedDocumentationProvider;
+  }
+
+  return optimizedDocumentationProvider
 }
 
 /**
@@ -229,9 +233,9 @@ export function optimizeExampleProvider(exampleProvider: any): any {
     searchExamples: memoize(exampleProvider.searchExamples, 'examples'),
     getExampleCategories: memoize(exampleProvider.getExampleCategories, 'examples'),
     getExample: memoize(exampleProvider.getExample, 'examples'),
-  };
-  
-  return optimizedExampleProvider;
+  }
+
+  return optimizedExampleProvider
 }
 
 /**
@@ -239,30 +243,31 @@ export function optimizeExampleProvider(exampleProvider: any): any {
  */
 export function applyPerformanceOptimizations(): void {
   // Import modules
-  import('../components/registry').then(componentRegistry => {
-    import('../search/engine').then(searchEngine => {
-      import('../code-generator/generator').then(codeGenerator => {
-        import('../documentation/provider').then(documentationProvider => {
-          import('../example-provider/index').then(exampleProvider => {
+  import('../components/registry').then((componentRegistry) => {
+    import('../search/engine').then((searchEngine) => {
+      import('../code-generator/generator').then((codeGenerator) => {
+        import('../documentation/provider').then((documentationProvider) => {
+          import('../example-provider/index').then((exampleProvider) => {
             // Apply optimizations
-            const optimizedComponentRegistry = optimizeComponentRegistry(componentRegistry.default);
-            const optimizedSearchEngine = optimizeSearch(searchEngine.default);
-            const optimizedCodeGenerator = optimizeCodeGenerator(codeGenerator.default);
-            const optimizedDocumentationProvider = optimizeDocumentationProvider(documentationProvider.default);
-            const optimizedExampleProvider = optimizeExampleProvider(exampleProvider.default);
-            
+            const optimizedComponentRegistry = optimizeComponentRegistry(componentRegistry.default)
+            const optimizedSearchEngine = optimizeSearch(searchEngine.default)
+            const optimizedCodeGenerator = optimizeCodeGenerator(codeGenerator.default)
+            const optimizedDocumentationProvider = optimizeDocumentationProvider(
+              documentationProvider.default,
+            )
+            const optimizedExampleProvider = optimizeExampleProvider(exampleProvider.default)
+
             // Replace module exports
-            Object.assign(componentRegistry.default, optimizedComponentRegistry);
-            Object.assign(searchEngine.default, optimizedSearchEngine);
-            Object.assign(codeGenerator.default, optimizedCodeGenerator);
-            Object.assign(documentationProvider.default, optimizedDocumentationProvider);
-            Object.assign(exampleProvider.default, optimizedExampleProvider);
-            
+            Object.assign(componentRegistry.default, optimizedComponentRegistry)
+            Object.assign(searchEngine.default, optimizedSearchEngine)
+            Object.assign(codeGenerator.default, optimizedCodeGenerator)
+            Object.assign(documentationProvider.default, optimizedDocumentationProvider)
+            Object.assign(exampleProvider.default, optimizedExampleProvider)
+
             //console.error('Performance optimizations applied');
-          });
-        });
-      });
-    });
-  });
-  
+          })
+        })
+      })
+    })
+  })
 }

@@ -32,7 +32,7 @@
     "test:resources": "jest --testMatch '**/resources.test.ts'",
     "test:roo": "jest --testMatch '**/roo-integration.test.ts'",
     "test:components": "jest --testMatch '**/component-details.test.ts'",
-    "test:search": "jest --testMatch '**/search-engine.test.ts'",    
+    "test:search": "jest --testMatch '**/search-engine.test.ts'",
     "test:ci": "CI=true SKIP_LONG_RUNNING_TESTS=true jest",
     "lint": "biome lint .",
     "format": "biome format --write .",

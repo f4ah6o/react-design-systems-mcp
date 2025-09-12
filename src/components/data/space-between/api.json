@@ -17,11 +17,7 @@
       "inlineType": {
         "name": "SpaceBetweenProps.AlignItems",
         "type": "union",
-        "values": [
-          "center",
-          "end",
-          "start"
-        ]
+        "values": ["center", "end", "start"]
       },
       "optional": true,
       "description": "Determines how the child elements will be aligned based on the [align-items](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items) property of the CSS Flexbox."
@@ -39,10 +35,7 @@
       "inlineType": {
         "name": "SpaceBetweenProps.Direction",
         "type": "union",
-        "values": [
-          "horizontal",
-          "vertical"
-        ]
+        "values": ["horizontal", "vertical"]
       },
       "optional": true,
       "description": "Defines the direction in which the content is laid out.",
@@ -61,16 +54,7 @@
       "inlineType": {
         "name": "SpaceBetweenProps.Size",
         "type": "union",
-        "values": [
-          "s",
-          "m",
-          "xxxs",
-          "xxs",
-          "xs",
-          "l",
-          "xl",
-          "xxl"
-        ]
+        "values": ["s", "m", "xxxs", "xxs", "xs", "l", "xl", "xxl"]
       },
       "optional": false,
       "description": "Defines the spacing between the individual items of the content."

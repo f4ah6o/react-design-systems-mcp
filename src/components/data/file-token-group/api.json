@@ -11,10 +11,7 @@
       "inlineType": {
         "name": "FileTokenGroupProps.Alignment",
         "type": "union",
-        "values": [
-          "horizontal",
-          "vertical"
-        ]
+        "values": ["horizontal", "vertical"]
       },
       "optional": true,
       "description": "Specifies the direction in which tokens are aligned (`horizontal | vertical`)."

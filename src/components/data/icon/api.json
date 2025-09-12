@@ -183,14 +183,7 @@
       "inlineType": {
         "name": "IconProps.Size",
         "type": "union",
-        "values": [
-          "big",
-          "small",
-          "normal",
-          "medium",
-          "inherit",
-          "large"
-        ]
+        "values": ["big", "small", "normal", "medium", "inherit", "large"]
       },
       "optional": true,
       "description": "Specifies the size of the icon.\n\nIf you set size to `inherit`, an icon size will be assigned based on the icon's inherited line height.\nFor icons used alongside text, ensure the icon is placed inside the acompanying text tag.\nThe icon will be vertically centered based on the height.",

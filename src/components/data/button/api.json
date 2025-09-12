@@ -79,11 +79,7 @@
       "inlineType": {
         "name": "string | boolean",
         "type": "union",
-        "values": [
-          "string",
-          "false",
-          "true"
-        ]
+        "values": ["string", "false", "true"]
       },
       "optional": true,
       "description": "Specifies whether the linked URL, when selected, will prompt the user to download instead of navigate.\nYou can specify a string value that will be suggested as the name of the downloaded file.\nThis property only applies when an `href` is provided."
@@ -107,10 +103,7 @@
       "inlineType": {
         "name": "ButtonProps.FormAction",
         "type": "union",
-        "values": [
-          "none",
-          "submit"
-        ]
+        "values": ["none", "submit"]
       },
       "optional": true,
       "description": "The form action that is performed by a button click.",
@@ -152,10 +145,7 @@
       "inlineType": {
         "name": "ButtonProps.IconAlign",
         "type": "union",
-        "values": [
-          "left",
-          "right"
-        ]
+        "values": ["left", "right"]
       },
       "optional": true,
       "description": "Specifies the alignment of the icon.",
@@ -350,14 +340,7 @@
       "inlineType": {
         "name": "ButtonProps.Variant",
         "type": "union",
-        "values": [
-          "link",
-          "normal",
-          "icon",
-          "primary",
-          "inline-icon",
-          "inline-link"
-        ]
+        "values": ["link", "normal", "icon", "primary", "inline-icon", "inline-link"]
       },
       "optional": true,
       "description": "Determines the general styling of the button as follows:\n* `primary` for primary buttons.\n* `normal` for secondary buttons.\n* `link` for tertiary buttons.\n* `icon` to display an icon only (no text).\n* `inline-icon` to display an icon-only (no text) button within a text context.\n* `inline-link` to display a tertiary button with no outer padding.",

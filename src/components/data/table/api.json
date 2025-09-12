@@ -156,10 +156,7 @@
       "inlineType": {
         "name": "\"top\" | \"middle\"",
         "type": "union",
-        "values": [
-          "top",
-          "middle"
-        ]
+        "values": ["top", "middle"]
       },
       "optional": true,
       "description": "Determines the alignment of the content inside table cells.\nThis property affects all cells, including the ones in the selection column.\nTo target individual cells use `columnDefinitions.verticalAlign`, that takes precedence over `cellVerticalAlign`.",
@@ -190,10 +187,7 @@
       "inlineType": {
         "name": "\"compact\" | \"comfortable\"",
         "type": "union",
-        "values": [
-          "compact",
-          "comfortable"
-        ]
+        "values": ["compact", "comfortable"]
       },
       "optional": true,
       "description": "Toggles the content density of the table. Defaults to `'comfortable'`.",
@@ -408,10 +402,7 @@
       "inlineType": {
         "name": "TableProps.SelectionType",
         "type": "union",
-        "values": [
-          "single",
-          "multi"
-        ]
+        "values": ["single", "multi"]
       },
       "optional": true,
       "description": "Specifies the selection type (`'single' | 'multi'`)."
@@ -527,10 +518,7 @@
       "inlineType": {
         "name": "TableProps.TrackBy<T>",
         "type": "union",
-        "values": [
-          "string",
-          "(item: T) => string"
-        ]
+        "values": ["string", "(item: T) => string"]
       },
       "optional": true,
       "description": "Specifies a property that uniquely identifies an individual item.\nWhen it's set, it's used to provide [keys for React](https://reactjs.org/docs/lists-and-keys.html#keys)\nfor performance optimizations.\n\nIt is also used in the following situations:\n- to connect `items` and `selectedItems` values when they reference different objects.\n- to connect `items` and `expandableRows.expandedItems` values when they reference different objects.\n- to attach successful edit state to the correct item if its row index changes after editing."
@@ -541,13 +529,7 @@
       "inlineType": {
         "name": "TableProps.Variant",
         "type": "union",
-        "values": [
-          "container",
-          "embedded",
-          "stacked",
-          "full-page",
-          "borderless"
-        ]
+        "values": ["container", "embedded", "stacked", "full-page", "borderless"]
       },
       "optional": true,
       "description": "Specify a table variant with one of the following:\n* `container` - Use this variant to have the table displayed within a container.\n* `borderless` - Use this variant when the table should have no outer borders or shadow\n                 (such as in a dashboard item container).\n* `embedded` - Use this variant within a parent container (such as a modal, expandable\n               section, container or split panel).\n               **Deprecated**, replaced by `borderless` and `container`.\n* `stacked` - Use this variant adjacent to other stacked containers (such as a container,\n              table).\n* `full-page` – Use this variant when the table is the entire content of a page.",

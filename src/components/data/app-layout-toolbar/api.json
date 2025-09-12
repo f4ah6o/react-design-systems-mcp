@@ -185,14 +185,7 @@
       "inlineType": {
         "name": "AppLayoutProps.ContentType",
         "type": "union",
-        "values": [
-          "default",
-          "form",
-          "table",
-          "dashboard",
-          "cards",
-          "wizard"
-        ]
+        "values": ["default", "form", "table", "dashboard", "cards", "wizard"]
       },
       "optional": true,
       "description": "Determines the default behavior of the component based on some predefined page layouts.\nIndividual properties will always take precedence over the default coming from the content type.",
@@ -238,10 +231,7 @@
       "inlineType": {
         "name": "\"default\" | \"high-contrast\"",
         "type": "union",
-        "values": [
-          "default",
-          "high-contrast"
-        ]
+        "values": ["default", "high-contrast"]
       },
       "optional": true,
       "description": "Determines the visual treatment for the breadcrumbs and notifications slots. Specifically:\n* `default` - Does not apply any visual treatment.\n* `high-contrast` - Applies high-contrast to both slots. Use in conjunction with `headerVariant=\"high-contrast\"` in ContentLayout.",

@@ -25,11 +25,7 @@
       "inlineType": {
         "name": "SpinnerProps.Size",
         "type": "union",
-        "values": [
-          "big",
-          "normal",
-          "large"
-        ]
+        "values": ["big", "normal", "large"]
       },
       "optional": true,
       "description": "Specifies the size of the spinner.",
@@ -41,11 +37,7 @@
       "inlineType": {
         "name": "SpinnerProps.Variant",
         "type": "union",
-        "values": [
-          "normal",
-          "disabled",
-          "inverted"
-        ]
+        "values": ["normal", "disabled", "inverted"]
       },
       "optional": true,
       "description": "Specifies the color variant of the spinner. The `normal` variant picks up the current color of its context.",

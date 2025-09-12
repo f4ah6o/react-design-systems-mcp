@@ -90,10 +90,7 @@
       "inlineType": {
         "name": "\"manual\" | \"automatic\"",
         "type": "union",
-        "values": [
-          "manual",
-          "automatic"
-        ]
+        "values": ["manual", "automatic"]
       },
       "optional": true,
       "description": "Determines how the active tab is switched when navigating using\nthe keyboard. The options are:\n- 'automatic' (default): the active tab is switched using the arrow keys.\n- 'manual': a tab must be explicitly activated using the enter/space key.\nWe recommend using 'automatic' in most situations to provide consistent\nand quick switching between tabs. Use 'manual' only if there is a specific\nneed to introduce friction to the switching of tabs.",
@@ -111,11 +108,7 @@
       "inlineType": {
         "name": "TabsProps.Variant",
         "type": "union",
-        "values": [
-          "default",
-          "container",
-          "stacked"
-        ]
+        "values": ["default", "container", "stacked"]
       },
       "optional": true,
       "description": "The possible visual variants of tabs are the following:\n* `default` - Use in any context.\n* `container` - Use this variant to have the tabs displayed within a container header.\n* `stacked` - Use this variant directly adjacent to other stacked containers (such as a container, table).",

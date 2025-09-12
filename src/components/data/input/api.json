@@ -48,11 +48,7 @@
       "inlineType": {
         "name": "string | boolean",
         "type": "union",
-        "values": [
-          "string",
-          "false",
-          "true"
-        ]
+        "values": ["string", "false", "true"]
       },
       "optional": true,
       "description": "Specifies whether to enable a browser's autocomplete functionality for this input.\nIn some cases it might be appropriate to disable autocomplete (for example, for security-sensitive fields).\nTo use it correctly, set the `name` property.\n\nYou can either provide a boolean value to set the property to \"on\" or \"off\", or specify a string value\nfor the [autocomplete](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete) attribute.",
@@ -109,16 +105,7 @@
       "inlineType": {
         "name": "InputProps.InputMode",
         "type": "union",
-        "values": [
-          "search",
-          "numeric",
-          "none",
-          "url",
-          "text",
-          "decimal",
-          "tel",
-          "email"
-        ]
+        "values": ["search", "numeric", "none", "url", "text", "decimal", "tel", "email"]
       },
       "optional": true,
       "description": "Adds a hint to the browser about the type of data a user may enter into this field.\nSome devices may render a different virtual keyboard depending on this value.\nThis value may not be supported by all browsers or devices."
@@ -159,10 +146,7 @@
       "inlineType": {
         "name": "InputProps.Step",
         "type": "union",
-        "values": [
-          "number",
-          "\"any\""
-        ]
+        "values": ["number", "\"any\""]
       },
       "optional": true,
       "description": "The step attribute is a number that specifies the granularity that the value\nmust adhere to or the keyword \"any\". It is valid for the numeric input types,\nincluding the date, month, week, time, datetime-local, number and range types."
@@ -173,14 +157,7 @@
       "inlineType": {
         "name": "InputProps.Type",
         "type": "union",
-        "values": [
-          "number",
-          "search",
-          "url",
-          "text",
-          "email",
-          "password"
-        ]
+        "values": ["number", "search", "url", "text", "email", "password"]
       },
       "optional": true,
       "description": "Specifies the type of control to render.\nInputs with a `number` type use the native element behavior, which might\nbe slightly different across browsers.",

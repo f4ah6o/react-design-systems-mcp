@@ -96,11 +96,7 @@
       "inlineType": {
         "name": "PopoverProps.Size",
         "type": "union",
-        "values": [
-          "small",
-          "medium",
-          "large"
-        ]
+        "values": ["small", "medium", "large"]
       },
       "optional": true,
       "description": "Determines the maximum width of the popover.",
@@ -299,11 +295,7 @@
       "inlineType": {
         "name": "\"small\" | \"medium\" | \"large\"",
         "type": "union",
-        "values": [
-          "small",
-          "medium",
-          "large"
-        ]
+        "values": ["small", "medium", "large"]
       },
       "optional": true,
       "description": "Specifies the size of the pie or donut chart.\nWhen used with `fitHeight`, this property defines the minimum size of the chart area.",
@@ -315,11 +307,7 @@
       "inlineType": {
         "name": "\"error\" | \"finished\" | \"loading\"",
         "type": "union",
-        "values": [
-          "error",
-          "finished",
-          "loading"
-        ]
+        "values": ["error", "finished", "loading"]
       },
       "optional": true,
       "description": "Specifies the current status of loading data.\n* `loading` - Indicates that data fetching is in progress.\n* `finished` - Indicates that data has loaded successfully.\n* `error` - Indicates that an error occurred during fetch. You should provide an option to enable the user to recover.",
@@ -331,10 +319,7 @@
       "inlineType": {
         "name": "\"pie\" | \"donut\"",
         "type": "union",
-        "values": [
-          "pie",
-          "donut"
-        ]
+        "values": ["pie", "donut"]
       },
       "optional": true,
       "description": "Visual variant of the pie chart. Currently supports the default `pie` variant and the `donut` variant.\nThe donut variant provides a slot in the center of the chart that can contain additional information.\nFor more information, see `innerContent`.",

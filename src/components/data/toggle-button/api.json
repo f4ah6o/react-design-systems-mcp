@@ -419,10 +419,7 @@
       "inlineType": {
         "name": "ToggleButtonProps.Variant",
         "type": "union",
-        "values": [
-          "normal",
-          "icon"
-        ]
+        "values": ["normal", "icon"]
       },
       "optional": true,
       "description": "Determines the general styling of the toggle button as follows:\n* `normal` for secondary buttons.\n* `icon` to display an icon only (no text).\n\nDefaults to `normal` if not specified.",

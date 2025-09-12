@@ -215,12 +215,7 @@
       "inlineType": {
         "name": "ButtonDropdownProps.Variant",
         "type": "union",
-        "values": [
-          "normal",
-          "icon",
-          "primary",
-          "inline-icon"
-        ]
+        "values": ["normal", "icon", "primary", "inline-icon"]
       },
       "optional": true,
       "description": "Determines the general styling of the button dropdown.\n* `primary` for primary buttons\n* `normal` for secondary buttons\n* `icon` for icon buttons\n* `inline-icon` for icon buttons with no outer padding",

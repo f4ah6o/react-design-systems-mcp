@@ -45,12 +45,7 @@
       "inlineType": {
         "name": "BoxProps.Display",
         "type": "union",
-        "values": [
-          "inline",
-          "none",
-          "block",
-          "inline-block"
-        ]
+        "values": ["inline", "none", "block", "inline-block"]
       },
       "optional": true,
       "description": "Overrides the display of the element. You can set it to the following values:\n\n- `block` - Specifies block display.\n- `inline` - Specifies inline display.\n- `inline-block` - Specifies inline-block display.\n- `none` - Hides the box.\n\nNote: If you don't set it, the display depends on the variant."
@@ -61,10 +56,7 @@
       "inlineType": {
         "name": "BoxProps.Float",
         "type": "union",
-        "values": [
-          "left",
-          "right"
-        ]
+        "values": ["left", "right"]
       },
       "optional": true,
       "description": "Defines the floating behavior. You can set it to `left` or `right`."
@@ -95,12 +87,7 @@
       "inlineType": {
         "name": "BoxProps.FontWeight",
         "type": "union",
-        "values": [
-          "bold",
-          "normal",
-          "light",
-          "heavy"
-        ]
+        "values": ["bold", "normal", "light", "heavy"]
       },
       "optional": true,
       "description": "Overrides the font weight. If not set, the value depends on the variant.",
@@ -173,11 +160,7 @@
       "inlineType": {
         "name": "BoxProps.TextAlign",
         "type": "union",
-        "values": [
-          "center",
-          "left",
-          "right"
-        ]
+        "values": ["center", "left", "right"]
       },
       "optional": true,
       "description": "Defines the text alignment within the element. You can set it to `left`, `center`, or `right`."

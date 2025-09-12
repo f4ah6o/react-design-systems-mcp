@@ -92,10 +92,7 @@
       "inlineType": {
         "name": "CalendarProps.Granularity",
         "type": "union",
-        "values": [
-          "day",
-          "month"
-        ]
+        "values": ["day", "month"]
       },
       "optional": true,
       "description": "Specifies the granularity at which users will be able to select a date.\nDefaults to `day`.",

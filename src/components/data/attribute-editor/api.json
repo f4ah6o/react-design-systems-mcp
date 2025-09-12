@@ -46,10 +46,7 @@
       "inlineType": {
         "name": "AttributeEditorProps.AddButtonVariant",
         "type": "union",
-        "values": [
-          "normal",
-          "inline-link"
-        ]
+        "values": ["normal", "inline-link"]
       },
       "optional": true,
       "description": "Specifies the variant to use for the add button. By default a normal button is used.\nUse `inline-link` when using an attribute editor nested inside complex attribute editing\nwith expandable sections.",

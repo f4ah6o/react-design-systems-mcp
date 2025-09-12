@@ -112,10 +112,7 @@
       "inlineType": {
         "name": "\"default\" | \"stacked\"",
         "type": "union",
-        "values": [
-          "default",
-          "stacked"
-        ]
+        "values": ["default", "stacked"]
       },
       "optional": true,
       "description": "Specify a container variant with one of the following:\n* `default` - Use this variant in standalone context.\n* `stacked` - Use this variant adjacent to other stacked containers (such as a container,\n              table).",

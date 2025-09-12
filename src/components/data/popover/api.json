@@ -71,12 +71,7 @@
       "inlineType": {
         "name": "PopoverProps.Position",
         "type": "union",
-        "values": [
-          "left",
-          "top",
-          "bottom",
-          "right"
-        ]
+        "values": ["left", "top", "bottom", "right"]
       },
       "optional": true,
       "description": "Determines where the popover is displayed when opened, relative to the trigger.\nIf the popover doesn't have enough space to open in this direction, it\nautomatically chooses a better direction based on available space.",
@@ -95,11 +90,7 @@
       "inlineType": {
         "name": "PopoverProps.Size",
         "type": "union",
-        "values": [
-          "small",
-          "medium",
-          "large"
-        ]
+        "values": ["small", "medium", "large"]
       },
       "optional": true,
       "description": "Determines the maximum width for the popover.",
@@ -117,11 +108,7 @@
       "inlineType": {
         "name": "PopoverProps.TriggerType",
         "type": "union",
-        "values": [
-          "custom",
-          "text",
-          "text-inline"
-        ]
+        "values": ["custom", "text", "text-inline"]
       },
       "optional": true,
       "description": "Specifies the type of content inside the trigger region. The following types are available:\n- `text` - Use for triggers containing inline components, like status indicator.\n- `text-inline` - Use for triggers containing plain text only.\n- `custom` - Use for the [button](/components/button/) component.",

@@ -131,12 +131,7 @@
       "inlineType": {
         "name": "AlertProps.Type",
         "type": "union",
-        "values": [
-          "error",
-          "success",
-          "warning",
-          "info"
-        ]
+        "values": ["error", "success", "warning", "info"]
       },
       "optional": true,
       "description": "Specifies the type of message you want to display.",

@@ -70,11 +70,7 @@
       "inlineType": {
         "name": "ProgressBarProps.Status",
         "type": "union",
-        "values": [
-          "error",
-          "in-progress",
-          "success"
-        ]
+        "values": ["error", "in-progress", "success"]
       },
       "optional": true,
       "description": "Specifies the status of the progress bar. You can set it to one of the following:\n\n- `\"in-progress\"` - Displays a progress bar.\n- `\"success\"` or `\"error\"` - Displays a result state and replaces the progress element with a status indicator,\n`resultText`, and a result button.",
@@ -93,11 +89,7 @@
       "inlineType": {
         "name": "ProgressBarProps.Variant",
         "type": "union",
-        "values": [
-          "flash",
-          "standalone",
-          "key-value"
-        ]
+        "values": ["flash", "standalone", "key-value"]
       },
       "optional": true,
       "description": "Enables the correct styling of the progress bar in different contexts. You can set it to one of the following:\n\n- `\"flash\"` - Use this variatn when using the progress bar within a flash component.\n             Note that the result button isn't displayed when using this variant.\n             Use the `buttonText` property and the `onButtonClick` event listener of the flashbar item instead of the result button provided by the progress bar.\n- `\"key-value\"` - Use this variant when using the progress bar within the key-value pairs pattern.\n- `\"standalone\"` Use in all other cases. This is the default value.",

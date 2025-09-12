@@ -46,13 +46,7 @@
       "inlineType": {
         "name": "HeaderProps.HeadingTag",
         "type": "union",
-        "values": [
-          "h1",
-          "h2",
-          "h3",
-          "h4",
-          "h5"
-        ]
+        "values": ["h1", "h2", "h3", "h4", "h5"]
       },
       "optional": true,
       "description": "Overrides the default [HTML heading tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements)\nprovided by the variant. Using this property does not change the visual appearance of the component."
@@ -70,12 +64,7 @@
       "inlineType": {
         "name": "HeaderProps.Variant",
         "type": "union",
-        "values": [
-          "h1",
-          "h2",
-          "h3",
-          "awsui-h1-sticky"
-        ]
+        "values": ["h1", "h2", "h3", "awsui-h1-sticky"]
       },
       "optional": true,
       "description": "Specifies the variant of the header:\n* `h1` - Use this for page level headers.\n* `h2` - Use this for container level headers.\n* `h3` - Use this for section level headers.\n* `awsui-h1-sticky` - Use this for sticky headers in cards and tables.",

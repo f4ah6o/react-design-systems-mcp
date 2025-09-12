@@ -45,10 +45,7 @@
       "inlineType": {
         "name": "ChatBubbleProps.Type",
         "type": "union",
-        "values": [
-          "incoming",
-          "outgoing"
-        ]
+        "values": ["incoming", "outgoing"]
       },
       "optional": false,
       "description": "Defines the type of the chat bubble and sets its color accordingly."

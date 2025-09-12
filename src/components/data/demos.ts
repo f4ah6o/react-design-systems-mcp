@@ -1,35 +1,35 @@
 /**
  * Demo Data Model
- * 
+ *
  * This module defines demo entities based on research from the Cloudscape demos repository.
  * Demos are extracted from https://github.com/cloudscape-design/demos and structured
  * according to the examples-list.json catalog and individual demo implementations.
  */
 
 export interface DemoVariation {
-  name: string;
-  description: string;
-  props?: Record<string, any>;
-  code?: string;
+  name: string
+  description: string
+  props?: Record<string, any>
+  code?: string
 }
 
 export interface DemoMetadata {
-  source: string; // URL or file path to original demo
-  complexity: 'basic' | 'intermediate' | 'advanced';
-  lastUpdated: string;
-  dependencies: string[];
+  source: string // URL or file path to original demo
+  complexity: 'basic' | 'intermediate' | 'advanced'
+  lastUpdated: string
+  dependencies: string[]
 }
 
 export interface Demo {
-  id: string;
-  name: string;
-  description: string;
-  componentId: string;
-  type: string; // e.g., 'basic', 'interactive', 'form', 'data-display'
-  variations: DemoVariation[];
-  tags: string[];
-  code?: string;
-  metadata: DemoMetadata;
+  id: string
+  name: string
+  description: string
+  componentId: string
+  type: string // e.g., 'basic', 'interactive', 'form', 'data-display'
+  variations: DemoVariation[]
+  tags: string[]
+  code?: string
+  metadata: DemoMetadata
 }
 
 /**
@@ -48,20 +48,20 @@ export const demoData: Record<string, Demo> = {
         name: 'Primary Button',
         description: 'Primary action button with emphasis',
         props: { variant: 'primary' },
-        code: `<Button variant="primary">Primary Action</Button>`
+        code: `<Button variant="primary">Primary Action</Button>`,
       },
       {
         name: 'Normal Button',
         description: 'Default button for secondary actions',
         props: { variant: 'normal' },
-        code: `<Button variant="normal">Secondary Action</Button>`
+        code: `<Button variant="normal">Secondary Action</Button>`,
       },
       {
         name: 'Link Button',
         description: 'Button styled as a link',
         props: { variant: 'link' },
-        code: `<Button variant="link">Link Action</Button>`
-      }
+        code: `<Button variant="link">Link Action</Button>`,
+      },
     ],
     tags: ['button', 'basic', 'variants'],
     code: `import React from 'react';
@@ -80,8 +80,8 @@ export default function ButtonDemo() {
       source: 'https://github.com/cloudscape-design/demos/blob/main/src/pages/button',
       complexity: 'basic',
       lastUpdated: '2025-09-11',
-      dependencies: ['@cloudscape-design/components']
-    }
+      dependencies: ['@cloudscape-design/components'],
+    },
   },
 
   'table-basic': {
@@ -99,7 +99,7 @@ export default function ButtonDemo() {
   columnDefinitions={columns}
   items={items}
   variant="container"
-/>`
+/>`,
       },
       {
         name: 'Sortable Table',
@@ -110,7 +110,7 @@ export default function ButtonDemo() {
   items={items}
   sortingDisabled={false}
   onSortingChange={handleSortingChange}
-/>`
+/>`,
       },
       {
         name: 'Selectable Table',
@@ -122,8 +122,8 @@ export default function ButtonDemo() {
   selectionType="multi"
   selectedItems={selectedItems}
   onSelectionChange={handleSelectionChange}
-/>`
-      }
+/>`,
+      },
     ],
     tags: ['table', 'data-display', 'sorting', 'selection', 'pagination'],
     code: `import React, { useState } from 'react';
@@ -162,8 +162,8 @@ export default function TableDemo() {
       source: 'https://github.com/cloudscape-design/demos/blob/main/src/pages/table',
       complexity: 'intermediate',
       lastUpdated: '2025-09-11',
-      dependencies: ['@cloudscape-design/components', 'react']
-    }
+      dependencies: ['@cloudscape-design/components', 'react'],
+    },
   },
 
   'form-validation': {
@@ -185,7 +185,7 @@ export default function TableDemo() {
   <FormField label="Name" errorText={nameError}>
     <Input value={name} onChange={handleNameChange} />
   </FormField>
-</Form>`
+</Form>`,
       },
       {
         name: 'Real-time Validation',
@@ -200,8 +200,8 @@ export default function TableDemo() {
       type="email"
     />
   </FormField>
-</Form>`
-      }
+</Form>`,
+      },
     ],
     tags: ['form', 'validation', 'input', 'error-handling'],
     code: `import React, { useState } from 'react';
@@ -280,8 +280,8 @@ export default function FormValidationDemo() {
       source: 'https://github.com/cloudscape-design/demos/blob/main/src/pages/form-validation',
       complexity: 'intermediate',
       lastUpdated: '2025-09-11',
-      dependencies: ['@cloudscape-design/components', 'react']
-    }
+      dependencies: ['@cloudscape-design/components', 'react'],
+    },
   },
 
   'cards-layout': {
@@ -304,7 +304,7 @@ export default function FormValidationDemo() {
       { content: item => item.description }
     ]
   }}
-/>`
+/>`,
       },
       {
         name: 'Rich Cards',
@@ -320,8 +320,8 @@ export default function FormValidationDemo() {
       { content: item => \`Status: \${item.status}\` }
     ]
   }}
-/>`
-      }
+/>`,
+      },
     ],
     tags: ['cards', 'layout', 'grid', 'responsive'],
     code: `import React from 'react';
@@ -378,8 +378,8 @@ export default function CardsDemo() {
       source: 'https://github.com/cloudscape-design/demos/blob/main/src/pages/cards',
       complexity: 'basic',
       lastUpdated: '2025-09-11',
-      dependencies: ['@cloudscape-design/components']
-    }
+      dependencies: ['@cloudscape-design/components'],
+    },
   },
 
   'input-basic': {
@@ -393,20 +393,20 @@ export default function CardsDemo() {
         name: 'Text Input',
         description: 'Basic text input field',
         props: { type: 'text' },
-        code: `<Input\n  value={value}\n  onChange={({ detail }) => setValue(detail.value)}\n  placeholder=\"Enter text...\"\n/>`
+        code: `<Input\n  value={value}\n  onChange={({ detail }) => setValue(detail.value)}\n  placeholder="Enter text..."\n/>`,
       },
       {
         name: 'Password Input',
         description: 'Password input with visibility toggle',
         props: { type: 'password' },
-        code: `<Input\n  type=\"password\"\n  value={password}\n  onChange={({ detail }) => setPassword(detail.value)}\n  placeholder=\"Enter password...\"\n/>`
+        code: `<Input\n  type="password"\n  value={password}\n  onChange={({ detail }) => setPassword(detail.value)}\n  placeholder="Enter password..."\n/>`,
       },
       {
         name: 'Disabled Input',
         description: 'Disabled input field',
         props: { disabled: true },
-        code: `<Input\n  value={value}\n  disabled\n  placeholder=\"Disabled input\"\n/>`
-      }
+        code: `<Input\n  value={value}\n  disabled\n  placeholder="Disabled input"\n/>`,
+      },
     ],
     tags: ['input', 'form', 'validation', 'text'],
     code: `import React, { useState } from 'react';
@@ -453,8 +453,8 @@ export default function InputDemo() {
       source: 'https://github.com/cloudscape-design/demos/blob/main/src/pages/input',
       complexity: 'basic',
       lastUpdated: '2025-09-11',
-      dependencies: ['@cloudscape-design/components']
-    }
+      dependencies: ['@cloudscape-design/components'],
+    },
   },
 
   'select-basic': {
@@ -468,14 +468,14 @@ export default function InputDemo() {
         name: 'Single Select',
         description: 'Basic single selection dropdown',
         props: { selectedOption: null },
-        code: `<Select\n  selectedOption={selectedOption}\n  onChange={({ detail }) => setSelectedOption(detail.selectedOption)}\n  options={[\n    { label: "Option 1", value: "1" },\n    { label: "Option 2", value: "2" }\n  ]}\n/>`
+        code: `<Select\n  selectedOption={selectedOption}\n  onChange={({ detail }) => setSelectedOption(detail.selectedOption)}\n  options={[\n    { label: "Option 1", value: "1" },\n    { label: "Option 2", value: "2" }\n  ]}\n/>`,
       },
       {
         name: 'Multiselect',
         description: 'Multiple selection dropdown',
         props: { selectedOptions: [] },
-        code: `<Multiselect\n  selectedOptions={selectedOptions}\n  onChange={({ detail }) => setSelectedOptions(detail.selectedOptions)}\n  options={[\n    { label: "Option 1", value: "1" },\n    { label: "Option 2", value: "2" }\n  ]}\n/>`
-      }
+        code: `<Multiselect\n  selectedOptions={selectedOptions}\n  onChange={({ detail }) => setSelectedOptions(detail.selectedOptions)}\n  options={[\n    { label: "Option 1", value: "1" },\n    { label: "Option 2", value: "2" }\n  ]}\n/>`,
+      },
     ],
     tags: ['select', 'dropdown', 'form', 'multiselect'],
     code: `import React, { useState } from 'react';
@@ -521,8 +521,8 @@ export default function SelectDemo() {
       source: 'https://github.com/cloudscape-design/demos/blob/main/src/pages/select',
       complexity: 'basic',
       lastUpdated: '2025-09-11',
-      dependencies: ['@cloudscape-design/components']
-    }
+      dependencies: ['@cloudscape-design/components'],
+    },
   },
 
   'alert-basic': {
@@ -536,26 +536,26 @@ export default function SelectDemo() {
         name: 'Success Alert',
         description: 'Success message alert',
         props: { type: 'success' },
-        code: `<Alert type="success" header="Success">Operation completed successfully</Alert>`
+        code: `<Alert type="success" header="Success">Operation completed successfully</Alert>`,
       },
       {
         name: 'Error Alert',
         description: 'Error message alert',
         props: { type: 'error' },
-        code: `<Alert type="error" header="Error">Something went wrong</Alert>`
+        code: `<Alert type="error" header="Error">Something went wrong</Alert>`,
       },
       {
         name: 'Warning Alert',
         description: 'Warning message alert',
         props: { type: 'warning' },
-        code: `<Alert type="warning" header="Warning">Please check your input</Alert>`
+        code: `<Alert type="warning" header="Warning">Please check your input</Alert>`,
       },
       {
         name: 'Info Alert',
         description: 'Information alert',
         props: { type: 'info' },
-        code: `<Alert type="info" header="Information">Here's some helpful information</Alert>`
-      }
+        code: `<Alert type="info" header="Information">Here's some helpful information</Alert>`,
+      },
     ],
     tags: ['alert', 'notification', 'feedback', 'message'],
     code: `import React, { useState } from 'react';
@@ -617,8 +617,8 @@ export default function AlertDemo() {
       source: 'https://github.com/cloudscape-design/demos/blob/main/src/pages/alert',
       complexity: 'intermediate',
       lastUpdated: '2025-09-11',
-      dependencies: ['@cloudscape-design/components', 'react']
-    }
+      dependencies: ['@cloudscape-design/components', 'react'],
+    },
   },
 
   'modal-basic': {
@@ -632,14 +632,14 @@ export default function AlertDemo() {
         name: 'Small Modal',
         description: 'Compact modal dialog',
         props: { size: 'small' },
-        code: `<Modal\n  size="small"\n  visible={visible}\n  onDismiss={() => setVisible(false)}\n  header="Small Modal"\n>\n  Content goes here\n</Modal>`
+        code: `<Modal\n  size="small"\n  visible={visible}\n  onDismiss={() => setVisible(false)}\n  header="Small Modal"\n>\n  Content goes here\n</Modal>`,
       },
       {
         name: 'Large Modal',
         description: 'Large modal dialog',
         props: { size: 'large' },
-        code: `<Modal\n  size="large"\n  visible={visible}\n  onDismiss={() => setVisible(false)}\n  header="Large Modal"\n>\n  Content goes here\n</Modal>`
-      }
+        code: `<Modal\n  size="large"\n  visible={visible}\n  onDismiss={() => setVisible(false)}\n  header="Large Modal"\n>\n  Content goes here\n</Modal>`,
+      },
     ],
     tags: ['modal', 'dialog', 'overlay', 'popup'],
     code: `import React, { useState } from 'react';
@@ -711,8 +711,8 @@ export default function ModalDemo() {
       source: 'https://github.com/cloudscape-design/demos/blob/main/src/pages/modal',
       complexity: 'intermediate',
       lastUpdated: '2025-09-11',
-      dependencies: ['@cloudscape-design/components', 'react']
-    }
+      dependencies: ['@cloudscape-design/components', 'react'],
+    },
   },
 
   'tabs-basic': {
@@ -726,14 +726,14 @@ export default function ModalDemo() {
         name: 'Default Tabs',
         description: 'Basic tabbed interface',
         props: { variant: 'default' },
-        code: `<Tabs\n  tabs={[\n    { label: "Tab 1", id: "first", content: "First tab content" },\n    { label: "Tab 2", id: "second", content: "Second tab content" }\n  ]}\n/>`
+        code: `<Tabs\n  tabs={[\n    { label: "Tab 1", id: "first", content: "First tab content" },\n    { label: "Tab 2", id: "second", content: "Second tab content" }\n  ]}\n/>`,
       },
       {
         name: 'Container Tabs',
         description: 'Tabs with container styling',
         props: { variant: 'container' },
-        code: `<Tabs\n  variant="container"\n  tabs={[\n    { label: "Tab 1", id: "first", content: "First tab content" },\n    { label: "Tab 2", id: "second", content: "Second tab content" }\n  ]}\n/>`
-      }
+        code: `<Tabs\n  variant="container"\n  tabs={[\n    { label: "Tab 1", id: "first", content: "First tab content" },\n    { label: "Tab 2", id: "second", content: "Second tab content" }\n  ]}\n/>`,
+      },
     ],
     tags: ['tabs', 'navigation', 'panels', 'interface'],
     code: `import React, { useState } from 'react';
@@ -801,8 +801,8 @@ export default function TabsDemo() {
       source: 'https://github.com/cloudscape-design/demos/blob/main/src/pages/tabs',
       complexity: 'basic',
       lastUpdated: '2025-09-11',
-      dependencies: ['@cloudscape-design/components', 'react']
-    }
+      dependencies: ['@cloudscape-design/components', 'react'],
+    },
   },
 
   'dashboard-layout': {
@@ -820,7 +820,7 @@ export default function TabsDemo() {
   navigation={<Navigation />}
   content={<DashboardContent />}
   toolsHide
-/>`
+/>`,
       },
       {
         name: 'Full Dashboard',
@@ -830,8 +830,8 @@ export default function TabsDemo() {
   navigation={<Navigation />}
   content={<DashboardContent />}
   tools={<DashboardTools />}
-/>`
-      }
+/>`,
+      },
     ],
     tags: ['dashboard', 'layout', 'app-layout', 'navigation', 'advanced'],
     code: `import React, { useState, useEffect } from 'react';
@@ -912,9 +912,9 @@ export default function DashboardDemo() {
       source: 'https://github.com/cloudscape-design/demos/blob/main/src/pages/dashboard',
       complexity: 'advanced',
       lastUpdated: '2025-09-11',
-      dependencies: ['@cloudscape-design/components', 'react']
-    }
-  }
-};
+      dependencies: ['@cloudscape-design/components', 'react'],
+    },
+  },
+}
 
-export default demoData;
+export default demoData

@@ -12,6 +12,6 @@
  * - Performance optimizations
  * - Security enhancements
  */
-declare let server: import("fastmcp").FastMCP<undefined>;
-export default server;
+declare let server: import('fastmcp').FastMCP<undefined>
+export default server
 //# sourceMappingURL=server.d.ts.map

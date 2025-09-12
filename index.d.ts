@@ -10,8 +10,10 @@
  * @param options Configuration options for the server
  * @returns Configured MCP server instance
  */
-export declare function createCloudscapeAssistant(options?: any): import("fastmcp").FastMCP<undefined>;
-export default createCloudscapeAssistant;
-export { createFastMCPServer } from './src/mcp/server';
-export { getServerConfig } from './src/utils/config';
+export declare function createCloudscapeAssistant(
+  options?: any,
+): import('fastmcp').FastMCP<undefined>
+export default createCloudscapeAssistant
+export { createFastMCPServer } from './src/mcp/server'
+export { getServerConfig } from './src/utils/config'
 //# sourceMappingURL=index.d.ts.map

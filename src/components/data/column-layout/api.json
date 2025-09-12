@@ -17,12 +17,7 @@
       "inlineType": {
         "name": "ColumnLayoutProps.Borders",
         "type": "union",
-        "values": [
-          "all",
-          "none",
-          "horizontal",
-          "vertical"
-        ]
+        "values": ["all", "none", "horizontal", "vertical"]
       },
       "optional": true,
       "description": "Controls whether dividers are placed between rows and columns.\n\nNote: This is not supported when used with `minColumnWidth`.",
@@ -68,10 +63,7 @@
       "inlineType": {
         "name": "ColumnLayoutProps.Variant",
         "type": "union",
-        "values": [
-          "default",
-          "text-grid"
-        ]
+        "values": ["default", "text-grid"]
       },
       "optional": true,
       "description": "Specifies the content type. This determines the spacing of the grid.",

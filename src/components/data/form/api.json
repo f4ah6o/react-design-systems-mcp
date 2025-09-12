@@ -91,10 +91,7 @@
       "inlineType": {
         "name": "\"embedded\" | \"full-page\"",
         "type": "union",
-        "values": [
-          "embedded",
-          "full-page"
-        ]
+        "values": ["embedded", "full-page"]
       },
       "optional": true,
       "description": "Specify a form variant with one of the following:\n* `full-page` - Use this variant when the form contains the entire content of the page.\n* `embedded` - Use this variant when the form doesn't occupy the full page.",

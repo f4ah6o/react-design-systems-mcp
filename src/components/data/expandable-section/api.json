@@ -98,13 +98,7 @@
       "inlineType": {
         "name": "ExpandableSectionProps.HeadingTag",
         "type": "union",
-        "values": [
-          "h1",
-          "h2",
-          "h3",
-          "h4",
-          "h5"
-        ]
+        "values": ["h1", "h2", "h3", "h4", "h5"]
       },
       "optional": true,
       "description": "Overrides the default [HTML heading tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements).\nUse with the container variant (which defaults to H2) or default/footer variants (which default to DIV). Using this\nproperty does not change the visual appearance of the component. Note that this only works with the `headerText`\nslot (not with the deprecated `header`), and not with the navigation variant."
@@ -122,14 +116,7 @@
       "inlineType": {
         "name": "ExpandableSectionProps.Variant",
         "type": "union",
-        "values": [
-          "inline",
-          "default",
-          "container",
-          "footer",
-          "navigation",
-          "stacked"
-        ]
+        "values": ["inline", "default", "container", "footer", "navigation", "stacked"]
       },
       "optional": true,
       "description": "The possible variants of an expandable section are as follows:\n * `default` - Use this variant in any context.\n * `footer` - Use this variant in container footers.\n * `container` - Use this variant in a detail page alongside other containers.\n * `navigation` - Use this variant in the navigation panel with anchors and custom styled content.\n   It doesn't have any default styles.\n* `stacked` - Use this variant directly adjacent to other stacked containers (such as a container, table).\n* `inline` - Use this variant in any context where you need reduced padding around the header.",

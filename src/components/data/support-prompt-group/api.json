@@ -23,10 +23,7 @@
       "inlineType": {
         "name": "SupportPromptGroupProps.Alignment",
         "type": "union",
-        "values": [
-          "vertical",
-          "horizontal"
-        ]
+        "values": ["vertical", "horizontal"]
       },
       "optional": true,
       "description": "Alignment of the prompts. Defaults to `vertical`."

@@ -3,21 +3,21 @@
  */
 
 interface Example {
-  id: string;
-  name: string;
-  description: string;
-  component: string;
-  code: string;
-  type: string;
-  tags?: string[];
+  id: string
+  name: string
+  description: string
+  component: string
+  code: string
+  type: string
+  tags?: string[]
 }
 
 const examples: Record<string, Example> = {
-  "app-layout-basic": {
-    id: "app-layout-basic",
-    name: "Basic AppLayout",
-    description: "A basic AppLayout with navigation, content, and tools panels.",
-    component: "app-layout",
+  'app-layout-basic': {
+    id: 'app-layout-basic',
+    name: 'Basic AppLayout',
+    description: 'A basic AppLayout with navigation, content, and tools panels.',
+    component: 'app-layout',
     code: `import AppLayout from "@cloudscape-design/components/app-layout";
 import SideNavigation from "@cloudscape-design/components/side-navigation";
 import Container from "@cloudscape-design/components/container";
@@ -53,14 +53,14 @@ function BasicAppLayout() {
     />
   );
 }`,
-    type: "basic"
+    type: 'basic',
   },
-  
-  "app-layout-with-navigation": {
-    id: "app-layout-with-navigation",
-    name: "AppLayout with Navigation",
-    description: "An AppLayout with a navigation panel and breadcrumbs.",
-    component: "app-layout",
+
+  'app-layout-with-navigation': {
+    id: 'app-layout-with-navigation',
+    name: 'AppLayout with Navigation',
+    description: 'An AppLayout with a navigation panel and breadcrumbs.',
+    component: 'app-layout',
     code: `import AppLayout from "@cloudscape-design/components/app-layout";
 import SideNavigation from "@cloudscape-design/components/side-navigation";
 import BreadcrumbGroup from "@cloudscape-design/components/breadcrumb-group";
@@ -99,14 +99,14 @@ function AppLayoutWithNavigation() {
     />
   );
 }`,
-    type: "navigation"
+    type: 'navigation',
   },
-  
-  "table-basic": {
-    id: "table-basic",
-    name: "Basic Table",
-    description: "A basic table with column definitions and items.",
-    component: "table",
+
+  'table-basic': {
+    id: 'table-basic',
+    name: 'Basic Table',
+    description: 'A basic table with column definitions and items.',
+    component: 'table',
     code: `import Table from "@cloudscape-design/components/table";
 
 function BasicTable() {
@@ -137,14 +137,14 @@ function BasicTable() {
     />
   );
 }`,
-    type: "basic"
+    type: 'basic',
   },
-  
-  "table-with-sorting": {
-    id: "table-with-sorting",
-    name: "Table with Sorting",
-    description: "A table with sortable columns.",
-    component: "table",
+
+  'table-with-sorting': {
+    id: 'table-with-sorting',
+    name: 'Table with Sorting',
+    description: 'A table with sortable columns.',
+    component: 'table',
     code: `import Table from "@cloudscape-design/components/table";
 import { useState } from "react";
 
@@ -208,14 +208,14 @@ function TableWithSorting() {
     />
   );
 }`,
-    type: "sorting"
+    type: 'sorting',
   },
-  
-  "form-basic": {
-    id: "form-basic",
-    name: "Basic Form",
-    description: "A basic form with input fields and submit button.",
-    component: "form",
+
+  'form-basic': {
+    id: 'form-basic',
+    name: 'Basic Form',
+    description: 'A basic form with input fields and submit button.',
+    component: 'form',
     code: `import Form from "@cloudscape-design/components/form";
 import FormField from "@cloudscape-design/components/form-field";
 import Input from "@cloudscape-design/components/input";
@@ -259,14 +259,14 @@ function BasicForm() {
     </Form>
   );
 }`,
-    type: "basic"
+    type: 'basic',
   },
-  
-  "button-variants": {
-    id: "button-variants",
-    name: "Button Variants",
-    description: "Different button variants (primary, normal, link, icon).",
-    component: "button",
+
+  'button-variants': {
+    id: 'button-variants',
+    name: 'Button Variants',
+    description: 'Different button variants (primary, normal, link, icon).',
+    component: 'button',
     code: `import Button from "@cloudscape-design/components/button";
 import SpaceBetween from "@cloudscape-design/components/space-between";
 
@@ -280,14 +280,14 @@ function ButtonVariants() {
     </SpaceBetween>
   );
 }`,
-    type: "variants"
+    type: 'variants',
   },
-  
-  "container-with-header": {
-    id: "container-with-header",
-    name: "Container with Header",
-    description: "A container with a header and content.",
-    component: "container",
+
+  'container-with-header': {
+    id: 'container-with-header',
+    name: 'Container with Header',
+    description: 'A container with a header and content.',
+    component: 'container',
     code: `import Container from "@cloudscape-design/components/container";
 import Header from "@cloudscape-design/components/header";
 import SpaceBetween from "@cloudscape-design/components/space-between";
@@ -313,8 +313,8 @@ function ContainerWithHeader() {
     </Container>
   );
 }`,
-    type: "header"
-  }
-};
+    type: 'header',
+  },
+}
 
-export default examples;
+export default examples

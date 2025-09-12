@@ -1,6 +1,6 @@
 /**
  * Component Registry (New Implementation)
- * 
+ *
  * This module provides access to the Cloudscape component metadata using the new documentation format.
  * - Full documentation on all components is now available under src/components/{component-name}
  * - Each component directory provides:
@@ -9,223 +9,229 @@
  *   - api.json: A full API representation of the component in JSON format
  */
 
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs'
+import path from 'node:path'
 
 // Define types for component metadata
 export interface PropertyMetadata {
-  name: string;
-  type: string;
-  description: string;
-  defaultValue?: any;
-  required: boolean;
-  acceptedValues?: (string | number)[];
-  isDeprecated?: boolean;
-  examples?: string[];
+  name: string
+  type: string
+  description: string
+  defaultValue?: any
+  required: boolean
+  acceptedValues?: (string | number)[]
+  isDeprecated?: boolean
+  examples?: string[]
 }
 
 export interface ComponentMetadata {
-  id: string;
-  name: string;
-  category?: string;
-  description?: string;
-  importPath?: string;
-  version?: string;
-  isExperimental?: boolean;
-  relatedComponents?: string[];
-  tags?: string[];
-  properties: Record<string, PropertyMetadata>;
-  examples: string[];
+  id: string
+  name: string
+  category?: string
+  description?: string
+  importPath?: string
+  version?: string
+  isExperimental?: boolean
+  relatedComponents?: string[]
+  tags?: string[]
+  properties: Record<string, PropertyMetadata>
+  examples: string[]
 }
 
 export interface CategoryMetadata {
-  id: string;
-  name: string;
-  description: string;
-  components: string[];
+  id: string
+  name: string
+  description: string
+  components: string[]
 }
 
 export interface PatternMetadata {
-  id: string;
-  name: string;
-  description: string;
-  components: string[];
-  code: string;
-  customizationOptions: Record<string, CustomizationOption>;
+  id: string
+  name: string
+  description: string
+  components: string[]
+  code: string
+  customizationOptions: Record<string, CustomizationOption>
 }
 
 export interface CustomizationOption {
-  name: string;
-  type: string;
-  description: string;
-  defaultValue: any;
-  acceptedValues?: (string | number)[];
+  name: string
+  type: string
+  description: string
+  defaultValue: any
+  acceptedValues?: (string | number)[]
 }
 
 export interface ExampleMetadata {
-  id: string;
-  name: string;
-  description: string;
-  component: string;
-  code: string;
-  type: string;
-  tags?: string[];
+  id: string
+  name: string
+  description: string
+  component: string
+  code: string
+  type: string
+  tags?: string[]
 }
 
 // Define types for API JSON format
 interface ApiJsonProperty {
-  name: string;
-  type: string;
+  name: string
+  type: string
   inlineType?: {
-    name: string;
-    type: string;
-    values?: string[];
+    name: string
+    type: string
+    values?: string[]
     properties?: Array<{
-      name: string;
-      type: string;
-      optional?: boolean;
-    }>;
-  };
-  optional?: boolean;
-  description: string;
-  defaultValue?: string;
-  deprecatedTag?: string;
-  analyticsTag?: string;
-  i18nTag?: boolean;
+      name: string
+      type: string
+      optional?: boolean
+    }>
+  }
+  optional?: boolean
+  description: string
+  defaultValue?: string
+  deprecatedTag?: string
+  analyticsTag?: string
+  i18nTag?: boolean
 }
 
 interface ApiJsonEvent {
-  name: string;
-  description: string;
-  cancelable: boolean;
+  name: string
+  description: string
+  cancelable: boolean
 }
 
 interface ApiJsonFunction {
-  name: string;
-  description: string;
-  returnType: string;
-  parameters: any[];
+  name: string
+  description: string
+  returnType: string
+  parameters: any[]
 }
 
 interface ApiJsonRegion {
-  name: string;
-  description: string;
-  isDefault: boolean;
-  deprecatedTag?: string;
+  name: string
+  description: string
+  isDefault: boolean
+  deprecatedTag?: string
 }
 
 interface ApiJson {
-  name: string;
-  dashCaseName: string;
-  releaseStatus: string;
-  regions: ApiJsonRegion[];
-  functions: ApiJsonFunction[];
-  properties: ApiJsonProperty[];
-  events: ApiJsonEvent[];
+  name: string
+  dashCaseName: string
+  releaseStatus: string
+  regions: ApiJsonRegion[]
+  functions: ApiJsonFunction[]
+  properties: ApiJsonProperty[]
+  events: ApiJsonEvent[]
   _meta: {
-    component: string;
-    source: string;
-    extracted_at: string;
-  };
+    component: string
+    source: string
+    extracted_at: string
+  }
 }
 
 // Cache for component metadata
-const componentCache: Record<string, ComponentMetadata> = {};
-const exampleCache: Record<string, ExampleMetadata> = {};
-const categoryCache: Record<string, CategoryMetadata> = {};
-const patternCache: Record<string, PatternMetadata> = {};
+const componentCache: Record<string, ComponentMetadata> = {}
+const exampleCache: Record<string, ExampleMetadata> = {}
+const categoryCache: Record<string, CategoryMetadata> = {}
+const patternCache: Record<string, PatternMetadata> = {}
 
 // Helper function to get component directories
 function getComponentDirectories(): string[] {
-  const componentsDir = path.resolve(__dirname, '../components');
-  return fs.readdirSync(componentsDir)
-    .filter(item => {
-      const itemPath = path.join(componentsDir, item);
-      return fs.statSync(itemPath).isDirectory() && 
-             item !== 'data' && // Exclude the data directory
-             fs.existsSync(path.join(itemPath, 'api.json')); // Must have api.json
+  const componentsDir = path.resolve(__dirname, '../components')
+  return fs
+    .readdirSync(componentsDir)
+    .filter((item) => {
+      const itemPath = path.join(componentsDir, item)
+      return (
+        fs.statSync(itemPath).isDirectory() &&
+        item !== 'data' && // Exclude the data directory
+        fs.existsSync(path.join(itemPath, 'api.json'))
+      ) // Must have api.json
     })
-    .map(dir => dir);
+    .map((dir) => dir)
 }
 
 // Helper function to load API JSON
 function loadApiJson(componentDir: string): ApiJson | null {
   try {
-    const apiJsonPath = path.resolve(__dirname, componentDir, 'api.json');
+    const apiJsonPath = path.resolve(__dirname, componentDir, 'api.json')
     if (fs.existsSync(apiJsonPath)) {
-      const apiJsonContent = fs.readFileSync(apiJsonPath, 'utf8');
-      return JSON.parse(apiJsonContent);
+      const apiJsonContent = fs.readFileSync(apiJsonPath, 'utf8')
+      return JSON.parse(apiJsonContent)
     }
   } catch (error) {
-    console.error(`Error loading API JSON for ${componentDir}:`, error);
+    console.error(`Error loading API JSON for ${componentDir}:`, error)
   }
-  return null;
+  return null
 }
 
 // Helper function to load usage markdown
-function loadUsageMd(componentDir: string): string | null {
+function _loadUsageMd(componentDir: string): string | null {
   try {
-    const usageMdPath = path.resolve(__dirname, componentDir, 'usage.md');
+    const usageMdPath = path.resolve(__dirname, componentDir, 'usage.md')
     if (fs.existsSync(usageMdPath)) {
-      return fs.readFileSync(usageMdPath, 'utf8');
+      return fs.readFileSync(usageMdPath, 'utf8')
     }
   } catch (error) {
-    console.error(`Error loading usage.md for ${componentDir}:`, error);
+    console.error(`Error loading usage.md for ${componentDir}:`, error)
   }
-  return null;
+  return null
 }
 
 // Helper function to get example files
 function getExampleFiles(componentDir: string): string[] {
   try {
-    const examplesDir = path.resolve(__dirname, componentDir, 'examples');
+    const examplesDir = path.resolve(__dirname, componentDir, 'examples')
     if (fs.existsSync(examplesDir)) {
-      return fs.readdirSync(examplesDir)
-        .filter(file => file.endsWith('.tsx.d'))
-        .map(file => file.replace('.tsx.d', ''));
+      return fs
+        .readdirSync(examplesDir)
+        .filter((file) => file.endsWith('.tsx.d'))
+        .map((file) => file.replace('.tsx.d', ''))
     }
   } catch (error) {
-    console.error(`Error loading examples for ${componentDir}:`, error);
+    console.error(`Error loading examples for ${componentDir}:`, error)
   }
-  return [];
+  return []
 }
 
 // Helper function to load example content
 function loadExampleContent(componentDir: string, exampleFile: string): string | null {
   try {
-    const examplePath = path.resolve(__dirname, componentDir, 'examples', `${exampleFile}.tsx.d`);
+    const examplePath = path.resolve(__dirname, componentDir, 'examples', `${exampleFile}.tsx.d`)
     if (fs.existsSync(examplePath)) {
-      return fs.readFileSync(examplePath, 'utf8');
+      return fs.readFileSync(examplePath, 'utf8')
     }
   } catch (error) {
-    console.error(`Error loading example ${exampleFile} for ${componentDir}:`, error);
+    console.error(`Error loading example ${exampleFile} for ${componentDir}:`, error)
   }
-  return null;
+  return null
 }
 
 // Convert API JSON property to PropertyMetadata
 function convertApiJsonProperty(apiProperty: ApiJsonProperty): PropertyMetadata {
-  const acceptedValues: (string | number)[] = [];
-  
+  const acceptedValues: (string | number)[] = []
+
   // Extract accepted values from inlineType if available
   if (apiProperty.inlineType?.type === 'union' && apiProperty.inlineType.values) {
-    apiProperty.inlineType.values.forEach(value => {
+    apiProperty.inlineType.values.forEach((value) => {
       if (typeof value === 'string' || typeof value === 'number') {
-        acceptedValues.push(value);
+        acceptedValues.push(value)
       }
-    });
+    })
   }
 
   return {
     name: apiProperty.name,
     type: apiProperty.inlineType?.name || apiProperty.type,
     description: apiProperty.description,
-    defaultValue: apiProperty.defaultValue ? apiProperty.defaultValue.replace(/^['"]|['"]$/g, '') : undefined,
+    defaultValue: apiProperty.defaultValue
+      ? apiProperty.defaultValue.replace(/^['"]|['"]$/g, '')
+      : undefined,
     required: !apiProperty.optional,
     acceptedValues,
     isDeprecated: !!apiProperty.deprecatedTag,
-    examples: []
-  };
+    examples: [],
+  }
 }
 
 // Convert example file to ExampleMetadata
@@ -233,19 +239,19 @@ function createExampleMetadata(componentId: string, exampleFile: string): Exampl
   // Format the example name from the file name
   const name = exampleFile
     .split('_')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')
 
   // Determine example type based on filename
-  let type = 'basic';
-  if (exampleFile.includes('error')) type = 'error';
-  else if (exampleFile.includes('warning')) type = 'warning';
-  else if (exampleFile.includes('success')) type = 'success';
-  else if (exampleFile.includes('loading')) type = 'loading';
-  else if (exampleFile.includes('empty')) type = 'empty';
+  let type = 'basic'
+  if (exampleFile.includes('error')) type = 'error'
+  else if (exampleFile.includes('warning')) type = 'warning'
+  else if (exampleFile.includes('success')) type = 'success'
+  else if (exampleFile.includes('loading')) type = 'loading'
+  else if (exampleFile.includes('empty')) type = 'empty'
 
   // Extract tags from filename
-  const tags = exampleFile.split('_').filter(tag => tag.length > 2);
+  const tags = exampleFile.split('_').filter((tag) => tag.length > 2)
 
   return {
     id: `${componentId}-${exampleFile}`,
@@ -254,21 +260,21 @@ function createExampleMetadata(componentId: string, exampleFile: string): Exampl
     component: componentId,
     code: loadExampleContent(componentId, exampleFile) || '',
     type,
-    tags
-  };
+    tags,
+  }
 }
 
 // Load all components
 function loadAllComponents(): void {
-  const componentDirs = getComponentDirectories();
-  
-  componentDirs.forEach(componentDir => {
-    const apiJson = loadApiJson(componentDir);
-    if (!apiJson) return;
+  const componentDirs = getComponentDirectories()
 
-    const componentId = apiJson.dashCaseName;
-    const exampleFiles = getExampleFiles(componentDir);
-    
+  componentDirs.forEach((componentDir) => {
+    const apiJson = loadApiJson(componentDir)
+    if (!apiJson) return
+
+    const componentId = apiJson.dashCaseName
+    const exampleFiles = getExampleFiles(componentDir)
+
     // Create component metadata
     const componentMetadata: ComponentMetadata = {
       id: componentId,
@@ -281,23 +287,23 @@ function loadAllComponents(): void {
       relatedComponents: [], // Would need additional logic to determine related components
       tags: determineTags(componentId, apiJson),
       properties: {},
-      examples: exampleFiles
-    };
+      examples: exampleFiles,
+    }
 
     // Convert properties
-    apiJson.properties.forEach(prop => {
-      componentMetadata.properties[prop.name] = convertApiJsonProperty(prop);
-    });
+    apiJson.properties.forEach((prop) => {
+      componentMetadata.properties[prop.name] = convertApiJsonProperty(prop)
+    })
 
     // Store in cache
-    componentCache[componentId] = componentMetadata;
+    componentCache[componentId] = componentMetadata
 
     // Process examples
-    exampleFiles.forEach(exampleFile => {
-      const exampleMetadata = createExampleMetadata(componentDir, exampleFile);
-      exampleCache[exampleMetadata.id] = exampleMetadata;
-    });
-  });
+    exampleFiles.forEach((exampleFile) => {
+      const exampleMetadata = createExampleMetadata(componentDir, exampleFile)
+      exampleCache[exampleMetadata.id] = exampleMetadata
+    })
+  })
 }
 
 // Helper function to determine component category
@@ -305,15 +311,19 @@ function determineCategory(componentId: string): string {
   // This is a simplified approach - in a real implementation, you might want to
   // have a more sophisticated categorization system
   if (['table', 'cards', 'alert', 'badge', 'box', 'status-indicator'].includes(componentId)) {
-    return 'display';
-  } else if (['form', 'input', 'select', 'textarea', 'checkbox', 'radio-group', 'button'].includes(componentId)) {
-    return 'input';
+    return 'display'
+  } else if (
+    ['form', 'input', 'select', 'textarea', 'checkbox', 'radio-group', 'button'].includes(
+      componentId,
+    )
+  ) {
+    return 'input'
   } else if (['app-layout', 'grid', 'space-between', 'container'].includes(componentId)) {
-    return 'layout';
+    return 'layout'
   } else if (['side-navigation', 'tabs', 'breadcrumb-group'].includes(componentId)) {
-    return 'navigation';
+    return 'navigation'
   } else {
-    return 'other';
+    return 'other'
   }
 }
 
@@ -321,29 +331,29 @@ function determineCategory(componentId: string): string {
 function extractDescription(apiJson: ApiJson): string {
   // This is a simplified approach - in a real implementation, you might want to
   // extract this from the usage.md file or have a separate description field
-  const childrenRegion = apiJson.regions.find(region => region.name === 'children');
-  return childrenRegion?.description || '';
+  const childrenRegion = apiJson.regions.find((region) => region.name === 'children')
+  return childrenRegion?.description || ''
 }
 
 // Helper function to determine tags
 function determineTags(componentId: string, apiJson: ApiJson): string[] {
   // This is a simplified approach - in a real implementation, you might want to
   // extract tags from the usage.md file or have a separate tags field
-  const tags: string[] = [componentId];
-  
+  const tags: string[] = [componentId]
+
   // Add category as a tag
-  const category = determineCategory(componentId);
-  if (category) tags.push(category);
-  
+  const category = determineCategory(componentId)
+  if (category) tags.push(category)
+
   // Add release status as a tag
-  if (apiJson.releaseStatus) tags.push(apiJson.releaseStatus);
-  
-  return tags;
+  if (apiJson.releaseStatus) tags.push(apiJson.releaseStatus)
+
+  return tags
 }
 
 // Initialize the registry
 function initialize(): void {
-  loadAllComponents();
+  loadAllComponents()
 }
 
 /**
@@ -352,9 +362,9 @@ function initialize(): void {
  */
 export function getAllComponents(): Record<string, ComponentMetadata> {
   if (Object.keys(componentCache).length === 0) {
-    initialize();
+    initialize()
   }
-  return componentCache;
+  return componentCache
 }
 
 /**
@@ -364,9 +374,9 @@ export function getAllComponents(): Record<string, ComponentMetadata> {
  */
 export function getComponent(componentId: string): ComponentMetadata | undefined {
   if (Object.keys(componentCache).length === 0) {
-    initialize();
+    initialize()
   }
-  return componentCache[componentId];
+  return componentCache[componentId]
 }
 
 /**
@@ -376,27 +386,27 @@ export function getComponent(componentId: string): ComponentMetadata | undefined
 export function getAllCategories(): Record<string, CategoryMetadata> {
   if (Object.keys(categoryCache).length === 0) {
     // Generate categories from components
-    const components = getAllComponents();
-    const categories: Record<string, CategoryMetadata> = {};
-    
-    Object.values(components).forEach(component => {
+    const components = getAllComponents()
+    const categories: Record<string, CategoryMetadata> = {}
+
+    Object.values(components).forEach((component) => {
       if (component.category) {
         if (!categories[component.category]) {
           categories[component.category] = {
             id: component.category,
             name: component.category.charAt(0).toUpperCase() + component.category.slice(1),
             description: `${component.category.charAt(0).toUpperCase() + component.category.slice(1)} components`,
-            components: []
-          };
+            components: [],
+          }
         }
-        categories[component.category].components.push(component.id);
+        categories[component.category].components.push(component.id)
       }
-    });
-    
-    Object.assign(categoryCache, categories);
+    })
+
+    Object.assign(categoryCache, categories)
   }
-  
-  return categoryCache;
+
+  return categoryCache
 }
 
 /**
@@ -405,8 +415,8 @@ export function getAllCategories(): Record<string, CategoryMetadata> {
  * @returns Category metadata
  */
 export function getCategory(categoryId: string): CategoryMetadata | undefined {
-  const categories = getAllCategories();
-  return categories[categoryId];
+  const categories = getAllCategories()
+  return categories[categoryId]
 }
 
 /**
@@ -415,7 +425,7 @@ export function getCategory(categoryId: string): CategoryMetadata | undefined {
  */
 export function getAllPatterns(): Record<string, PatternMetadata> {
   // In a real implementation, you would load patterns from a file or database
-  return patternCache;
+  return patternCache
 }
 
 /**
@@ -424,7 +434,7 @@ export function getAllPatterns(): Record<string, PatternMetadata> {
  * @returns Pattern metadata
  */
 export function getPattern(patternId: string): PatternMetadata | undefined {
-  return patternCache[patternId];
+  return patternCache[patternId]
 }
 
 /**
@@ -436,23 +446,23 @@ export function getPattern(patternId: string): PatternMetadata | undefined {
  * @returns Component examples
  */
 export function getComponentExamples(options: {
-  componentId: string;
-  type?: string;
-  limit?: number;
+  componentId: string
+  type?: string
+  limit?: number
 }): ExampleMetadata[] {
-  const { componentId, type, limit } = options;
-  
+  const { componentId, type, limit } = options
+
   // Ensure components are loaded
-  getAllComponents();
-  
+  getAllComponents()
+
   // Get component examples
-  const componentExamples = Object.values(exampleCache).filter((example: ExampleMetadata) =>
-    example.component === componentId &&
-    (!type || example.type === type)
-  );
-  
+  const componentExamples = Object.values(exampleCache).filter(
+    (example: ExampleMetadata) =>
+      example.component === componentId && (!type || example.type === type),
+  )
+
   // Apply limit
-  return limit ? componentExamples.slice(0, limit) : componentExamples;
+  return limit ? componentExamples.slice(0, limit) : componentExamples
 }
 
 // Export the module
@@ -463,5 +473,5 @@ export default {
   getCategory,
   getAllPatterns,
   getPattern,
-  getComponentExamples
-};
+  getComponentExamples,
+}

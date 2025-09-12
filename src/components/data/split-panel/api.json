@@ -23,10 +23,7 @@
       "inlineType": {
         "name": "\"hide\" | \"collapse\"",
         "type": "union",
-        "values": [
-          "hide",
-          "collapse"
-        ]
+        "values": ["hide", "collapse"]
       },
       "optional": true,
       "description": "Determines whether the split panel collapses or hides completely when closed.",

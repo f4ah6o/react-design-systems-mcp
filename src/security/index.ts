@@ -1,12 +1,11 @@
 /**
  * Security Module
- * 
+ *
  * This module provides security enhancements for the Cloudscape MCP Server.
  * It includes input validation, sanitization, and other security features.
  */
 
-import { FastMCP } from 'fastmcp';
-import { z } from 'zod';
+import type { FastMCP } from 'fastmcp'
 
 /**
  * Validate component ID
@@ -15,7 +14,7 @@ import { z } from 'zod';
  */
 export function validateComponentId(componentId: string): boolean {
   // Component IDs should only contain lowercase letters, numbers, and hyphens
-  return /^[a-z0-9-]+$/.test(componentId);
+  return /^[a-z0-9-]+$/.test(componentId)
 }
 
 /**
@@ -25,7 +24,7 @@ export function validateComponentId(componentId: string): boolean {
  */
 export function validatePropertyId(propertyId: string): boolean {
   // Property IDs should only contain letters, numbers, and hyphens
-  return /^[a-zA-Z0-9-]+$/.test(propertyId);
+  return /^[a-zA-Z0-9-]+$/.test(propertyId)
 }
 
 /**
@@ -35,7 +34,7 @@ export function validatePropertyId(propertyId: string): boolean {
  */
 export function validatePatternId(patternId: string): boolean {
   // Pattern IDs should only contain lowercase letters, numbers, and hyphens
-  return /^[a-z0-9-]+$/.test(patternId);
+  return /^[a-z0-9-]+$/.test(patternId)
 }
 
 /**
@@ -45,7 +44,7 @@ export function validatePatternId(patternId: string): boolean {
  */
 export function validateCategoryId(categoryId: string): boolean {
   // Category IDs should only contain lowercase letters, numbers, and hyphens
-  return /^[a-z0-9-]+$/.test(categoryId);
+  return /^[a-z0-9-]+$/.test(categoryId)
 }
 
 /**
@@ -55,7 +54,7 @@ export function validateCategoryId(categoryId: string): boolean {
  */
 export function validateExampleId(exampleId: string): boolean {
   // Example IDs should only contain lowercase letters, numbers, and hyphens
-  return /^[a-z0-9-]+$/.test(exampleId);
+  return /^[a-z0-9-]+$/.test(exampleId)
 }
 
 /**
@@ -64,10 +63,10 @@ export function validateExampleId(exampleId: string): boolean {
  * @returns Sanitized string
  */
 export function sanitizeString(input: string): string {
-  if (typeof input !== 'string') return input;
-  
+  if (typeof input !== 'string') return input
+
   // Remove potentially dangerous characters
-  return input.replace(/[<>'"&;]/g, '');
+  return input.replace(/[<>'"&;]/g, '')
 }
 
 /**
@@ -76,21 +75,21 @@ export function sanitizeString(input: string): string {
  * @returns Sanitized object
  */
 export function sanitizeObject(input: Record<string, any>): Record<string, any> {
-  if (typeof input !== 'object' || input === null) return input;
-  
-  const sanitized: Record<string, any> = {};
-  
+  if (typeof input !== 'object' || input === null) return input
+
+  const sanitized: Record<string, any> = {}
+
   for (const [key, value] of Object.entries(input)) {
     if (typeof value === 'string') {
-      sanitized[key] = sanitizeString(value);
+      sanitized[key] = sanitizeString(value)
     } else if (typeof value === 'object' && value !== null) {
-      sanitized[key] = sanitizeObject(value);
+      sanitized[key] = sanitizeObject(value)
     } else {
-      sanitized[key] = value;
+      sanitized[key] = value
     }
   }
-  
-  return sanitized;
+
+  return sanitized
 }
 
 /**
@@ -99,8 +98,8 @@ export function sanitizeObject(input: Record<string, any>): Record<string, any> 
  * @returns Sanitized code
  */
 export function sanitizeCode(code: string): string {
-  if (typeof code !== 'string') return code;
-  
+  if (typeof code !== 'string') return code
+
   // Remove potentially dangerous code patterns
   return code
     .replace(/eval\s*\(/g, 'disabledEval(')
@@ -110,7 +109,7 @@ export function sanitizeCode(code: string): string {
     .replace(/localStorage/g, 'disabledLocalStorage')
     .replace(/sessionStorage/g, 'disabledSessionStorage')
     .replace(/setTimeout/g, 'disabledSetTimeout')
-    .replace(/setInterval/g, 'disabledSetInterval');
+    .replace(/setInterval/g, 'disabledSetInterval')
 }
 
 /**
@@ -119,27 +118,27 @@ export function sanitizeCode(code: string): string {
  * @returns Validated and sanitized input
  */
 export function validateAndSanitizeSearchInput(input: Record<string, any>): Record<string, any> {
-  const sanitized = sanitizeObject(input);
-  
+  const sanitized = sanitizeObject(input)
+
   // Validate query
   if (sanitized.query && typeof sanitized.query === 'string') {
     // Limit query length
-    sanitized.query = sanitized.query.substring(0, 100);
+    sanitized.query = sanitized.query.substring(0, 100)
   }
-  
+
   // Validate limit
   if (sanitized.limit) {
     // Ensure limit is a number and within reasonable bounds
-    sanitized.limit = Math.min(Math.max(parseInt(sanitized.limit.toString()) || 10, 1), 100);
+    sanitized.limit = Math.min(Math.max(parseInt(sanitized.limit.toString(), 10) || 10, 1), 100)
   }
-  
+
   // Validate offset
   if (sanitized.offset) {
     // Ensure offset is a number and within reasonable bounds
-    sanitized.offset = Math.max(parseInt(sanitized.offset.toString()) || 0, 0);
+    sanitized.offset = Math.max(parseInt(sanitized.offset.toString(), 10) || 0, 0)
   }
-  
-  return sanitized;
+
+  return sanitized
 }
 
 /**
@@ -148,15 +147,17 @@ export function validateAndSanitizeSearchInput(input: Record<string, any>): Reco
  * @returns Validated and sanitized input
  * @throws {Error} - If component ID is invalid
  */
-export function validateAndSanitizeComponentDetailsInput(input: Record<string, any>): Record<string, any> {
-  const sanitized = sanitizeObject(input);
-  
+export function validateAndSanitizeComponentDetailsInput(
+  input: Record<string, any>,
+): Record<string, any> {
+  const sanitized = sanitizeObject(input)
+
   // Validate component ID
   if (!validateComponentId(sanitized.componentId)) {
-    throw new Error(`Invalid component ID: ${sanitized.componentId}`);
+    throw new Error(`Invalid component ID: ${sanitized.componentId}`)
   }
-  
-  return sanitized;
+
+  return sanitized
 }
 
 /**
@@ -165,34 +166,36 @@ export function validateAndSanitizeComponentDetailsInput(input: Record<string, a
  * @returns Validated and sanitized input
  * @throws {Error} - If component ID is invalid
  */
-export function validateAndSanitizeCodeGenerationInput(input: Record<string, any>): Record<string, any> {
-  const sanitized = sanitizeObject(input);
-  
+export function validateAndSanitizeCodeGenerationInput(
+  input: Record<string, any>,
+): Record<string, any> {
+  const sanitized = sanitizeObject(input)
+
   // Validate component ID
   if (!validateComponentId(sanitized.componentId)) {
-    throw new Error(`Invalid component ID: ${sanitized.componentId}`);
+    throw new Error(`Invalid component ID: ${sanitized.componentId}`)
   }
-  
+
   // Sanitize props
   if (sanitized.props) {
-    sanitized.props = sanitizeObject(sanitized.props);
+    sanitized.props = sanitizeObject(sanitized.props)
   }
-  
+
   // Sanitize children
   if (sanitized.children) {
-    sanitized.children = sanitizeCode(sanitized.children);
+    sanitized.children = sanitizeCode(sanitized.children)
   }
-  
+
   // Sanitize event handlers
   if (sanitized.eventHandlers) {
     for (const [event, handler] of Object.entries(sanitized.eventHandlers)) {
       if (typeof handler === 'string') {
-        sanitized.eventHandlers[event] = sanitizeCode(handler);
+        sanitized.eventHandlers[event] = sanitizeCode(handler)
       }
     }
   }
-  
-  return sanitized;
+
+  return sanitized
 }
 
 /**
@@ -201,20 +204,22 @@ export function validateAndSanitizeCodeGenerationInput(input: Record<string, any
  * @returns Validated and sanitized input
  * @throws {Error} - If pattern ID is invalid
  */
-export function validateAndSanitizePatternCodeGenerationInput(input: Record<string, any>): Record<string, any> {
-  const sanitized = sanitizeObject(input);
-  
+export function validateAndSanitizePatternCodeGenerationInput(
+  input: Record<string, any>,
+): Record<string, any> {
+  const sanitized = sanitizeObject(input)
+
   // Validate pattern ID
   if (!validatePatternId(sanitized.patternId)) {
-    throw new Error(`Invalid pattern ID: ${sanitized.patternId}`);
+    throw new Error(`Invalid pattern ID: ${sanitized.patternId}`)
   }
-  
+
   // Sanitize customizations
   if (sanitized.customizations) {
-    sanitized.customizations = sanitizeObject(sanitized.customizations);
+    sanitized.customizations = sanitizeObject(sanitized.customizations)
   }
-  
-  return sanitized;
+
+  return sanitized
 }
 
 /**
@@ -225,8 +230,8 @@ export function validateAndSanitizePatternCodeGenerationInput(input: Record<stri
 export function applySecurityEnhancements(server: FastMCP<any>): FastMCP<any> {
   // FastMCP already provides built-in security features
   // We can add additional security measures if needed
-  
+
   //console.error('Security enhancements applied to FastMCP server');
-  
-  return server;
+
+  return server
 }

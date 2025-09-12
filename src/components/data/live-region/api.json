@@ -45,10 +45,7 @@
       "inlineType": {
         "name": "LiveRegionProps.TagName",
         "type": "union",
-        "values": [
-          "div",
-          "span"
-        ]
+        "values": ["div", "span"]
       },
       "optional": true,
       "description": "The tag name to use for the wrapper around the `children` slot.",

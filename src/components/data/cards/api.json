@@ -187,10 +187,7 @@
       "inlineType": {
         "name": "CardsProps.SelectionType",
         "type": "union",
-        "values": [
-          "single",
-          "multi"
-        ]
+        "values": ["single", "multi"]
       },
       "optional": true,
       "description": "Specifies the selection mode. It can be either `single` or `multi`."
@@ -219,10 +216,7 @@
       "inlineType": {
         "name": "CardsProps.TrackBy<T>",
         "type": "union",
-        "values": [
-          "string",
-          "(item: T) => string"
-        ]
+        "values": ["string", "(item: T) => string"]
       },
       "optional": true,
       "description": "Specifies the property inside items that uniquely identifies them.\nWhen it's set, it's used to provide [keys for React](https://reactjs.org/docs/lists-and-keys.html#keys)\nfor performance optimizations.\n\nIt's also used for connecting `items` and `selectedItems` values when they don't reference the same object."
@@ -233,10 +227,7 @@
       "inlineType": {
         "name": "\"container\" | \"full-page\"",
         "type": "union",
-        "values": [
-          "container",
-          "full-page"
-        ]
+        "values": ["container", "full-page"]
       },
       "optional": true,
       "description": "Specify a cards variant with one of the following:\n* `container` - Use this variant to have the cards displayed as a container.\n* `full-page` – Use this variant when cards are the entire content of a page.",

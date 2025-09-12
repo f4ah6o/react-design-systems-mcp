@@ -117,12 +117,7 @@
       "inlineType": {
         "name": "ModalProps.Size",
         "type": "union",
-        "values": [
-          "small",
-          "max",
-          "medium",
-          "large"
-        ]
+        "values": ["small", "max", "medium", "large"]
       },
       "optional": true,
       "description": "Sets the width of the modal. `max` uses variable width up to the\nlargest size allowed by the design guidelines. Other sizes\n(`small`/`medium`/`large`) have fixed widths.",

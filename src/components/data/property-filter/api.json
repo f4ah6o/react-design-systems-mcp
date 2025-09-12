@@ -158,12 +158,7 @@
       "inlineType": {
         "name": "DropdownStatusProps.StatusType",
         "type": "union",
-        "values": [
-          "error",
-          "finished",
-          "loading",
-          "pending"
-        ]
+        "values": ["error", "finished", "loading", "pending"]
       },
       "optional": true,
       "description": "Specifies the current status of loading more options.\n* `pending` - Indicates that no request in progress, but more options may be loaded.\n* `loading` - Indicates that data fetching is in progress.\n* `finished` - Indicates that pagination has finished and no more requests are expected.\n* `error` - Indicates that an error occurred during fetch. You should use `recoveryText` to enable the user to recover."

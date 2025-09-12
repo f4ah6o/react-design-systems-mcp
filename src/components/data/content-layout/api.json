@@ -58,10 +58,7 @@
       "inlineType": {
         "name": "string | ((mode: \"dark\" | \"light\") => string)",
         "type": "union",
-        "values": [
-          "string",
-          "(mode: \"dark\" | \"light\") => string"
-        ]
+        "values": ["string", "(mode: \"dark\" | \"light\") => string"]
       },
       "optional": true,
       "description": "Use this property to style the background of the header.\n\nIt can be:\n* a string representing the CSS `background` value for the header element.\n* a function that receives the mode (\"light\" or \"dark\") as a parameter and returns a string.\n\n The header background spans across the full available width, independent of the specified `maxContentWidth`.\n If set, the component will not add the default background color to the header."
@@ -72,11 +69,7 @@
       "inlineType": {
         "name": "\"default\" | \"divider\" | \"high-contrast\"",
         "type": "union",
-        "values": [
-          "default",
-          "divider",
-          "high-contrast"
-        ]
+        "values": ["default", "divider", "high-contrast"]
       },
       "optional": true,
       "description": "Determines the visual treatment for the header. Specifically:\n* `default` - Does not apply any visual treatment.\n* `high-contrast` - Applies high-contrast to the background of the header and the elements contained within it.\n    If you are using the AppLayout component, set `headerVariant=\"high-contrast\"` to apply the same treatment to the breadcrumbs and notifications slots.\n* `divider` - Adds a horizontal separator between the header and the content.",

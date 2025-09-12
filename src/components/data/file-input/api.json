@@ -92,10 +92,7 @@
       "inlineType": {
         "name": "\"button\" | \"icon\"",
         "type": "union",
-        "values": [
-          "button",
-          "icon"
-        ]
+        "values": ["button", "icon"]
       },
       "optional": true,
       "description": "Variant of the file input. Defaults to \"button\"."

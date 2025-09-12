@@ -1,40 +1,40 @@
 /**
  * Pattern Data Model
- * 
+ *
  * This module defines pattern entities based on research from cloudscape.design/patterns.
- * Patterns are extracted from the 61+ design patterns across General, Generative AI, 
+ * Patterns are extracted from the 61+ design patterns across General, Generative AI,
  * and Resource Management categories, plus existing form/table patterns.
  */
 
 export interface PatternExample {
-  title: string;
-  description: string;
-  code?: string;
-  demoUrl?: string;
+  title: string
+  description: string
+  code?: string
+  demoUrl?: string
 }
 
 export interface CustomizationOption {
-  name: string;
-  type: string;
-  description: string;
-  defaultValue: any;
+  name: string
+  type: string
+  description: string
+  defaultValue: any
 }
 
 export interface Pattern {
-  id: string;
-  name: string;
-  description: string;
-  category: 'general' | 'generative-ai' | 'resource-management' | 'layout';
-  components: string[];
-  usageGuidelines: string;
-  examples: PatternExample[];
-  codeExample: string;
-  relatedPatterns: string[];
-  tags: string[];
-  lastUpdated: string;
+  id: string
+  name: string
+  description: string
+  category: 'general' | 'generative-ai' | 'resource-management' | 'layout'
+  components: string[]
+  usageGuidelines: string
+  examples: PatternExample[]
+  codeExample: string
+  relatedPatterns: string[]
+  tags: string[]
+  lastUpdated: string
   // Legacy fields for backward compatibility
-  code?: string;
-  customizationOptions?: Record<string, CustomizationOption>;
+  code?: string
+  customizationOptions?: Record<string, CustomizationOption>
 }
 
 /**
@@ -42,22 +42,23 @@ export interface Pattern {
  * Organized by categories: General, Generative AI, Resource Management, and Layout
  */
 export const patternData: Record<string, Pattern> = {
-  "layout-data-table": {
-    id: "layout-data-table",
-    name: "Data Table",
-    description: "A table with sorting, filtering, and pagination.",
-    category: "layout",
-    components: ["table", "pagination", "collection-preferences", "text-filter"],
-    usageGuidelines: "Use data table patterns when displaying tabular data with complex interactions like sorting, filtering, and pagination. Ideal for large datasets that require user manipulation.",
+  'layout-data-table': {
+    id: 'layout-data-table',
+    name: 'Data Table',
+    description: 'A table with sorting, filtering, and pagination.',
+    category: 'layout',
+    components: ['table', 'pagination', 'collection-preferences', 'text-filter'],
+    usageGuidelines:
+      'Use data table patterns when displaying tabular data with complex interactions like sorting, filtering, and pagination. Ideal for large datasets that require user manipulation.',
     examples: [
       {
-        title: "Basic Data Table",
-        description: "Table with filtering and pagination"
-      }
+        title: 'Basic Data Table',
+        description: 'Table with filtering and pagination',
+      },
     ],
-    relatedPatterns: ["general-filtering"],
-    tags: ["table", "data-display", "filtering", "pagination"],
-    lastUpdated: "2025-09-11",
+    relatedPatterns: ['general-filtering'],
+    tags: ['table', 'data-display', 'filtering', 'pagination'],
+    lastUpdated: '2025-09-11',
     codeExample: `import Table from "@cloudscape-design/components/table";
 import Pagination from "@cloudscape-design/components/pagination";
 import TextFilter from "@cloudscape-design/components/text-filter";
@@ -101,36 +102,37 @@ function DataTable({ items, columnDefinitions }) {
 }`,
     customizationOptions: {
       columnDefinitions: {
-        name: "columnDefinitions",
-        type: "array",
-        description: "Defines the columns of the table.",
-        defaultValue: []
+        name: 'columnDefinitions',
+        type: 'array',
+        description: 'Defines the columns of the table.',
+        defaultValue: [],
       },
       items: {
-        name: "items",
-        type: "array",
-        description: "The items to display in the table.",
-        defaultValue: []
-      }
-    }
+        name: 'items',
+        type: 'array',
+        description: 'The items to display in the table.',
+        defaultValue: [],
+      },
+    },
   },
-  
-  "layout-form": {
-    id: "layout-form",
-    name: "Form Layout",
-    description: "A form with validation and error handling.",
-    category: "layout",
-    components: ["form", "form-field", "input", "button", "space-between"],
-    usageGuidelines: "Use form layout patterns for collecting user input with proper validation and error handling. Provides consistent form structure and user experience.",
+
+  'layout-form': {
+    id: 'layout-form',
+    name: 'Form Layout',
+    description: 'A form with validation and error handling.',
+    category: 'layout',
+    components: ['form', 'form-field', 'input', 'button', 'space-between'],
+    usageGuidelines:
+      'Use form layout patterns for collecting user input with proper validation and error handling. Provides consistent form structure and user experience.',
     examples: [
       {
-        title: "Validated Form",
-        description: "Form with field validation and error messages"
-      }
+        title: 'Validated Form',
+        description: 'Form with field validation and error messages',
+      },
     ],
-    relatedPatterns: ["general-errors", "resource-management-create"],
-    tags: ["form", "validation", "input", "layout"],
-    lastUpdated: "2025-09-11",
+    relatedPatterns: ['general-errors', 'resource-management-create'],
+    tags: ['form', 'validation', 'input', 'layout'],
+    lastUpdated: '2025-09-11',
     codeExample: `import Form from "@cloudscape-design/components/form";
 import FormField from "@cloudscape-design/components/form-field";
 import Input from "@cloudscape-design/components/input";
@@ -199,25 +201,26 @@ function FormLayout({ fields, onSubmit }) {
 }`,
     customizationOptions: {
       fields: {
-        name: "fields",
-        type: "array",
-        description: "The fields to display in the form.",
-        defaultValue: []
+        name: 'fields',
+        type: 'array',
+        description: 'The fields to display in the form.',
+        defaultValue: [],
       },
       onSubmit: {
-        name: "onSubmit",
-        type: "function",
-        description: "Function called when the form is submitted.",
-        defaultValue: "data => console.error(data)"
-      }
-    }
+        name: 'onSubmit',
+        type: 'function',
+        description: 'Function called when the form is submitted.',
+        defaultValue: 'data => console.error(data)',
+      },
+    },
   },
-  
+
   // General Patterns from cloudscape.design/patterns
   'general-actions': {
     id: 'general-actions',
     name: 'Actions',
-    description: 'Patterns for user actions, including primary actions, secondary actions, and bulk actions.',
+    description:
+      'Patterns for user actions, including primary actions, secondary actions, and bulk actions.',
     category: 'general',
     components: ['button', 'button-group', 'split-button'],
     usageGuidelines: `## When to use actions
@@ -235,8 +238,8 @@ Use secondary actions for less important actions that support the primary workfl
       {
         title: 'Primary Action Button',
         description: 'Main call-to-action for completing a workflow',
-        code: `<Button variant="primary">Create resource</Button>`
-      }
+        code: `<Button variant="primary">Create resource</Button>`,
+      },
     ],
     codeExample: `import React from 'react';
 import Button from '@cloudscape-design/components/button';
@@ -252,13 +255,14 @@ export default function ActionsPattern() {
 }`,
     relatedPatterns: ['general-errors'],
     tags: ['actions', 'buttons', 'workflow'],
-    lastUpdated: '2025-09-11'
+    lastUpdated: '2025-09-11',
   },
 
   'general-errors': {
     id: 'general-errors',
     name: 'Errors',
-    description: 'Patterns for displaying and handling errors, including validation errors, system errors, and recovery actions.',
+    description:
+      'Patterns for displaying and handling errors, including validation errors, system errors, and recovery actions.',
     category: 'general',
     components: ['alert', 'form-field', 'flash-bar'],
     usageGuidelines: `## When to use error patterns
@@ -270,8 +274,8 @@ Use error patterns to communicate problems clearly and help users understand how
         description: 'Inline error message for form field validation',
         code: `<FormField label="Email" errorText="Please enter a valid email address">
   <Input value={email} onChange={handleChange} invalid />
-</FormField>`
-      }
+</FormField>`,
+      },
     ],
     codeExample: `import React, { useState } from 'react';
 import Alert from '@cloudscape-design/components/alert';
@@ -295,13 +299,14 @@ export default function ErrorsPattern() {
 }`,
     relatedPatterns: ['general-actions'],
     tags: ['errors', 'validation', 'alerts'],
-    lastUpdated: '2025-09-11'
+    lastUpdated: '2025-09-11',
   },
 
   'general-filtering': {
     id: 'general-filtering',
     name: 'Filtering',
-    description: 'Patterns for filtering and searching data, including property filters, faceted search, and advanced filtering.',
+    description:
+      'Patterns for filtering and searching data, including property filters, faceted search, and advanced filtering.',
     category: 'general',
     components: ['property-filter', 'select', 'input', 'multiselect'],
     usageGuidelines: `## When to use filtering
@@ -310,8 +315,8 @@ Use filtering patterns to help users find specific data quickly in large dataset
     examples: [
       {
         title: 'Property Filter',
-        description: 'Advanced filtering with multiple properties and operators'
-      }
+        description: 'Advanced filtering with multiple properties and operators',
+      },
     ],
     codeExample: `import React, { useState } from 'react';
 import PropertyFilter from '@cloudscape-design/components/property-filter';
@@ -335,7 +340,7 @@ export default function FilteringPattern() {
 }`,
     relatedPatterns: ['layout-data-table'],
     tags: ['filtering', 'search', 'property-filter'],
-    lastUpdated: '2025-09-11'
+    lastUpdated: '2025-09-11',
   },
 
   // Generative AI Patterns
@@ -351,8 +356,8 @@ Use chat patterns for conversational AI interfaces where users interact through 
     examples: [
       {
         title: 'Basic Chat Interface',
-        description: 'Simple chat with user and AI messages'
-      }
+        description: 'Simple chat with user and AI messages',
+      },
     ],
     codeExample: `import React, { useState } from 'react';
 import Input from '@cloudscape-design/components/input';
@@ -375,13 +380,14 @@ export default function ChatPattern() {
 }`,
     relatedPatterns: ['generative-ai-loading-states'],
     tags: ['chat', 'conversation', 'ai'],
-    lastUpdated: '2025-09-11'
+    lastUpdated: '2025-09-11',
   },
 
   'generative-ai-loading-states': {
     id: 'generative-ai-loading-states',
     name: 'Loading States',
-    description: 'Loading patterns specific to AI content generation, including progressive loading and streaming responses.',
+    description:
+      'Loading patterns specific to AI content generation, including progressive loading and streaming responses.',
     category: 'generative-ai',
     components: ['spinner', 'progress-bar', 'skeleton'],
     usageGuidelines: `## When to use AI loading patterns
@@ -390,8 +396,8 @@ Use specialized loading patterns when AI systems are generating content.`,
     examples: [
       {
         title: 'Content Generation Spinner',
-        description: 'Loading indicator while AI generates content'
-      }
+        description: 'Loading indicator while AI generates content',
+      },
     ],
     codeExample: `import React, { useState } from 'react';
 import Spinner from '@cloudscape-design/components/spinner';
@@ -413,14 +419,15 @@ export default function AILoadingPattern() {
 }`,
     relatedPatterns: ['generative-ai-chat'],
     tags: ['loading', 'ai-generation', 'progress'],
-    lastUpdated: '2025-09-11'
+    lastUpdated: '2025-09-11',
   },
 
   // Additional Generative AI Patterns
   'generative-ai-content-generation': {
     id: 'generative-ai-content-generation',
     name: 'Content Generation',
-    description: 'Patterns for AI-powered content creation interfaces with templates, prompts, and output management.',
+    description:
+      'Patterns for AI-powered content creation interfaces with templates, prompts, and output management.',
     category: 'generative-ai',
     components: ['textarea', 'button', 'cards', 'alert'],
     usageGuidelines: `## When to use content generation patterns
@@ -435,12 +442,12 @@ Use these patterns when providing AI-powered content creation tools that help us
     examples: [
       {
         title: 'Text Generation Interface',
-        description: 'Interface for generating text content with prompts and templates'
+        description: 'Interface for generating text content with prompts and templates',
       },
       {
         title: 'Code Generation Tool',
-        description: 'Specialized interface for AI-assisted code generation'
-      }
+        description: 'Specialized interface for AI-assisted code generation',
+      },
     ],
     codeExample: `import React, { useState } from 'react';
 import Textarea from '@cloudscape-design/components/textarea';
@@ -513,13 +520,14 @@ export default function ContentGenerationPattern() {
 }`,
     relatedPatterns: ['generative-ai-chat', 'generative-ai-loading-states'],
     tags: ['ai', 'content-generation', 'templates', 'productivity'],
-    lastUpdated: '2025-09-11'
+    lastUpdated: '2025-09-11',
   },
 
   'generative-ai-prompt-engineering': {
     id: 'generative-ai-prompt-engineering',
     name: 'Prompt Engineering',
-    description: 'Interface patterns for building, testing, and refining AI prompts with variables and templates.',
+    description:
+      'Interface patterns for building, testing, and refining AI prompts with variables and templates.',
     category: 'generative-ai',
     components: ['input', 'textarea', 'select', 'tabs', 'expandable-section'],
     usageGuidelines: `## When to use prompt engineering patterns
@@ -534,12 +542,12 @@ Use these patterns when building interfaces that help users create, test, and op
     examples: [
       {
         title: 'Prompt Builder',
-        description: 'Interactive tool for constructing AI prompts with variables'
+        description: 'Interactive tool for constructing AI prompts with variables',
       },
       {
         title: 'Prompt Testing Interface',
-        description: 'Environment for testing and comparing different prompt variations'
-      }
+        description: 'Environment for testing and comparing different prompt variations',
+      },
     ],
     codeExample: `import React, { useState } from 'react';
 import Tabs from '@cloudscape-design/components/tabs';
@@ -612,14 +620,15 @@ export default function PromptEngineeringPattern() {
 }`,
     relatedPatterns: ['generative-ai-content-generation', 'general-actions'],
     tags: ['ai', 'prompt-engineering', 'templates', 'testing', 'variables'],
-    lastUpdated: '2025-09-11'
+    lastUpdated: '2025-09-11',
   },
 
   // Resource Management Patterns
   'resource-management-create': {
     id: 'resource-management-create',
     name: 'Create Resource',
-    description: 'Patterns for creating new resources, including forms, validation, and confirmation workflows.',
+    description:
+      'Patterns for creating new resources, including forms, validation, and confirmation workflows.',
     category: 'resource-management',
     components: ['form', 'form-field', 'input', 'button'],
     usageGuidelines: `## When to use create resource patterns
@@ -628,8 +637,8 @@ Use create patterns when users need to add new items to your system.`,
     examples: [
       {
         title: 'Simple Create Form',
-        description: 'Basic form for creating a resource'
-      }
+        description: 'Basic form for creating a resource',
+      },
     ],
     codeExample: `import React, { useState } from 'react';
 import Form from '@cloudscape-design/components/form';
@@ -656,13 +665,14 @@ export default function CreateResourcePattern() {
 }`,
     relatedPatterns: ['resource-management-view', 'layout-form'],
     tags: ['create', 'form', 'validation'],
-    lastUpdated: '2025-09-11'
+    lastUpdated: '2025-09-11',
   },
 
   'resource-management-view': {
     id: 'resource-management-view',
     name: 'View Resource',
-    description: 'Patterns for displaying resource details, including overview pages, detail panels, and read-only views.',
+    description:
+      'Patterns for displaying resource details, including overview pages, detail panels, and read-only views.',
     category: 'resource-management',
     components: ['container', 'column-layout', 'key-value-pairs'],
     usageGuidelines: `## When to use view resource patterns
@@ -671,8 +681,8 @@ Use view patterns to display detailed information about resources in a readable 
     examples: [
       {
         title: 'Resource Overview',
-        description: 'High-level overview of resource details'
-      }
+        description: 'High-level overview of resource details',
+      },
     ],
     codeExample: `import React from 'react';
 import Container from '@cloudscape-design/components/container';
@@ -700,14 +710,15 @@ export default function ViewResourcePattern() {
 }`,
     relatedPatterns: ['resource-management-create'],
     tags: ['view', 'details', 'overview'],
-    lastUpdated: '2025-09-11'
+    lastUpdated: '2025-09-11',
   },
 
   // Additional Resource Management Patterns
   'resource-management-list': {
     id: 'resource-management-list',
     name: 'List Resources',
-    description: 'Patterns for displaying collections of resources with filtering, sorting, and bulk actions.',
+    description:
+      'Patterns for displaying collections of resources with filtering, sorting, and bulk actions.',
     category: 'resource-management',
     components: ['table', 'cards', 'pagination', 'text-filter', 'button-group'],
     usageGuidelines: `## When to use list resource patterns
@@ -722,12 +733,12 @@ Use list patterns when users need to browse, search, and manage collections of r
     examples: [
       {
         title: 'Resource Table View',
-        description: 'Tabular display with sorting and actions'
+        description: 'Tabular display with sorting and actions',
       },
       {
         title: 'Resource Card Grid',
-        description: 'Card-based layout for visual resources'
-      }
+        description: 'Card-based layout for visual resources',
+      },
     ],
     codeExample: `import React, { useState } from 'react';
 import Table from '@cloudscape-design/components/table';
@@ -796,13 +807,14 @@ export default function ListResourcePattern() {
 }`,
     relatedPatterns: ['resource-management-view', 'general-filtering'],
     tags: ['list', 'table', 'pagination', 'filtering', 'bulk-actions'],
-    lastUpdated: '2025-09-11'
+    lastUpdated: '2025-09-11',
   },
 
   'resource-management-edit': {
     id: 'resource-management-edit',
     name: 'Edit Resource',
-    description: 'Patterns for modifying existing resources with validation, change tracking, and confirmation workflows.',
+    description:
+      'Patterns for modifying existing resources with validation, change tracking, and confirmation workflows.',
     category: 'resource-management',
     components: ['form', 'form-field', 'input', 'button', 'alert'],
     usageGuidelines: `## When to use edit resource patterns
@@ -817,12 +829,12 @@ Use edit patterns when users need to modify existing resources with proper chang
     examples: [
       {
         title: 'In-place Editing',
-        description: 'Direct editing within the resource view'
+        description: 'Direct editing within the resource view',
       },
       {
         title: 'Edit Form Dialog',
-        description: 'Dedicated form for resource modifications'
-      }
+        description: 'Dedicated form for resource modifications',
+      },
     ],
     codeExample: `import React, { useState, useEffect } from 'react';
 import Form from '@cloudscape-design/components/form';
@@ -909,13 +921,14 @@ export default function EditResourcePattern({ initialResource }) {
 }`,
     relatedPatterns: ['resource-management-create', 'general-errors'],
     tags: ['edit', 'form', 'validation', 'change-tracking'],
-    lastUpdated: '2025-09-11'
+    lastUpdated: '2025-09-11',
   },
 
   'resource-management-delete': {
     id: 'resource-management-delete',
     name: 'Delete Resource',
-    description: 'Safe deletion patterns with confirmation dialogs, bulk deletion, and recovery options.',
+    description:
+      'Safe deletion patterns with confirmation dialogs, bulk deletion, and recovery options.',
     category: 'resource-management',
     components: ['modal', 'button', 'alert', 'checkbox'],
     usageGuidelines: `## When to use delete resource patterns
@@ -930,12 +943,12 @@ Use delete patterns to provide safe, reversible resource removal with clear conf
     examples: [
       {
         title: 'Single Item Deletion',
-        description: 'Confirmation dialog for deleting one resource'
+        description: 'Confirmation dialog for deleting one resource',
       },
       {
         title: 'Bulk Deletion',
-        description: 'Interface for deleting multiple resources safely'
-      }
+        description: 'Interface for deleting multiple resources safely',
+      },
     ],
     codeExample: `import React, { useState } from 'react';
 import Modal from '@cloudscape-design/components/modal';
@@ -1021,8 +1034,8 @@ export default function DeleteResourcePattern({
 }`,
     relatedPatterns: ['resource-management-list', 'general-actions'],
     tags: ['delete', 'confirmation', 'bulk-actions', 'safety'],
-    lastUpdated: '2025-09-11'
-  }
-};
+    lastUpdated: '2025-09-11',
+  },
+}
 
-export default patternData;
+export default patternData

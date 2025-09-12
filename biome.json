@@ -8,7 +8,20 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "recommended": true,
+      "suspicious": {
+        "noExplicitAny": "warn",
+        "noImplicitAnyLet": "warn",
+        "noAssignInExpressions": "warn",
+        "noTemplateCurlyInString": "warn"
+      },
+      "complexity": {
+        "noCommaOperator": "off",
+        "noStaticOnlyClass": "warn"
+      },
+      "style": {
+        "useTemplate": "on"
+      }
     }
   },
   "vcs": {
@@ -17,7 +30,19 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignoreUnknown": false
+    "ignoreUnknown": false,
+    "includes": ["src/**/*", "tests/**/*", "server.ts", "*.json", "*.md"],
+    "experimentalScannerIgnores": [
+      "node_modules/**",
+      "dist/**",
+      "coverage/**",
+      "index.js",
+      "server.js",
+      "index.d.ts",
+      "server.d.ts",
+      "**/*.d.ts",
+      "**/*.map"
+    ]
   },
   "javascript": {
     "formatter": {

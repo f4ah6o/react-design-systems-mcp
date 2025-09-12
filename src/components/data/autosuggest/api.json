@@ -151,11 +151,7 @@
       "inlineType": {
         "name": "OptionsFilteringType",
         "type": "union",
-        "values": [
-          "auto",
-          "none",
-          "manual"
-        ]
+        "values": ["auto", "none", "manual"]
       },
       "optional": true,
       "description": "Determines how filtering is applied to the list of `options`:\n\n* `auto` - The component will automatically filter options based on user input.\n* `manual` - You will set up `onChange` or `onLoadItems` event listeners and filter options on your side or request\nthem from server.\n\nBy default the component will filter the provided `options` based on the value of the filtering input field.\nOnly options that have a `value`, `label`, `description` or `labelTag` that contains the input value as a substring\nare displayed in the list of options.\n\nIf you set this property to `manual`, this default filtering mechanism is disabled and all provided `options` are\ndisplayed in the dropdown list. In that case make sure that you use the `onChange` or `onLoadItems` events in order\nto set the `options` property to the options that are relevant for the user, given the filtering input value.\n\nNote: Manual filtering doesn't disable match highlighting.",
@@ -251,12 +247,7 @@
       "inlineType": {
         "name": "DropdownStatusProps.StatusType",
         "type": "union",
-        "values": [
-          "error",
-          "finished",
-          "loading",
-          "pending"
-        ]
+        "values": ["error", "finished", "loading", "pending"]
       },
       "optional": true,
       "description": "Specifies the current status of loading more options.\n* `pending` - Indicates that no request in progress, but more options may be loaded.\n* `loading` - Indicates that data fetching is in progress.\n* `finished` - Indicates that pagination has finished and no more requests are expected.\n* `error` - Indicates that an error occurred during fetch. You should use `recoveryText` to enable the user to recover.",

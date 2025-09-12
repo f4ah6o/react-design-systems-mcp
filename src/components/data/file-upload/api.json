@@ -77,10 +77,7 @@
       "inlineType": {
         "name": "FileUploadProps.FileTokenAlignment",
         "type": "union",
-        "values": [
-          "horizontal",
-          "vertical"
-        ]
+        "values": ["horizontal", "vertical"]
       },
       "optional": true,
       "description": "Alignment of the file tokens. Defaults to \"vertical\"."

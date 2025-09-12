@@ -24,12 +24,7 @@
       "inlineType": {
         "name": "\"left\" | \"top\" | \"bottom\" | \"right\"",
         "type": "union",
-        "values": [
-          "left",
-          "top",
-          "bottom",
-          "right"
-        ]
+        "values": ["left", "top", "bottom", "right"]
       },
       "optional": true,
       "description": "The direction that the annotation popover should open in.\nChange this property if in the default direction the annotation popover\noverlaps too much with other content on the page.",
@@ -54,10 +49,7 @@
       "inlineType": {
         "name": "\"left\" | \"right\"",
         "type": "union",
-        "values": [
-          "left",
-          "right"
-        ]
+        "values": ["left", "right"]
       },
       "optional": true,
       "description": "On which side of the content the hotspot icon should be displayed.",

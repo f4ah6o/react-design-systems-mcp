@@ -37,10 +37,7 @@
       "inlineType": {
         "name": "LinkProps.Color",
         "type": "union",
-        "values": [
-          "normal",
-          "inverted"
-        ]
+        "values": ["normal", "inverted"]
       },
       "optional": true,
       "description": "Determines the text color of the link and its icon.\n\n- `normal`: Use in most cases where a link is required.\n- `inverted`: Use to style links inside Flashbars.\n\nThis property is overridden if the variant is `info`.",
@@ -113,12 +110,7 @@
       "inlineType": {
         "name": "LinkProps.Variant",
         "type": "union",
-        "values": [
-          "info",
-          "primary",
-          "secondary",
-          "awsui-value-large"
-        ]
+        "values": ["info", "primary", "secondary", "awsui-value-large"]
       },
       "optional": true,
       "description": "Determines the visual style of the link as follows:\n\n- `primary` - Displays the link text with bold styling for sufficient contrast with surrounding text.\n    Use this for links where the context doesn't imply interactivity such as\n    \"Learn more\" links and links within paragraphs.\n- `secondary` - Does not provide any additional indicators for interactivity (except for an underline when the user hovers over or focuses the link).\n    This can be used in cases where the interactivity is strongly implied by its context,\n    such as in a table or a list of external links.\n- `info` - Use for \"info\" links that link to content in a help panel.\n\nThe default is `secondary`, except inside the following components where it defaults to `primary`:\n- Table\n- Cards\n- Alert\n- Popover\n- Help Panel (main `content` only)"

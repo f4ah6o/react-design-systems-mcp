@@ -24,13 +24,7 @@
       "inlineType": {
         "name": "StatusIndicatorProps.Color",
         "type": "union",
-        "values": [
-          "blue",
-          "green",
-          "grey",
-          "red",
-          "yellow"
-        ]
+        "values": ["blue", "green", "grey", "red", "yellow"]
       },
       "optional": true,
       "description": "Specifies an override for the status indicator color."

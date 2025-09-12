@@ -80,11 +80,7 @@
       "inlineType": {
         "name": "TimeInputProps.Format",
         "type": "union",
-        "values": [
-          "hh",
-          "hh:mm",
-          "hh:mm:ss"
-        ]
+        "values": ["hh", "hh:mm", "hh:mm:ss"]
       },
       "optional": true,
       "description": "Specifies the format of the time input.\n\nUse it to restrict the granularity of time that the user can enter.",
