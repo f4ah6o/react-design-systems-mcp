@@ -6,6 +6,7 @@
  */
 
 import { MCPServerHelper, shouldSkipInCI } from '../utils'
+import { describe, beforeAll, beforeEach, afterEach, test, expect } from 'vitest'
 
 // Test configuration
 const TEST_TIMEOUT = 30000 // 30 seconds

@@ -25,6 +25,7 @@ import {
 import type { Demo } from './data/demos'
 import type { PatternCategory } from './data/pattern-categories'
 import type { Pattern } from './data/patterns'
+import { patternData as builtinPatterns } from './data/patterns'
 
 // Define types for component metadata
 export interface PropertyMetadata {
@@ -572,11 +573,9 @@ export function getCategory(categoryId: string): CategoryMetadata | undefined {
  */
 export function getAllPatterns(): Record<string, PatternMetadata> {
   if (Object.keys(patternCache).length === 0) {
-    // Load patterns from patterns.ts file
+    // Load patterns from TypeScript module
     try {
-      // Using dynamic import to avoid circular dependencies
-      const patternsModule = require('./data/patterns').default
-      Object.assign(patternCache, patternsModule)
+      Object.assign(patternCache, builtinPatterns)
     } catch (error) {
       console.error('Error loading patterns:', error)
     }

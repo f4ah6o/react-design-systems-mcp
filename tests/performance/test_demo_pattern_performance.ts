@@ -5,7 +5,7 @@
  * All operations should complete in sub-second response times for optimal user experience.
  */
 
-import { beforeEach, describe, expect, test } from '@jest/globals'
+import { beforeEach, describe, expect, test } from 'vitest'
 import { DemoProvider } from '../../src/demo-provider'
 import { PatternProvider } from '../../src/pattern-provider'
 

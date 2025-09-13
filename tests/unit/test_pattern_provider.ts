@@ -5,7 +5,7 @@
  * pattern search, details retrieval, category management, and validation.
  */
 
-import { beforeEach, describe, expect, test } from '@jest/globals'
+import { beforeEach, describe, expect, test } from 'vitest'
 import { PatternProvider } from '../../src/pattern-provider'
 
 describe('PatternProvider', () => {

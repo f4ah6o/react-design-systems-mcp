@@ -5,7 +5,7 @@
  * demo retrieval, filtering, validation, and error handling.
  */
 
-import { beforeEach, describe, expect, test } from '@jest/globals'
+import { beforeEach, describe, expect, test } from 'vitest'
 import { DemoProvider } from '../../src/demo-provider'
 
 describe('DemoProvider', () => {

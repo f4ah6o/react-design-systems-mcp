@@ -5,7 +5,7 @@
  * Tests cover demo structure validation, property validation, and consistency checks.
  */
 
-import { describe, expect, test } from '@jest/globals'
+import { describe, expect, test } from 'vitest'
 import {
   componentDemoMap,
   validateComponentDemoMappings,

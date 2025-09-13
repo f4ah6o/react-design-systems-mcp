@@ -5,7 +5,7 @@
  * Tests cover pattern structure validation, property validation, and consistency checks.
  */
 
-import { describe, expect, test } from '@jest/globals'
+import { describe, expect, test } from 'vitest'
 import { patternCategories } from '../../src/components/data/pattern-categories'
 import { type Pattern, patterns } from '../../src/components/data/patterns'
 

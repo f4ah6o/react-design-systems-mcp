@@ -4,6 +4,7 @@
  * This file contains tests for the MCP tools that provide advanced usage guidelines functionality.
  */
 
+import { describe, it, expect, vi } from 'vitest'
 import componentRegistry from '../../src/components/registry'
 
 // Mock MCP tool implementations for testing
@@ -445,7 +446,7 @@ More content`
     it('should handle empty component usage content', async () => {
       // This would happen if a component exists but has no usage guidelines
       // The actual registry should prevent this, but testing edge case
-      jest.spyOn(componentRegistry, 'getComponentUsage').mockReturnValueOnce('')
+      vi.spyOn(componentRegistry, 'getComponentUsage').mockReturnValueOnce('')
 
       await expect(
         MockMCPTools.get_component_usage({
@@ -453,7 +454,7 @@ More content`
         }),
       ).rejects.toThrow('Usage guidelines for component button not found')
 
-      jest.restoreAllMocks()
+      vi.restoreAllMocks()
     })
   })
 })

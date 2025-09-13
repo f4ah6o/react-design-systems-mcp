@@ -5,6 +5,7 @@
  */
 
 import componentRegistry from '../../src/components/registry'
+import { describe, it, expect } from 'vitest'
 
 // Mock MCP resource handler for testing
 class MockMCPResources {

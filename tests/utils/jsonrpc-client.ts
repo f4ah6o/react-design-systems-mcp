@@ -242,8 +242,9 @@ export class JsonRpcClient {
    * @param sessionId The session ID
    */
   public setSessionId(sessionId: string): void {
-    // For FastMCP, the JSON-RPC endpoint is at the root path with the session ID as a query parameter
+    // For FastMCP, include the session in both header and query to maximize compatibility
     this.path = `/?sessionId=${sessionId}`
+    this.headers['X-MCP-Session-ID'] = sessionId
   }
 
   /**

@@ -6,7 +6,7 @@
  * This follows the RED-GREEN-REFACTOR TDD cycle.
  */
 
-import { beforeAll, describe, expect, test } from '@jest/globals'
+import { beforeAll, describe, expect, test } from 'vitest'
 import type { FastMCP } from 'fastmcp'
 import componentRegistry from '../../src/components/registry'
 import { createFastMCPServer } from '../../src/mcp/server'

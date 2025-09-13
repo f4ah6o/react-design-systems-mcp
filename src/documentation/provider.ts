@@ -325,7 +325,7 @@ ${pattern.code}
 `
 
   // Generate customization options documentation
-  const customizationOptions = Object.entries(pattern.customizationOptions)
+  const customizationOptions = Object.entries(pattern.customizationOptions ?? {})
     .map(([_key, option]) => {
       const defaultValue =
         option.defaultValue !== null && option.defaultValue !== undefined

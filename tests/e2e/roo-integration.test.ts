@@ -7,6 +7,7 @@
 
 import fs from 'node:fs'
 import { MCPServerHelper, shouldSkipInCI } from '../utils'
+import { describe, beforeAll, beforeEach, afterEach, test, expect } from 'vitest'
 
 // Test configuration
 const TEST_TIMEOUT = 60000 // 60 seconds

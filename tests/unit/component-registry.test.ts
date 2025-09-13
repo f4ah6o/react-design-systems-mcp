@@ -6,6 +6,7 @@
  */
 
 import componentRegistry from '../../src/components/registry'
+import { describe, it, expect } from 'vitest'
 
 describe('Component Registry', () => {
   describe('getAllComponents', () => {

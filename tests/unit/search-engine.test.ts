@@ -7,6 +7,7 @@
 
 import componentRegistry from '../../src/components/registry'
 import searchEngine from '../../src/search/engine'
+import { describe, it, expect } from 'vitest'
 
 describe('Search Engine', () => {
   describe('searchComponents', () => {

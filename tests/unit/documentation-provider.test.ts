@@ -7,6 +7,7 @@
 
 import componentRegistry from '../../src/components/registry'
 import documentationProvider from '../../src/documentation/provider'
+import { describe, it, expect } from 'vitest'
 
 describe('Documentation Provider', () => {
   describe('getComponentDocumentation', () => {
