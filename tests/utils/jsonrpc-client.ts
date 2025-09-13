@@ -66,13 +66,25 @@ export class JsonRpcClient {
     params: any = {},
     id: string = this.generateId(),
   ): Promise<T> {
-    const request: JsonRpcRequest = {
-      jsonrpc: '2.0',
-      id,
-      method,
-      params,
-    }
+    const reqBody: JsonRpcRequest = { jsonrpc: '2.0', id, method, params }
 
+    // Try multiple candidate paths to support FastMCP and SDK SSE layouts
+    const candidates = this.buildPathCandidates()
+
+    let lastError: unknown
+    for (const path of candidates) {
+      try {
+        const result = await this.postOnce<T>(path, reqBody)
+        return result
+      } catch (err) {
+        lastError = err
+        // Try next candidate
+      }
+    }
+    throw lastError instanceof Error ? lastError : new Error(String(lastError))
+  }
+
+  private async postOnce<T>(path: string, body: JsonRpcRequest): Promise<T> {
     return new Promise<T>((resolve, reject) => {
       const requestTimeout = setTimeout(() => {
         reject(new Error(`Request timeout after ${this.timeout}ms`))
@@ -82,29 +94,21 @@ export class JsonRpcClient {
         {
           hostname: this.host,
           port: this.port,
-          path: this.path,
+          path,
           method: 'POST',
           headers: this.headers,
         },
         (res) => {
           let data = ''
-
-          res.on('data', (chunk) => {
-            data += chunk
-          })
-
+          res.on('data', (chunk) => (data += chunk))
           res.on('end', () => {
             clearTimeout(requestTimeout)
-
             try {
-              if (!data.trim()) {
-                // Some endpoints might not return data directly (e.g., when using SSE)
-                resolve({} as T)
+              if (!data || !data.trim()) {
+                reject(new Error('Empty response body'))
                 return
               }
-
               const response = JSON.parse(data) as JsonRpcResponse
-
               if (response.error) {
                 reject(
                   new Error(
@@ -113,7 +117,6 @@ export class JsonRpcClient {
                 )
                 return
               }
-
               resolve(response.result as T)
             } catch (error) {
               reject(new Error(`Error parsing JSON-RPC response: ${error}`))
@@ -127,9 +130,31 @@ export class JsonRpcClient {
         reject(error)
       })
 
-      req.write(JSON.stringify(request))
+      req.write(JSON.stringify(body))
       req.end()
     })
+  }
+
+  private buildPathCandidates(): string[] {
+    const set = new Set<string>()
+    const current = this.path || '/'
+    set.add(current)
+
+    // Extract sessionId if present
+    const hasQuery = current.includes('?')
+    const base = current.split('?')[0] || '/'
+    const urlParams = new URLSearchParams(hasQuery ? current.split('?')[1] : '')
+    const sid = urlParams.get('sessionId') || ''
+
+    // Common alternates for SDK/FastMCP
+    set.add('/')
+    set.add('/rpc')
+    if (sid) {
+      set.add(`/?sessionId=${sid}`)
+      set.add(`/rpc?sessionId=${sid}`)
+    }
+
+    return Array.from(set)
   }
 
   /**

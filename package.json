@@ -18,6 +18,7 @@
     "start": "node dist/server.js",
     "dev": "nodemon --exec ts-node src/server.ts",
     "dev:sse": "PORT=3001 nodemon --exec ts-node src/server.ts --transport sse",
+    "dev:sdk": "PORT=3001 nodemon --exec ts-node src/sdk/server.ts --transport sse",
     "build": "pnpm run clean && pnpm run prepare && pnpm run update-links && pnpm run postbuild",
     "prebuild": "pnpm run clean",
     "postbuild": "node -e \"require('fs').cpSync('src/components/data', 'dist/components/data', {recursive: true}); require('fs').chmodSync('dist/server.js', '755');\"",
@@ -58,6 +59,7 @@
   ],
   "dependencies": {
     "fastmcp": "^1.22.4",
+    "@modelcontextprotocol/sdk": "^1.0.0",
     "js-yaml": "^4.1.0",
     "tslib": "2.8.1"
   },
