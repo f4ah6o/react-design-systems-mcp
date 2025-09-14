@@ -14,6 +14,8 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/transport
 import componentRegistry from '../components/registry'
 import exampleProvider from '../example-provider'
 import { parseLinkToResource } from './link-parser'
+import searchEngine from '../search/engine'
+import documentationProvider from '../documentation/provider'
 import { getServerConfig } from '../utils/config'
 
 // Server metadata
@@ -54,6 +56,61 @@ async function main() {
             type: 'object',
             properties: { link: { type: 'string' } },
             required: ['link'],
+          },
+        },
+        {
+          name: 'search_components',
+          description: 'Search for Cloudscape components with advanced options',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              query: { type: 'string' },
+              category: { type: 'string' },
+              tags: { type: 'array', items: { type: 'string' } },
+              limit: { type: 'number' },
+              offset: { type: 'number' },
+              fuzzyMatch: { type: 'boolean' },
+              fuzzyThreshold: { type: 'number' },
+              filters: { type: 'object' },
+              sortBy: { type: 'string' },
+              sortOrder: { type: 'string' },
+            },
+          },
+        },
+        {
+          name: 'search_documentation',
+          description: 'Search within component documentation',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              query: { type: 'string' },
+              scope: { type: 'string' },
+              limit: { type: 'number' },
+            },
+            required: ['query'],
+          },
+        },
+        {
+          name: 'get_pattern_categories',
+          description: 'Get all pattern categories with optional details about patterns',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              includePatternCount: { type: 'boolean' },
+              includePatternList: { type: 'boolean' },
+            },
+          },
+        },
+        {
+          name: 'search_patterns',
+          description: 'Search for design patterns and common component combinations',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              query: { type: 'string' },
+              component: { type: 'string' },
+              tags: { type: 'array', items: { type: 'string' } },
+            },
           },
         },
       ],
@@ -123,6 +180,118 @@ async function main() {
       }
 
       return { content: [{ type: 'text', text: JSON.stringify(details, null, 2) }] }
+    }
+
+    if (name === 'search_components') {
+      const {
+        query,
+        category,
+        tags,
+        limit,
+        offset,
+        fuzzyMatch,
+        fuzzyThreshold,
+        filters,
+        sortBy,
+        sortOrder,
+      } = args || {}
+
+      const res = searchEngine.searchComponents({
+        query,
+        category,
+        tags,
+        limit,
+        offset,
+        fuzzyMatch,
+        fuzzyThreshold,
+        filters,
+        sortBy,
+        sortOrder,
+      })
+
+      return {
+        content: [
+          {
+            type: 'text',
+            text: JSON.stringify(
+              {
+                results: res.results.map((r) => ({
+                  componentId: r.id,
+                  name: r.name,
+                  category: r.category,
+                  description: r.description,
+                  relevance: r.relevance,
+                  matchedFields: r.matchedFields,
+                  tags: r.tags,
+                  importPath: r.importPath,
+                  version: r.version,
+                  isExperimental: r.isExperimental,
+                })),
+                totalResults: res.totalResults,
+                query: res.query,
+                category: res.category,
+                tags: res.tags,
+                limit: res.limit,
+                offset: res.offset,
+              },
+              null,
+              2,
+            ),
+          },
+        ],
+      }
+    }
+
+    if (name === 'search_documentation') {
+      const { query, scope = 'all', limit = 10 } = args || {}
+      if (!query) throw new Error('Search query is required')
+      const results = documentationProvider.searchDocumentation({
+        query,
+        scope,
+        limit,
+      })
+      return { content: [{ type: 'text', text: JSON.stringify(results) }] }
+    }
+
+    if (name === 'get_pattern_categories') {
+      const { includePatternCount = true, includePatternList = true } = args || {}
+      const result = componentRegistry.getPatternCategories({
+        includePatternCount,
+        includePatternList,
+      })
+      return { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] }
+    }
+
+    if (name === 'search_patterns') {
+      const { query, component, tags } = args || {}
+      const results = componentRegistry.searchPatterns({ query, component, tags })
+      return {
+        content: [
+          {
+            type: 'text',
+            text: JSON.stringify(
+              {
+                query: args || {},
+                totalResults: results.length,
+                patterns: results.map((pattern) => ({
+                  id: pattern.id,
+                  name: pattern.name,
+                  description: pattern.description,
+                  components: pattern.components,
+                  customizationOptions: Object.keys((pattern as any).customizationOptions || {}),
+                  code:
+                    (pattern as any).code && (pattern as any).code.length > 2000
+                      ? (pattern as any).code.substring(0, 2000) +
+                        '\n\n// Code truncated. Use get_pattern_code for full code.'
+                      : (pattern as any).code,
+                })),
+              },
+              null,
+              2,
+            ),
+          },
+        ],
+      }
     }
 
     if (name === 'get_link_resource') {
